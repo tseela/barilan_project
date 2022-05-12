@@ -8,7 +8,9 @@ from functools import wraps
 
 import pymongo
 from flask_bcrypt import bcrypt
-from algo.libs import classes
+import sys
+sys.path.append('../algo/libs/classes.py')
+import classes
 
 
 # server
@@ -16,6 +18,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = '03a5t89c1pf9Uc0a0f7E'
 # db
 client = pymongo.MongoClient("mongodb://TripDesigner:ShakedKing@tripdesigner-shard-00-00.i9pia.mongodb.net:27017,tripdesigner-shard-00-01.i9pia.mongodb.net:27017,tripdesigner-shard-00-02.i9pia.mongodb.net:27017/Users?ssl=true&replicaSet=atlas-517ql2-shard-0&authSource=admin&retryWrites=true&w=majority")
+# client = pymongo.MongoClient("https://data.mongodb-api.com/app/data-xwflj/endpoint/data/beta")
 db = client.tripDesigner
 users = db.Users
 trips = db.Trips
@@ -72,9 +75,11 @@ def signUp(username, password):
         return jsonify({'status': "fail", "message":"Cannot assingn this username"}), 401
 
     # need to add HASH and SALT to password.
+    salt = bcrypt.gensalt()
     user = {
         "username" : username,
-        "password" : bcrypt.generate_password_hash[password.decode('utf-8')],
+        "password" : bcrypt.hashpw((password + salt.decode()).encode(), bcrypt.gensalt()),
+        "salt" : salt,
         "trips" : []
     }
     users.insert_one(user)
@@ -90,8 +95,8 @@ def signin():
 
 def signIn(username, password):
     user = users.find_one({"username":username})
-
-    if user == None or not bcrypt.check_password_hash(user['password'], password):
+    # return bcrypt.checkpw((password + user['salt'].decode()).encode() , user['password'])
+    if user == None or not bcrypt.checkpw((password + user['salt'].decode()).encode() , user['password']):
         return make_response("Username not found or wrong password", 403, {'WWW-Authentic' : 'Basic realm:"Authentcation faild!'})
 
     session['logged_in'] = True
@@ -105,13 +110,15 @@ def signIn(username, password):
     return jsonify({'token' : token.decode('utf-8')})
 
 
-@app.route('/createtrip')
-@token_required
+# @app.route('/createtrip')
+# @token_required
 def Trips():
     #this is from ron
-    trip = classes.Trip(creatrTrip())
-    trips.insert_one(trip)
-    return render_template('trips.html')
+    # trip = classes.Trip()
+    trip = classes.Trip(1,2,3,4,5,6)
+    print(trip.__dict__)
+    return trips.insert_one(trip.__dict__) 
+
 
 
 
@@ -155,3 +162,6 @@ if __name__ == '__main__':
     # print(signIn("shaked", "moked"))
     # input()
     # print(changePassword("shaked", "moked", "noded"))
+    # print(signUp("shaked4", "moked"))
+    # print(signIn("shaked4", "moked"))
+    # print(Trips())
