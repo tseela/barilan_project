@@ -1,6 +1,5 @@
 # from flask import Flask
 # import pymongo
-from curses import cbreak
 from flask import Flask , request, jsonify,make_response, render_template, session
 import jwt
 from datetime import datetime, timedelta
@@ -8,7 +7,6 @@ from functools import wraps
 
 import pymongo
 from flask_bcrypt import bcrypt
-from algo.libs import classes
 
 
 # server
@@ -104,7 +102,7 @@ def signIn(username, password):
 
     return jsonify({'token' : token.decode('utf-8')})
 
-
+'''
 @app.route('/createtrip')
 @token_required
 def Trips():
@@ -112,7 +110,7 @@ def Trips():
     trip = classes.Trip(creatrTrip())
     trips.insert_one(trip)
     return render_template('trips.html')
-
+'''
 
 
 
