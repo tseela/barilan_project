@@ -67,7 +67,7 @@ def Trips():
 
 @app.route('/signup', methods=['POST'])
 def signup():
-    return signUp(request.form['username'], request.form['password'])
+    return signUp(request.json['username'], request.json['password'])
 
 
 def signUp(username, password):
@@ -90,7 +90,7 @@ def signUp(username, password):
 
 @app.route('/signin', methods=['POST'])
 def signin():
-    return signIn(request.form['username'], request.form['password'])
+    return signIn(request.json['username'], request.json['password'])
 
 
 def signIn(username, password):
