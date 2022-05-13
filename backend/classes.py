@@ -106,13 +106,15 @@ class Day:
 
 class Trip:
     def __init__(self):
+        self.destination = str("")
         self.duration = int(0)
         self.startDate = datetime.now()
         self.endDate = datetime.now()
         self.days = [Day()]
         self.cost = int(0)
         self.userId = int(0)
-    def __init__(self, duration, startDate, endDate, days, cost, userId):
+    def __init__(self, destination, duration, startDate, endDate, days, cost, userId):
+        self.destination = destination
         self.duration = duration
         self.startDate = startDate
         self.endDate = endDate
