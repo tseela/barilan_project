@@ -9,6 +9,7 @@ from functools import wraps
 import pymongo
 from flask_bcrypt import bcrypt
 import sys
+from backend.classes import Activity
 sys.path.append('../algo/libs/classes.py')
 import classes
 
@@ -22,6 +23,12 @@ client = pymongo.MongoClient("mongodb://TripDesigner:ShakedKing@tripdesigner-sha
 db = client.tripDesigner
 users = db.Users
 trips = db.Trips
+
+days = db.Days
+activities = db.Activities
+transportations = db.Transport
+placeOfStay = db.PlaceOfStay
+
 
 
 # example
@@ -112,13 +119,70 @@ def signIn(username, password):
 
 # @app.route('/createtrip')
 # @token_required
-def Trips():
+def createTrip():
     #this is from ron
+    # trip = createTrip()
+
     # trip = classes.Trip()
     trip = classes.Trip(1,2,3,4,5,6)
-    print(trip.__dict__)
+    tripDays = []
+    for day in trip.days:
+        tripDays.append(insertDay(day))
+        
+    trip.days = tripDays
+    # print(trip.__dict__)
     return trips.insert_one(trip.__dict__) 
 
+def insertDay(day):
+    day = classes.Day(day)
+    activityIDS = activities.insert_many(day.activities)
+    transIDS = transportations.insert_many(day.transportation)
+    placeID = placeOfStay.insert_one(day.placeOfStay)
+
+    day.activities = activityIDS
+    day.transportation = transIDS
+    day.placeOfStay = placeID
+
+    day = day.__dict__
+
+    # day['activities'] = activityIDS
+    # day['transportation'] = transIDS
+
+    return days.insert_one(day)
+
+
+# @app.route('/gettrip')
+# @token_required
+def getTrip():
+    user = request.json['uesr']
+    destination = request.json['destination']
+
+    trip = trips.find_one({'uesr':user, 'destination':destination})
+    trip = classes.Trip(trip)
+
+    tripDays = []
+    for day in trip.days:
+        tripDays.append(getDay(day))
+
+    trip.days = tripDays
+
+    return trip
+
+
+def getDay(dayID):
+    day = days.find_one({'_id':dayID})
+
+    #need to update this 3 lines
+    dayActivities = activities.find()
+    dayTransormations = transportations.find()
+    dayPlaceofstay = placeOfStay.find()
+
+    day = classes.Day(day)
+    day.activities = dayActivities
+    day.transportation = dayTransormations
+    day.placeOfStay = dayPlaceofstay
+
+    return day
 
 
 
