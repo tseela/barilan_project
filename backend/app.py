@@ -74,7 +74,7 @@ def Trips():
 
 @app.route('/signup', methods=['POST'])
 def signup():
-    return signUp(request.form['username'], request.form['password'])
+    return signUp(request.json['username'], request.json['password'])
 
 
 def signUp(username, password):
@@ -97,7 +97,7 @@ def signUp(username, password):
 
 @app.route('/signin', methods=['POST'])
 def signin():
-    return signIn(request.form['username'], request.form['password'])
+    return signIn(request.json['username'], request.json['password'])
 
 
 def signIn(username, password):
@@ -189,7 +189,7 @@ def getDay(dayID):
 
 # @app.route('/changePassword', methods=['POST'])
 # def changepassword():
-#     return changePassword(request.form['username'], request.form['password'], request.form['newPassword'])
+#     return changePassword(request.json['username'], request.json['password'], request.json['newPassword'])
 
  
 # def changePassword(username, password, newPassword):
@@ -205,7 +205,7 @@ def getDay(dayID):
 
 # @app.route('/changeUsername', methods=['POST'])
 # def changeusername():
-#     return changeUsername(request.form['username'], request.form['password'], request.form['newUsername'])
+#     return changeUsername(request.json['username'], request.json['password'], request.json['newUsername'])
 
 
 # def changeUsername(username, password, newUsername):
