@@ -1,0 +1,18 @@
+.page {
+  text-align: center;
+}
+
+.header {
+    background-image: url("../../../public/home-plane-background.jpg");
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+    min-height: 100vh;
+    flex-direction: column;
+    align-items: center;
+    justify-content: left;
+    font-size: calc(10px + 2vmin);
+    color: white;
+  }
