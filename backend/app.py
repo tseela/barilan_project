@@ -221,9 +221,9 @@ def getDay(dayID):
 
 
 if __name__ == '__main__':
-    # app.run(debug=True)
-    print(signUp("tseela", "666"))
-    print(signIn("tseela", "666"))
+    app.run(debug=True, port=5000)
+    # print(signUp("tseela", "666"))
+    # print(signIn("tseela", "666"))
     # input()
     # print(changePassword("shaked", "moked", "noded"))
     # print(signUp("shaked4", "moked"))
