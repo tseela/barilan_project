@@ -15,6 +15,7 @@ def signup():
 
 
 def signUp(username, password):
+    print("\nNew user trying to sign up:\nUsername:" + username + "\nPassword:" + password)
     return signIn(username, password)
 
 
@@ -26,13 +27,15 @@ def signin():
 
 
 def signIn(username, password):
-    token = jwt.encode({
+    print("\nA user trying to sign in:\nUsername:" + username + "\nPassword:" + password)
+    token = ({
         'user' : username,
         'expiration' : str(datetime.utcnow() + timedelta(seconds=120))
     },
     app.config['SECRET_KEY'])
+    print(token)
 
-    return jsonify({'token' : token.decode('utf-8')})
+    return jsonify({'token' : token})
 
 
 if __name__ == '__main__':
