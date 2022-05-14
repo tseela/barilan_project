@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import './Login.css';
+import './SignUp.css';
 
-async function loginUser(credentials) {
- return fetch('/login', {
+// what happendes if the username allready exists?
+async function SignUpUser(credentials) {
+ return fetch('/signup', {
    method: 'POST',
    headers: {
      'Content-Type': 'application/json'
@@ -13,13 +14,13 @@ async function loginUser(credentials) {
    .then(data => data.json())
 }
 
-export default function Login({ setToken }) {
+export default function SignUp({ setToken }) {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
 
   const handleSubmit = async e => {
     e.preventDefault();
-    const token = await loginUser({
+    const token = await SignUpUser({
       'username' : username,
       'password' : password,
     });
@@ -31,11 +32,11 @@ export default function Login({ setToken }) {
       <h1>Please Log In</h1>
       <form onSubmit={handleSubmit}>
         <label>
-          <p>Username</p>
+          <p>Enter username</p>
           <input type="text" onChange={e => setUserName(e.target.value)} />
         </label>
         <label>
-          <p>Password</p>
+          <p>Enter password</p>
           <input type="password" onChange={e => setPassword(e.target.value)} />
         </label>
         <div>
@@ -46,6 +47,6 @@ export default function Login({ setToken }) {
   )
 }
 
-Login.propTypes = {
+SignUp.propTypes = {
   setToken: PropTypes.func.isRequired
 };
