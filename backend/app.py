@@ -1,6 +1,7 @@
 # from flask import Flask
 # import pymongo
 from curses import cbreak
+from stat import FILE_ATTRIBUTE_SPARSE_FILE
 from flask import Flask , request, jsonify,make_response, render_template, session
 import jwt
 from datetime import datetime, timedelta
@@ -9,9 +10,13 @@ from functools import wraps
 import pymongo
 from flask_bcrypt import bcrypt
 import sys
-from backend.classes import Activity
+
+from sqlalchemy import false
+# from classes import Activity, Day
 sys.path.append('../algo/libs/classes.py')
 import classes
+from bson import ObjectId
+
 
 
 # server
@@ -125,6 +130,11 @@ def createTrip():
 
     # trip = classes.Trip()
     trip = classes.Trip(1,2,3,4,5,6)
+    return insertTrip(trip)
+
+
+def insertTrip(trip):
+    trip = classes.Trip.toTrip(trip)
     tripDays = []
     for day in trip.days:
         tripDays.append(insertDay(day))
@@ -133,32 +143,34 @@ def createTrip():
     # print(trip.__dict__)
     return trips.insert_one(trip.__dict__) 
 
+
 def insertDay(day):
-    day = classes.Day(day)
-    activityIDS = activities.insert_many(day.activities)
-    transIDS = transportations.insert_many(day.transportation)
-    placeID = placeOfStay.insert_one(day.placeOfStay)
+    day = classes.Day.toDay(day)
+    activityIDS = []
+    transIDS = []
+    placeID = []
+    for activitiy in day.activities:
+        activityIDS.append(activities.insert_one({'activity':activitiy.__dict__}).inserted_id)
+    for trans in day.transportation:
+        transIDS.append(transportations.insert_one({'transformation':trans.__dict__}).inserted_id)
+    placeID = placeOfStay.insert_one({'placeOfStay':day.placeOfStay.__dict__}).inserted_id
 
     day.activities = activityIDS
     day.transportation = transIDS
     day.placeOfStay = placeID
-
     day = day.__dict__
 
     # day['activities'] = activityIDS
     # day['transportation'] = transIDS
 
-    return days.insert_one(day)
+    return days.insert_one(day).inserted_id
 
 
 # @app.route('/gettrip')
 # @token_required
-def getTrip():
-    user = request.json['uesr']
-    destination = request.json['destination']
-
-    trip = trips.find_one({'uesr':user, 'destination':destination})
-    trip = classes.Trip(trip)
+def getTrip(id):
+    trip = trips.find_one({'_id':id})
+    trip = classes.Trip.DictToTrip(trip)
 
     tripDays = []
     for day in trip.days:
@@ -171,16 +183,26 @@ def getTrip():
 
 def getDay(dayID):
     day = days.find_one({'_id':dayID})
+    day = classes.Day.DictToDay(day)
 
-    #need to update this 3 lines
-    dayActivities = activities.find()
-    dayTransormations = transportations.find()
-    dayPlaceofstay = placeOfStay.find()
+    activityObjects = []
+    for activity in day.activities:
+        act = activities.find_one({'_id':activity})
+        act = classes.Activity.DictToActivity(act['activity'])
+        activityObjects.append(act)
 
-    day = classes.Day(day)
-    day.activities = dayActivities
-    day.transportation = dayTransormations
-    day.placeOfStay = dayPlaceofstay
+    transObjects = []
+    for trans in day.transportation:
+        transformation = transportations.find_one({'_id':trans})
+        transformation = classes.Transport.DictToTransport(transformation['transformation'])
+        transObjects.append(transformation)
+    
+    placeOf = placeOfStay.find_one({'_id':day.placeOfStay})
+    placeOf = classes.PlaceOfStay.DictToPlace(placeOf['placeOfStay'])
+
+    day.activities = activityObjects
+    day.transportation = transObjects
+    day.placeOfStay = placeOf
 
     return day
 
@@ -221,7 +243,7 @@ def getDay(dayID):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # app.run(debug=True)
     # print(signUp("shaked", "moked"))
     # print(signIn("shaked", "moked"))
     # input()
@@ -229,3 +251,48 @@ if __name__ == '__main__':
     # print(signUp("shaked4", "moked"))
     # print(signIn("shaked4", "moked"))
     # print(Trips())
+
+    activity1 = classes.Activity(2, 2000, datetime.now(), datetime.now(), "first activity", "location1", "image1", False)
+    activity2 = classes.Activity(2, 2000, datetime.now(), datetime.now(), "second activity", "location2", "image2", False)
+    myActivities = [activity1, activity2]
+
+    myTransformation = classes.Transport(0.5, 7, datetime.now(),datetime.now(), "1->2", "location 1.5", "image 1.5", False, "first activity", 1, "second activity")
+    
+    myPlace = classes.PlaceOfStay(1, 500, datetime.now(), datetime.now(), "hotel", "location sleep", "image sleep", True, "Israel")
+
+    day1 = classes.Day(myActivities, [myTransformation], 4507, datetime.now(),datetime.now(),4.5, myPlace)
+    day2 = classes.Day(myActivities, [myTransformation], 4507, datetime.now(),datetime.now(),4.5, myPlace)
+    day3 = classes.Day(myActivities, [myTransformation], 4507, datetime.now(),datetime.now(),4.5, myPlace)
+    
+    myDays = [day1, day2, day3]
+
+    myTrip = classes.Trip("Israel", 3, datetime.now(), datetime.now(), myDays, 3*4507, 1234)
+
+
+    # tripID = insertTrip(myTrip).inserted_id
+
+
+
+    trip = trips.find_one({'_id':ObjectId('6283b41a23876f4403012a2b')})
+    # print(trip)
+    trip = trips.find_one({'destination':'Israel'})
+    # print(trip)
+
+
+    trip = getTrip(ObjectId('6283b41a23876f4403012a2b'))
+    print(trip.__dict__)
+    print()
+    print()
+    for day in trip.days:
+        print(day.__dict__)
+        print()
+        for act in day.activities:
+            print(act.__dict__)
+        print()
+        for trans in day.transportation:
+            print(trans.__dict__)
+        print()
+        print(day.placeOfStay.__dict__)
+
+
+
