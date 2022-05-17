@@ -33,6 +33,10 @@ class Transport:
         self.placeOfOrigin = placeOfOrigin
         self.methodOfTransportation = methodOfTransportation
         self.destination = destination
+    def toTransport(trans):
+        return Transport(trans.duration, trans.cost, trans.timeStart, trans.timeEnd, trans.title, trans.googleMapsLink, trans.googleMapsImageLink, trans.orderInAdvance, trans.placeOfOrigin, trans.methodOfTransportation, trans.destination)
+    def DictToTransport(trans):
+        return Transport(trans['duration'], trans['cost'], trans['timeStart'], trans['timeEnd'], trans['title'], trans['googleMapsLink'], trans['googleMapsImageLink'], trans['orderInAdvance'], trans['placeOfOrigin'], trans['methodOfTransportation'], trans['destination'])
 
 class Transportation(Enum):
     NONE = 0
@@ -62,6 +66,10 @@ class PlaceOfStay:
         self.googleMapsImageLink = googleMapsImageLink
         self.orderInAdvance = orderInAdvance
         self.destination = destination
+    def toPlace(place):
+        return PlaceOfStay(place.duration, place.cost, place.timeStart, place.timeEnd, place.title, place.googleMapsLink, place.googleMapsImageLink, place.orderInAdvance, place.destination)
+    def DictToPlace(place):
+        return PlaceOfStay(place['duration'], place['cost'], place['timeStart'], place['timeEnd'], place['title'], place['googleMapsLink'], place['googleMapsImageLink'], place['orderInAdvance'], place['destination'])
 
 
 class Activity:
@@ -83,6 +91,10 @@ class Activity:
         self.googleMapsLink = googleMapsLink
         self.googleMapsImageLink = googleMapsImageLink
         self.orderInAdvance = orderInAdvance
+    def toActivity(activity):
+        return Activity(activity.duration , activity.cost, activity.timeStart, activity.timeEnd, activity.title, activity.googleMapsLink, activity.googleMapsImageLink, activity.orderInAdvance)
+    def DictToActivity(activity):
+        return Activity(activity['duration'] , activity['cost'], activity['timeStart'], activity['timeEnd'], activity['title'], activity['googleMapsLink'], activity['googleMapsImageLink'], activity['orderInAdvance'])
 
 
 class Day:
@@ -102,6 +114,10 @@ class Day:
         self.timeEnd = timeEnd
         self.duration = duration
         self.placeOfStay = placeOfStay
+    def toDay(day):
+        return Day(day.activities, day.transportation, day.cost, day.timeStart, day.timeEnd, day.duration, day.placeOfStay)
+    def DictToDay(day):
+        return Day(day['activities'], day['transportation'], day['cost'], day['timeStart'], day['timeEnd'], day['duration'], day['placeOfStay'])
 
 
 class Trip:
@@ -121,3 +137,7 @@ class Trip:
         self.days = days
         self.cost = cost
         self.userId = userId
+    def toTrip(trip) -> Trip:
+        return Trip(trip.destination, trip.duration, trip.startDate, trip.endDate, trip.days, trip.cost, trip.userId)
+    def DictToTrip(trip) -> Trip:
+        return Trip(trip['destination'], trip['duration'], trip['startDate'], trip['endDate'], trip['days'], trip['cost'], trip['userId'])
