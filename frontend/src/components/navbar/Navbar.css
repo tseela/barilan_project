@@ -1,0 +1,55 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 8rem;
+}
+
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 100px;
+}
+
+.logo-icon {
+    transform: rotate(90deg);
+    color: rgb(66, 36, 148);
+}
+  
+.logo-text {
+    font-size: 40px;
+    font-weight: 300;
+    color: black;
+    font-weight: 500;
+}
+  
+.logo-text span {
+    font-weight: 600;
+    color: rgb(49, 114, 255);
+}
+  
+.nav-links {
+    display: flex;
+    color: black;
+    margin-right: 100px;
+}
+  
+.nav-links li {
+    margin-left: 10px;
+    margin-right: 10px;
+    list-style: none;
+}
+  
+.nav-links a {
+    font-size: 24px;
+    font-weight: 300;
+    color: black;
+    text-decoration: none;
+    margin-right: 1rem;
+    transition: all 0.3s;
+}
+.nav-links a:hover {
+    color: blue;
+    font-weight: bold;
+}

@@ -23,7 +23,7 @@ from bson import ObjectId
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '03a5t89c1pf9Uc0a0f7E'
 # db
-client = pymongo.MongoClient("mongodb://TripDesigner:ShakedKing@tripdesigner-shard-00-00.i9pia.mongodb.net:27017,tripdesigner-shard-00-01.i9pia.mongodb.net:27017,tripdesigner-shard-00-02.i9pia.mongodb.net:27017/Users?ssl=true&replicaSet=atlas-517ql2-shard-0&authSource=admin&retryWrites=true&w=majority")
+client = pymongo.MongoClient("mongodb+srv://TripDesigner:ShakedKing@tripdesigner.i9pia.mongodb.net/Users?retryWrites=true&w=majority", connect=False)
 # client = pymongo.MongoClient("https://data.mongodb-api.com/app/data-xwflj/endpoint/data/beta")
 db = client.tripDesigner
 users = db.Users
@@ -212,7 +212,7 @@ def getDay(dayID):
 
 # @app.route('/changePassword', methods=['POST'])
 # def changepassword():
-#     return changePassword(request.form['username'], request.form['password'], request.form['newPassword'])
+#     return changePassword(request.json['username'], request.json['password'], request.json['newPassword'])
 
  
 # def changePassword(username, password, newPassword):
@@ -228,7 +228,7 @@ def getDay(dayID):
 
 # @app.route('/changeUsername', methods=['POST'])
 # def changeusername():
-#     return changeUsername(request.form['username'], request.form['password'], request.form['newUsername'])
+#     return changeUsername(request.json['username'], request.json['password'], request.json['newUsername'])
 
 
 # def changeUsername(username, password, newUsername):
