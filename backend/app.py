@@ -135,12 +135,13 @@ def createTrip():
 
 def insertTrip(trip):
     trip = classes.Trip.toTrip(trip)
+    
     tripDays = []
     for day in trip.days:
         tripDays.append(insertDay(day))
         
     trip.days = tripDays
-    # print(trip.__dict__)
+
     return trips.insert_one(trip.__dict__) 
 
 
@@ -149,19 +150,19 @@ def insertDay(day):
     activityIDS = []
     transIDS = []
     placeID = []
+
     for activitiy in day.activities:
         activityIDS.append(activities.insert_one({'activity':activitiy.__dict__}).inserted_id)
+
     for trans in day.transportation:
         transIDS.append(transportations.insert_one({'transformation':trans.__dict__}).inserted_id)
+
     placeID = placeOfStay.insert_one({'placeOfStay':day.placeOfStay.__dict__}).inserted_id
 
     day.activities = activityIDS
     day.transportation = transIDS
     day.placeOfStay = placeID
     day = day.__dict__
-
-    # day['activities'] = activityIDS
-    # day['transportation'] = transIDS
 
     return days.insert_one(day).inserted_id
 
