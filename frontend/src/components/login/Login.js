@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import './SignUp.css';
+import './Login.css';
 
-// what happendes if the username allready exists?
-async function SignUpUser(credentials) {
+async function loginUser(credentials) {
  return fetch('/signup', {
    method: 'POST',
    headers: {
@@ -14,13 +13,13 @@ async function SignUpUser(credentials) {
    .then(data => data.json())
 }
 
-export default function SignUp({ setToken }) {
+export default function Login({ setToken }) {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
 
   const handleSubmit = async e => {
     e.preventDefault();
-    const token = await SignUpUser({
+    const token = await loginUser({
       'username' : username,
       'password' : password,
     });
@@ -32,11 +31,11 @@ export default function SignUp({ setToken }) {
       <h1>Please Log In</h1>
       <form onSubmit={handleSubmit}>
         <label>
-          <p>Enter username</p>
+          <p>Username</p>
           <input type="text" onChange={e => setUserName(e.target.value)} />
         </label>
         <label>
-          <p>Enter password</p>
+          <p>Password</p>
           <input type="password" onChange={e => setPassword(e.target.value)} />
         </label>
         <div>
@@ -47,6 +46,6 @@ export default function SignUp({ setToken }) {
   )
 }
 
-SignUp.propTypes = {
+Login.propTypes = {
   setToken: PropTypes.func.isRequired
-};
+}

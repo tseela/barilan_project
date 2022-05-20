@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { useToken } from '../../hooks';
-import './Login.css';
+import PropTypes from 'prop-types';
+import './SignUp.css';
 
-async function loginUser(credentials) {
+async function signUser(credentials) {
  return fetch('/signup', {
    method: 'POST',
    headers: {
@@ -13,22 +13,13 @@ async function loginUser(credentials) {
    .then(data => data.json())
 }
 
-export default function Login() {
+export default function SignUp({ setToken }) {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
-  const { token, setToken } = useToken();
-
-  if (token) {
-    return(
-      <div>
-        <button onClick={() => setToken(null)}>Logout from account</button>
-      </div>
-    )
-  }
 
   const handleSubmit = async e => {
     e.preventDefault();
-    const token = await loginUser({
+    const token = await signUser({
       'username' : username,
       'password' : password,
     });
@@ -36,8 +27,8 @@ export default function Login() {
   }
 
   return(
-    <div className="login-wrapper">
-      <h1>Please Log In</h1>
+    <div className="signup-wrapper">
+      <h1>Please Sign Up</h1>
       <form onSubmit={handleSubmit}>
         <label>
           <p>Username</p>
@@ -53,4 +44,8 @@ export default function Login() {
       </form>
     </div>
   )
+}
+
+SignUp.propTypes = {
+  setToken: PropTypes.func.isRequired
 }

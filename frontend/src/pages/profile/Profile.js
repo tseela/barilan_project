@@ -1,13 +1,19 @@
 import './Profile.css';
 import { Navbar } from '../../components';
-import { Login } from '../../pages';
 import { useToken } from '../../hooks';
 
 export default function Profile() {
     const { token, setToken } = useToken();
 
-    if(!token) {
-      return <Login token={token} setToken={setToken} />
+    if (!token) {
+        return(
+            <main className='profile'>
+                <header className='navbar'>
+                    <Navbar />
+                </header>
+                <div>You need to log in first!<br></br><a href='/signin'>Login</a></div>
+            </main>
+        );
     }
 
     return (
