@@ -1,8 +1,15 @@
 import React from "react";
 import './Navbar.css';
 import { ImAirplane } from 'react-icons/im';
+import { useToken } from '../../hooks';
 
 export default function Navbar() {
+    const { token, setToken } = useToken();
+    var log_text = "login"
+    if (token) {
+        log_text = "logout";
+    }
+
     return (
         <nav className="navbar container">
             <div className="logo">
@@ -23,7 +30,7 @@ export default function Navbar() {
                     <a href="/profile">My Profile</a>
                 </li>
                 <li>
-                    <a href="/login">Login / Sign Up</a>
+                    <a href="/login">{log_text}</a>
                 </li>
                 </ul>
             </menu>
