@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import { useToken } from '../../hooks';
 import './Login.css';
 
 async function loginUser(credentials) {
- return fetch('/login', {
+ return fetch('/signup', {
    method: 'POST',
    headers: {
      'Content-Type': 'application/json'
@@ -13,9 +13,18 @@ async function loginUser(credentials) {
    .then(data => data.json())
 }
 
-export default function Login({ setToken }) {
+export default function Login() {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
+  const { token, setToken } = useToken();
+
+  if (token) {
+    return(
+      <div>
+        <button onClick={() => setToken(null)}>Logout from account</button>
+      </div>
+    )
+  }
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -45,7 +54,3 @@ export default function Login({ setToken }) {
     </div>
   )
 }
-
-Login.propTypes = {
-  setToken: PropTypes.func.isRequired
-};
