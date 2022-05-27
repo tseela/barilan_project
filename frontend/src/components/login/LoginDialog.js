@@ -40,10 +40,10 @@ export default function LoginDialog({ setToken }) {
         <div className='login-btn-div'>
           <button className='login-btn' type="submit">Login</button>
         </div>
-        <div className='go-register'>
-          You don't have an account? <a href='/signup'>Register</a>
-        </div>
       </form>
+      <div className='go-register'>
+        You don't have an account? <a href='/signup'>Register</a>
+      </div>
     </div>
   )
 }

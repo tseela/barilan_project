@@ -23,7 +23,9 @@ export default function Login() {
             <header className='navbar'>
                 <Navbar />
             </header>
-            <LoginDialog setToken={setToken} />
+            <div className='login-dialog'>
+                <LoginDialog setToken={setToken} />
+            </div>
         </main>
     );
 }

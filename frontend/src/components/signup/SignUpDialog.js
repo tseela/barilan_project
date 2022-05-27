@@ -16,9 +16,14 @@ async function signUser(credentials) {
 export default function SignUpDialog({ setToken }) {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
+  const [confirm_password, setConfirmPassword] = useState();
 
   const handleSubmit = async e => {
     e.preventDefault();
+    if (confirm_password !== password) {
+      alert("Confirm Password and Password doesn't match.");
+      return;
+    }
     const token = await signUser({
       'username' : username,
       'password' : password,
@@ -37,10 +42,17 @@ export default function SignUpDialog({ setToken }) {
         <label>
           <input className='form' type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
         </label>
+        <br></br>
+        <label>
+          <input className='form conf-pass' type="password" placeholder="Confirm Password" onChange={e => setConfirmPassword(e.target.value)} />
+        </label>
         <div className='signup-btn-div'>
           <button className='signup-btn' type="submit">Sign Up</button>
         </div>
       </form>
+      <div className='go-login'>
+        You already have an account? <a href='/login'>Login</a>
+      </div>
     </div>
   )
 }

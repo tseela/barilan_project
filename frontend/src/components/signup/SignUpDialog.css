@@ -6,7 +6,7 @@
     background-color: whitesmoke;
     border-radius: 25px;
     width: 450px;
-    height: 300px;
+    height: fit-content;
 }
 
 .headline {
@@ -18,6 +18,10 @@
 .form {
     height: 30px;
     font-size: 20px;
+}
+
+.conf-pass {
+    margin-top: 7px;
 }
 
 .signup-btn-div {
@@ -34,4 +38,10 @@
     border-width: 0px;
     width: 130px;
     height: 40px;
+}
+
+.go-login {
+    margin-top: 10px;
+    font-size: 15px;
+    margin-bottom: 20px;
 }
