@@ -1,27 +1,29 @@
-import './Profile.css';
+import './SignUp.css';
 import { Navbar } from '../../components';
+import { SignUpDialog, Logout } from '../../components';
 import { useToken } from '../../hooks';
 
-export default function Profile() {
+export default function Login() {
     const { token, setToken } = useToken();
 
-    if (!token) { //alert("You need to log in first!") and move straight to /signin
+    if (token) {
         return(
-            <main className='profile'>
+            <main className='signup'>
+                <script>alert("You need to logout first!")</script>
                 <header className='navbar'>
                     <Navbar />
                 </header>
-                <div>You need to log in first!<br></br><a href='/login'>Login</a></div>
+                <Logout setToken={setToken} />
             </main>
         );
     }
 
     return (
-        <main className='profile'>
+        <main className='signup'>
             <header className='navbar'>
                 <Navbar />
             </header>
-            <div>replace with user profile</div>
+            <SignUpDialog setToken={setToken} />
         </main>
     );
 }

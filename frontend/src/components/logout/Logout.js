@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 export default function Logout({ setToken }) {
     return(
         <div>
-            <button onClick={() => setToken(null)}>Logout from account</button>
+            <button className='logout' onClick={() => setToken(null)}>Logout</button>
         </div>
     );
 }

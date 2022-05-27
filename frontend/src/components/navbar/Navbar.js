@@ -11,7 +11,7 @@ export default function Navbar() {
     }
 
     return (
-        <nav className="navbar container">
+        <nav className="navbar-container">
             <div className="logo">
                 <ImAirplane className='logo-icon' size={33} />
                 <p className="logo-text">

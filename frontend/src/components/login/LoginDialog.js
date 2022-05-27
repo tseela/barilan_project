@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import './Login.css';
+import './LoginDialog.css';
 
 async function loginUser(credentials) {
  return fetch('/signup', {
@@ -13,7 +13,7 @@ async function loginUser(credentials) {
    .then(data => data.json())
 }
 
-export default function Login({ setToken }) {
+export default function LoginDialog({ setToken }) {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
 
@@ -28,24 +28,26 @@ export default function Login({ setToken }) {
 
   return(
     <div className="login-wrapper">
-      <h1>Please Log In</h1>
+      <h className="headline" >Log In</h>
       <form onSubmit={handleSubmit}>
         <label>
-          <p>Username</p>
-          <input type="text" onChange={e => setUserName(e.target.value)} />
+          <input className='form' type="text" placeholder="Username" onChange={e => setUserName(e.target.value)} />
         </label>
+        <p></p>
         <label>
-          <p>Password</p>
-          <input type="password" onChange={e => setPassword(e.target.value)} />
+          <input className='form' type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
         </label>
-        <div>
-          <button type="submit">Submit</button>
+        <div className='login-btn-div'>
+          <button className='login-btn' type="submit">Login</button>
+        </div>
+        <div className='go-register'>
+          You don't have an account? <a href='/signup'>Register</a>
         </div>
       </form>
     </div>
   )
 }
 
-Login.propTypes = {
+LoginDialog.propTypes = {
   setToken: PropTypes.func.isRequired
 }
