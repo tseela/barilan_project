@@ -5,13 +5,13 @@ import { useToken } from '../../hooks';
 export default function Profile() {
     const { token, setToken } = useToken();
 
-    if (!token) {
+    if (!token) { //alert("You need to log in first!") and move straight to /signin
         return(
             <main className='profile'>
                 <header className='navbar'>
                     <Navbar />
                 </header>
-                <div>You need to log in first!<br></br><a href='/signin'>Login</a></div>
+                <div>You need to log in first!<br></br><a href='/login'>Login</a></div>
             </main>
         );
     }

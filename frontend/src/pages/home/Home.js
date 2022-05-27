@@ -4,9 +4,12 @@ import {Navbar} from "../../components"
 
 export default function Home() {
     return (
-        <main className='page'>
+        <main className='home'>
             <header className='header'>
-                <Navbar />
+            <Navbar />
+                <div className="page">
+                    hii
+                </div>
             </header>
         </main>
     )

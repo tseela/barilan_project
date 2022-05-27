@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import './SignUp.css';
+import './SignUpDialog.css';
 
 async function signUser(credentials) {
  return fetch('/signup', {
@@ -13,7 +13,7 @@ async function signUser(credentials) {
    .then(data => data.json())
 }
 
-export default function SignUp({ setToken }) {
+export default function SignUpDialog({ setToken }) {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
 
@@ -28,24 +28,23 @@ export default function SignUp({ setToken }) {
 
   return(
     <div className="signup-wrapper">
-      <h1>Please Sign Up</h1>
+      <h className="headline" >Sign Up</h>
       <form onSubmit={handleSubmit}>
         <label>
-          <p>Username</p>
-          <input type="text" onChange={e => setUserName(e.target.value)} />
+          <input className='form' type="text" placeholder="Username" onChange={e => setUserName(e.target.value)} />
         </label>
+        <p></p>
         <label>
-          <p>Password</p>
-          <input type="password" onChange={e => setPassword(e.target.value)} />
+          <input className='form' type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
         </label>
-        <div>
-          <button type="submit">Submit</button>
+        <div className='signup-btn-div'>
+          <button className='signup-btn' type="submit">Sign Up</button>
         </div>
       </form>
     </div>
   )
 }
 
-SignUp.propTypes = {
+SignUpDialog.propTypes = {
   setToken: PropTypes.func.isRequired
 }
