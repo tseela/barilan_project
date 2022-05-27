@@ -6,7 +6,7 @@
     background-color: whitesmoke;
     border-radius: 25px;
     width: 450px;
-    height: 300px;
+    height: fit-content;
 }
 
 .headline {
@@ -40,4 +40,5 @@
 .go-register {
     margin-top: 10px;
     font-size: 15px;
+    margin-bottom: 20px;
 }

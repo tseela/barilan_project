@@ -13,7 +13,7 @@ export default function Navbar() {
     return (
         <nav className="navbar-container">
             <div className="logo">
-                <ImAirplane className='logo-icon' size={33} />
+                <ImAirplane className='logo-icon' size={50} />
                 <p className="logo-text">
                 <span>T</span>rip<span>P</span>lanner
                 </p>

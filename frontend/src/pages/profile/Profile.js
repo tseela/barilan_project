@@ -11,7 +11,7 @@ export default function Profile() {
                 <header className='navbar'>
                     <Navbar />
                 </header>
-                <div>You need to log in first!<br></br><a href='/login'>Login</a></div>
+                <div className='body'>You need to log in first!<br></br><a href='/login'>Login</a></div>
             </main>
         );
     }
@@ -21,7 +21,7 @@ export default function Profile() {
             <header className='navbar'>
                 <Navbar />
             </header>
-            <div>replace with user profile</div>
+            <div className='body'>replace with user profile</div>
         </main>
     );
 }

@@ -1,9 +1,14 @@
 .signup {
+    font-size: calc(10px + 2vmin);
+    color: white;
+    background-color: #252525;
+}
+
+.signup-dialog {
+    display: flex;
     min-height: 100vh;
     flex-direction: column;
     align-items: center;
     justify-content: left;
-    font-size: calc(10px + 2vmin);
-    color: white;
-    background-color: #252525;
+    margin-top: 50px;
 }
