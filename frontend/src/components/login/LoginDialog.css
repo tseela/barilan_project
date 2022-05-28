@@ -5,40 +5,40 @@
     color: black;
     background-color: whitesmoke;
     border-radius: 25px;
-    width: 450px;
+    width: 65vh;
     height: fit-content;
 }
 
 .headline {
     text-align: center;
-    font-size: 40px;
     font-weight: bold;
-    margin: 20px;
+    font-size: 6vh;
+    margin-bottom: 3vh;
 }
 
 .form {
-    height: 30px;
-    font-size: 20px;
+    height: 4vh;
+    font-size: 100%;
 }
 
 .login-btn-div {
     text-align: center;
-    margin-top: 10px;
+    margin-top: 2%;
 }
 
 .login-btn {
-    margin-top: 20px;
-    font-size: 25px;
+    margin-top: 8%;
+    font-size: 100%;
     background-color: blue;
     color: white;
     border-radius: 4px;
     border-width: 0px;
-    width: 100px;
-    height: 40px;
+    width: 45%;
+    height: 5vh;
 }
 
 .go-register {
-    margin-top: 10px;
-    font-size: 15px;
-    margin-bottom: 20px;
+    margin-top: 4%;
+    font-size: 63%;
+    margin-bottom: 2vh;
 }
