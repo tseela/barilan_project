@@ -10,7 +10,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: 100px;
+    margin-left: 5vw;
 }
 
 .logo-icon {
@@ -19,7 +19,7 @@
 }
   
 .logo-text {
-    font-size: 60px;
+    font-size: 10vh;
     font-weight: 300;
     color: black;
     font-weight: 500;
@@ -33,17 +33,17 @@
 .nav-links {
     display: flex;
     color: black;
-    margin-right: 100px;
+    margin-right: 3vw;
 }
   
 .nav-links li {
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-left: 2vw;
+    margin-right: 2vw;
     list-style: none;
 }
   
 .nav-links a {
-    font-size: 30px;
+    font-size: calc(4vh + 3px);
     font-weight: 300;
     color: black;
     text-decoration: none;

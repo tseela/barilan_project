@@ -23,7 +23,10 @@ export default function LoginDialog({ setToken }) {
       'username' : username,
       'password' : password,
     });
-    setToken(token);
+    if (token) {
+      setToken(token);
+    }
+    // error login
   }
 
   return(

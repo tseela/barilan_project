@@ -10,6 +10,12 @@ export default function Navbar() {
         log_text = "logout";
     }
 
+    const logoutIfNeeded = async e => {
+        if (token) {
+            setToken(null);
+        }
+    }
+
     return (
         <nav className="navbar-container">
             <div className="logo">
@@ -30,7 +36,7 @@ export default function Navbar() {
                     <a href="/profile">My Profile</a>
                 </li>
                 <li>
-                    <a href="/login">{log_text}</a>
+                    <a href="/login" onClick={logoutIfNeeded}>{log_text}</a>
                 </li>
                 </ul>
             </menu>
