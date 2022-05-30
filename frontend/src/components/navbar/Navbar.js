@@ -19,12 +19,12 @@ export default function Navbar() {
     return (
         <nav className="navbar-container">
             <div className="logo">
-                <ImAirplane className='logo-icon' size={50} />
+                <ImAirplane className='logo-icon' />
                 <p className="logo-text">
                 <span>T</span>rip<span>P</span>lanner
                 </p>
             </div>
-            <menu>
+            <menu className="nav-menu">
                 <ul className="nav-links">
                 <li>
                     <a href="/home">Home</a>
