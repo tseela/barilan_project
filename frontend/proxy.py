@@ -19,6 +19,17 @@ def signUp(username, password):
     return signIn(username, password)
 
 
+@app.route('/signup-fail', methods=['POST'])
+def signup_fail():
+    x = jsonify({'status': "fail", "message":"Cannot assingn this username"}), 401
+    print(x)
+    return x
+
+@app.route('/signin-fail', methods=['POST'])
+def signin_fail():
+    x = make_response("Username not found or wrong password", 403, {'WWW-Authentic' : 'Basic realm:"Authentcation faild!'})
+    print(x)
+    return x
 
 
 @app.route('/signin', methods=['POST'])

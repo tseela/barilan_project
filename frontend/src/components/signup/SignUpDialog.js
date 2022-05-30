@@ -3,14 +3,20 @@ import PropTypes from 'prop-types';
 import './SignUpDialog.css';
 
 async function signUser(credentials) {
- return fetch('/signup', {
-   method: 'POST',
-   headers: {
-     'Content-Type': 'application/json'
-   },
-   body: JSON.stringify(credentials)
- })
-   .then(data => data.json())
+  let res = await fetch('/signup', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(credentials)
+  });
+
+  if (res.status !== 200) {
+    return null;
+  }
+  
+  let ret = res.json();
+  return ret;
 }
 
 export default function SignUpDialog({ setToken }) {
@@ -20,15 +26,27 @@ export default function SignUpDialog({ setToken }) {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    if (confirm_password !== password) {
-      alert("Confirm Password and Password doesn't match.");
+
+    if (username === '' || password === '') {
+      alert("REGISTRATION FAILED: Username and password must not be empty.");
       return;
     }
+
+    if (confirm_password !== password) {
+      alert("REGISTRATION FAILED: Confirm Password and Password doesn't match.");
+      return;
+    }
+
     const token = await signUser({
       'username' : username,
       'password' : password,
     });
-    setToken(token);
+
+    if (token) {
+      setToken(token);
+    } else {
+      alert("REGISTRATION FAILED: This username is taken. Choose a different one.");
+    }
   }
 
   return(
