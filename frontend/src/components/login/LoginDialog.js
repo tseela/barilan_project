@@ -3,13 +3,20 @@ import PropTypes from 'prop-types';
 import './LoginDialog.css';
 
 async function loginUser(credentials) {
-  return fetch('/signup', {
+  let res = await fetch('/signin', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(credentials)
-  }).then(data => data.json())
+  });
+
+  if (res.status !== 200) {
+    return null;
+  }
+  
+  let ret = res.json();
+  return ret;
 }
 
 export default function LoginDialog({ setToken }) {
@@ -18,14 +25,22 @@ export default function LoginDialog({ setToken }) {
 
   const handleSubmit = async e => {
     e.preventDefault();
+
+    if (username === '' || password === '') {
+      alert("LOGIN FAILED: Username and password must not be empty.");
+      return;
+    }
+
     const token = await loginUser({
       'username' : username,
       'password' : password,
     });
+    
     if (token) {
       setToken(token);
+    } else {
+      alert("LOGIN FAILED: Username or Password are incorrect.");
     }
-    // error login
   }
 
   return(
