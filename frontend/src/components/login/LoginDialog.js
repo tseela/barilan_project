@@ -3,14 +3,13 @@ import PropTypes from 'prop-types';
 import './LoginDialog.css';
 
 async function loginUser(credentials) {
- return fetch('/signup', {
-   method: 'POST',
-   headers: {
-     'Content-Type': 'application/json'
-   },
-   body: JSON.stringify(credentials)
- })
-   .then(data => data.json())
+  return fetch('/signup', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(credentials)
+  }).then(data => data.json())
 }
 
 export default function LoginDialog({ setToken }) {
