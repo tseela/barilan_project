@@ -224,6 +224,8 @@ def getTripsByusername(name):
 
     return trips
 
+
+
 def addTripToUser(name, tripID):
     user = users.find_one({"username" : name})
     
@@ -236,6 +238,8 @@ def addTripToUser(name, tripID):
         user['trips'] = user['trips'] + [tripID]
 
     user = users.find_one_and_update({"username" : name}, update={ "$set": {"trips" : user['trips']}})
+
+
 
 def removeTripfromUser(name, tripID):
     user = users.find_one({"username" : name})
@@ -250,6 +254,11 @@ def removeTripfromUser(name, tripID):
         user['trips'].remove(tripID)
 
     user = users.find_one_and_update({"username" : name}, update={ "$set": {"trips" : user['trips']}})
+
+
+def createTripAndAdd(name):
+    id = createTrip()
+    addTripToUser(name,id)
 
 
 
@@ -338,7 +347,7 @@ if __name__ == '__main__':
     #         print(trans.__dict__)
     #     print()
     #     print(day.placeOfStay.__dict__)
-    
+
     print(getTripsByusername("shaked4"))
     addTripToUser("shaked4", ObjectId('6296391a2a9317f48543073f'))
     addTripToUser("shaked4", ObjectId('62963935ed1317e541f491be'))
