@@ -45,7 +45,7 @@ export default function LoginDialog({ setToken }) {
 
   return(
     <div className="login-wrapper">
-      <h className="headline" >Log In</h>
+      <header className="headline" >Log In</header>
       <form onSubmit={handleSubmit}>
         <label>
           <input className='form' type="text" placeholder="Username" onChange={e => setUserName(e.target.value)} />

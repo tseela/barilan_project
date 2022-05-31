@@ -51,10 +51,10 @@ export default function SignUpDialog({ setToken }) {
 
   return(
     <div className="signup-wrapper">
-      <h className="headline" >Sign Up</h>
+      <header className="headline" >Sign Up</header>
       <form onSubmit={handleSubmit}>
         <label>
-          <input className='form' type="text" placeholder="Username" onChange={e => setUserName(e.target.value)} />
+          <input className='form' type="text" placeholder="Username" maxlength="10" onChange={e => setUserName(e.target.value)} />
         </label>
         <p></p>
         <label>
