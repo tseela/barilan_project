@@ -82,6 +82,8 @@ def Trips():
     return render_template('trips.html')
 
 
+# sign up
+# @return status
 @app.route('/signup', methods=['POST'])
 def signup():
     return signUp(request.json['username'], request.json['password'])
@@ -104,7 +106,8 @@ def signUp(username, password):
 
 
 
-
+# sign in
+# @return status
 @app.route('/signin', methods=['POST'])
 def signin():
     return signIn(request.json['username'], request.json['password'])
@@ -129,6 +132,7 @@ def signIn(username, password):
 
 # @app.route('/createtrip')
 # @token_required
+# @return tripID
 def createTrip():
     #this is from ron
     # trip = createTrip()
@@ -138,6 +142,7 @@ def createTrip():
     return insertTrip(trip)
 
 
+# @return tripID
 def insertTrip(trip):
     trip = classes.Trip.toTrip(trip)
     
@@ -150,6 +155,7 @@ def insertTrip(trip):
     return trips.insert_one(trip.__dict__) 
 
 
+# @return dayID
 def insertDay(day):
     day = classes.Day.toDay(day)
     activityIDS = []
@@ -174,6 +180,7 @@ def insertDay(day):
 
 # @app.route('/gettrip')
 # @token_required
+# @return trip object
 def getTrip(id):
     trip = trips.find_one({'_id':id})
     trip = classes.Trip.DictToTrip(trip)
@@ -187,6 +194,7 @@ def getTrip(id):
     return trip
 
 
+# @return day object
 def getDay(dayID):
     day = days.find_one({'_id':dayID})
     day = classes.Day.DictToDay(day)
@@ -212,6 +220,8 @@ def getDay(dayID):
 
     return day
 
+
+# @return trips objects
 def getTripsByusername(name):
     user = users.find_one({"username" : name})
 
@@ -225,7 +235,7 @@ def getTripsByusername(name):
     return trips
 
 
-
+# add the id of trip to user
 def addTripToUser(name, tripID):
     user = users.find_one({"username" : name})
     
