@@ -2,6 +2,7 @@
 # import pymongo
 from curses import cbreak
 from stat import FILE_ATTRIBUTE_SPARSE_FILE
+from typing import List
 from flask import Flask , request, jsonify,make_response, render_template, session
 import jwt
 from datetime import datetime, timedelta
@@ -9,11 +10,12 @@ from functools import wraps
 
 import pymongo
 from flask_bcrypt import bcrypt
+# import sys
 import sys
 
 from sqlalchemy import false
 # from classes import Activity, Day
-sys.path.append('../algo/libs/classes.py')
+# sys.path.append('../algo/libs/classes.py')
 import classes
 from bson import ObjectId
 
@@ -23,7 +25,10 @@ from bson import ObjectId
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '03a5t89c1pf9Uc0a0f7E'
 # db
-client = pymongo.MongoClient("mongodb+srv://TripDesigner:ShakedKing@tripdesigner.i9pia.mongodb.net/Users?retryWrites=true&w=majority", connect=False)
+# client = pymongo.MongoClient("mongodb+srv://TripDesigner:ShakedKing@tripdesigner.i9pia.mongodb.net/Users?retryWrites=true&w=majority", connect=False)
+
+client = pymongo.MongoClient("mongodb+srv://TripDesigner:ShakedKing@tripdesigner.i9pia.mongodb.net/?retryWrites=true&w=majority")
+db = client.test
 # client = pymongo.MongoClient("https://data.mongodb-api.com/app/data-xwflj/endpoint/data/beta")
 db = client.tripDesigner
 users = db.Users
@@ -207,6 +212,44 @@ def getDay(dayID):
 
     return day
 
+def getTripsByusername(name):
+    user = users.find_one({"username" : name})
+
+    trips = []
+    if (user['trips'] == None):
+        return trips
+
+    for trip in user['trips']:
+        trips.append(getTrip(trip))
+
+    return trips
+
+def addTripToUser(name, tripID):
+    user = users.find_one({"username" : name})
+    
+    if (not type(user['trips']) == list):
+        user['trips'] = [tripID]
+
+    else:
+        if (tripID in user['trips']):
+            return
+        user['trips'] = user['trips'] + [tripID]
+
+    user = users.find_one_and_update({"username" : name}, update={ "$set": {"trips" : user['trips']}})
+
+def removeTripfromUser(name, tripID):
+    user = users.find_one({"username" : name})
+    
+    if (not type(user['trips']) == list):
+        return
+
+    else:
+        if (tripID not in user['trips']):
+            return
+
+        user['trips'].remove(tripID)
+
+    user = users.find_one_and_update({"username" : name}, update={ "$set": {"trips" : user['trips']}})
 
 
 
@@ -243,6 +286,7 @@ def getDay(dayID):
 #     return "ok"
 
 
+
 if __name__ == '__main__':
     # app.run(debug=True)
     # print(signUp("shaked", "moked"))
@@ -268,32 +312,43 @@ if __name__ == '__main__':
     myDays = [day1, day2, day3]
 
     myTrip = classes.Trip("Israel", 3, datetime.now(), datetime.now(), myDays, 3*4507, 1234)
+    myTrip2 = classes.Trip("Israel", 3, datetime.now(), datetime.now(), myDays, 3*4507, 1234)
 
 
-    # tripID = insertTrip(myTrip).inserted_id
+    # tripID = insertTrip(myTrip2).inserted_id
 
 
-
-    trip = trips.find_one({'_id':ObjectId('6283b41a23876f4403012a2b')})
+    # trip = trips.find_one({'_id':tripID})
+    # trip = trips.find_one({'_id':ObjectId('6283b41a23876f4403012a2b')})
     # print(trip)
-    trip = trips.find_one({'destination':'Israel'})
+    # trip = trips.find_one({'destination':'Israel'})
     # print(trip)
 
+    # trip = getTrip(ObjectId('6283b41a23876f4403012a2b'))
+    # print(trip.__dict__)
+    # print()
+    # print()
+    # for day in trip.days:
+    #     print(day.__dict__)
+    #     print()
+    #     for act in day.activities:
+    #         print(act.__dict__)
+    #     print()
+    #     for trans in day.transportation:
+    #         print(trans.__dict__)
+    #     print()
+    #     print(day.placeOfStay.__dict__)
+    
+    print(getTripsByusername("shaked4"))
+    addTripToUser("shaked4", ObjectId('6296391a2a9317f48543073f'))
+    addTripToUser("shaked4", ObjectId('62963935ed1317e541f491be'))
+    addTripToUser("shaked4", ObjectId('6283b41a23876f4403012a2b'))
+    # addTripToUser("shaked4", ObjectId('6283b41a23876f4403012a2b'))x
+    print(getTripsByusername("shaked4"))
+    removeTripfromUser("shaked4", ObjectId('62963935ed1317e541f491be'))
+    print(getTripsByusername("shaked4"))
 
-    trip = getTrip(ObjectId('6283b41a23876f4403012a2b'))
-    print(trip.__dict__)
-    print()
-    print()
-    for day in trip.days:
-        print(day.__dict__)
-        print()
-        for act in day.activities:
-            print(act.__dict__)
-        print()
-        for trans in day.transportation:
-            print(trans.__dict__)
-        print()
-        print(day.placeOfStay.__dict__)
+    
 
 
 
