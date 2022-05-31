@@ -5,15 +5,16 @@ import { useToken } from '../../hooks';
 
 export default function Navbar() {
     const { token, setToken } = useToken();
-    var log_text = "login"
-    if (token) {
-        log_text = "logout";
+
+    const logout = async e => {
+        setToken(null);
     }
 
-    const logoutIfNeeded = async e => {
-        if (token) {
-            setToken(null);
-        }
+    var link = <a href="/login">Login</a>; //login
+    if (token) { // logout // may need to change that one
+        link = <div className="logout-div">{token[0]?.user}
+        <a href="/login" id="logout" onClick={logout}>Logout</a>
+        </div>;
     }
 
     return (
@@ -35,8 +36,8 @@ export default function Navbar() {
                 <li>
                     <a href="/profile">My Profile</a>
                 </li>
-                <li>
-                    <a href="/login" onClick={logoutIfNeeded}>{log_text}</a>
+                <li className="login-link">
+                    {link}
                 </li>
                 </ul>
             </menu>

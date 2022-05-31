@@ -2,7 +2,8 @@
     display: flex;
     justify-content: space-between;
     align-items: stretch;
-    height: min(20vh, 15vw);
+    height: min(16vh, 12vw);
+    min-height: 100px;
     width: 100vw;
     background-color: lightblue;
 }
@@ -12,7 +13,7 @@
     justify-content: center;
     align-items: center;
     margin-left: 5vw;
-    font-size: max(5vh, 4vw);
+    font-size: max(4vh, 3vw);
 }
 
 .logo-icon {
@@ -43,7 +44,7 @@
 }
   
 .nav-links a {
-    font-size: min(calc(4vh + 3px), calc(2vw + 5px));
+    font-size: min(4vh, 2vw);
     font-weight: 300;
     color: black;
     text-decoration: none;
@@ -53,4 +54,17 @@
 .nav-links a:hover {
     color: blue;
     font-weight: bold;
+}
+
+.logout-div {
+    display: flex;
+    flex-direction: column;
+    font-size: min(5vh, 3vw);
+    text-align: center;
+}
+
+#logout {
+    font-size: min(calc(2vh + 3px), 2vw);
+    font-weight: bold;
+    color: darkblue;
 }
