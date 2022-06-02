@@ -5,8 +5,13 @@ import { useToken } from '../../hooks';
 export default function Profile() {
     const { token, setToken } = useToken();
     let username = token[0]?.user;
-    const trips = [{id:1, name:"trip1"}, {id:2, name:"trip2"}, {id:3, name:"trip3"}];
-    const listItems = trips.map((trip) => <li key={trip.id}>{trip.name}</li>);
+    
+    let trips = [];
+    for (let i = 1; i < 10; ++i) {
+        trips.push({id:i, name:"trip" + i});
+    }
+
+    const listItems = trips.map((trip) => <li><a href={"/trip/" + trip.id}>{trip.name}</a></li>);
 
     if (!token) {
         return(
@@ -29,7 +34,7 @@ export default function Profile() {
                     {username}
                 </div>
                 <div className='profile-trips'>
-                    <ul>{listItems}</ul>
+                    <ul className='trips-ul'>{listItems}</ul>
                 </div>
             </div>
         </main>

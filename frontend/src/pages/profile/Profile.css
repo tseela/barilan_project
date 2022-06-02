@@ -1,8 +1,8 @@
 .profile-page {
-    font-size: calc(10px + 2vmin);
     color: white;
     background-color: #252525;
     min-height: 100vh;
+    max-height: fit-content;
 }
 
 body {
@@ -24,16 +24,39 @@ body {
 }
 
 .profile-username {
-    font-size: min(15vh, 8vw);
+    font-size: min(13vh, 8vw);
     font-weight: bold;
     margin-left: 5vw;
 }
 
-.profile-trips {
-    display: flex;
-    flex-direction: row;
-}
-
 .profile-trips ul {
     list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-basis: 33.333333%;
+}
+
+.profile-trips li {
+    margin-top: 6vh;
+    margin-bottom: 6vh;
+    margin-left: 3vw;
+    margin-right: 5vw;
+
+    flex-basis: 5%;
+}
+
+.profile-trips a {
+    background-color: blue;
+
+    padding-left: min(10vw, 17vh);
+    padding-right: min(10vw, 17vh);
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+
+    border-radius: 50px;
+    font-size: min(3.5vw, 5vh);
+    text-decoration: none;
+    color: white;
 }
