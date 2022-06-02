@@ -122,6 +122,7 @@ class Day:
 
 class Trip:
     def __init__(self):
+        self.name = str("")
         self.destination = str("")
         self.duration = int(0)
         self.startDate = datetime.now()
@@ -129,7 +130,8 @@ class Trip:
         self.days = [Day()]
         self.cost = int(0)
         self.userId = int(0)
-    def __init__(self, destination, duration, startDate, endDate, days, cost, userId):
+    def __init__(self, name, destination, duration, startDate, endDate, days, cost, userId):
+        self.name = name
         self.destination = destination
         self.duration = duration
         self.startDate = startDate
@@ -138,6 +140,6 @@ class Trip:
         self.cost = cost
         self.userId = userId
     def toTrip(trip) -> Trip:
-        return Trip(trip.destination, trip.duration, trip.startDate, trip.endDate, trip.days, trip.cost, trip.userId)
+        return Trip(trip.name, trip.destination, trip.duration, trip.startDate, trip.endDate, trip.days, trip.cost, trip.userId)
     def DictToTrip(trip) -> Trip:
-        return Trip(trip['destination'], trip['duration'], trip['startDate'], trip['endDate'], trip['days'], trip['cost'], trip['userId'])
+        return Trip(trip['name'], trip['destination'], trip['duration'], trip['startDate'], trip['endDate'], trip['days'], trip['cost'], trip['userId'])

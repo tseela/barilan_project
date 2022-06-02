@@ -1,8 +1,6 @@
 # from flask import Flask
 # import pymongo
-from curses import cbreak
-from stat import FILE_ATTRIBUTE_SPARSE_FILE
-from typing import List
+
 from flask import Flask , request, jsonify,make_response, render_template, session
 import jwt
 from datetime import datetime, timedelta
@@ -13,7 +11,6 @@ from flask_bcrypt import bcrypt
 # import sys
 import sys
 
-from sqlalchemy import false
 # from classes import Activity, Day
 # sys.path.append('../algo/libs/classes.py')
 import classes
@@ -77,7 +74,6 @@ def home():
 
 
 @app.route('/trips')
-@token_required
 def Trips():
     return render_template('trips.html')
 
@@ -130,8 +126,7 @@ def signIn(username, password):
     return jsonify({'token' : token.decode('utf-8')})
 
 
-# @app.route('/createtrip')
-# @token_required
+@app.route('/createtrip')
 # @return tripID
 def createTrip():
     #this is from ron
@@ -178,8 +173,11 @@ def insertDay(day):
     return days.insert_one(day).inserted_id
 
 
-# @app.route('/gettrip')
-# @token_required
+@app.route('/getTrip')
+def GetTrip():
+    # return getTrip(request.args.get('tripID'))
+    return getTrip(request.json('tripID'))
+
 # @return trip object
 def getTrip(id):
     trip = trips.find_one({'_id':id})
@@ -221,6 +219,20 @@ def getDay(dayID):
     return day
 
 
+
+@app.route('/updateTrip', methods=['POST'])
+def UpdateTrip():
+    return updateTrip(request.json['tripID'], request.json['trip'])
+
+def updateTrip(tripId, newTrip):
+    newTrip = classes.Trip.DictToTrip(newTrip)
+    return trips.find_one_and_update({'_id':tripId}, {'$set':newTrip.__dict__})
+
+
+@app.route('./getTripsByUser')
+def GetTripsByUser():
+    return getTripsByusername(request.json['username'])
+
 # @return trips objects
 def getTripsByusername(name):
     user = users.find_one({"username" : name})
@@ -234,6 +246,10 @@ def getTripsByusername(name):
 
     return trips
 
+
+app.route('/addTripToUser')
+def AddTripToUser():
+    return addTripToUser(request.json['username'], request.json['tripID'])
 
 # add the id of trip to user
 def addTripToUser(name, tripID):
@@ -250,6 +266,10 @@ def addTripToUser(name, tripID):
     user = users.find_one_and_update({"username" : name}, update={ "$set": {"trips" : user['trips']}})
 
 
+app.route('/removeTripFromUser')
+def RemoveTripFromUser():
+    return removeTripfromUser(request.json['username'], request.json['tripID'])
+
 
 def removeTripfromUser(name, tripID):
     user = users.find_one({"username" : name})
@@ -265,6 +285,10 @@ def removeTripfromUser(name, tripID):
 
     user = users.find_one_and_update({"username" : name}, update={ "$set": {"trips" : user['trips']}})
 
+
+app.route('./createTripAndAdd')
+def CreateTripAndAdd():
+    return createTripAndAdd(request.json['username'])
 
 def createTripAndAdd(name):
     id = createTrip()
@@ -305,17 +329,7 @@ def createTripAndAdd(name):
 #     return "ok"
 
 
-
-if __name__ == '__main__':
-    # app.run(debug=True)
-    # print(signUp("shaked", "moked"))
-    # print(signIn("shaked", "moked"))
-    # input()
-    # print(changePassword("shaked", "moked", "noded"))
-    # print(signUp("shaked4", "moked"))
-    # print(signIn("shaked4", "moked"))
-    # print(Trips())
-
+def mockTrip():
     activity1 = classes.Activity(2, 2000, datetime.now(), datetime.now(), "first activity", "location1", "image1", False)
     activity2 = classes.Activity(2, 2000, datetime.now(), datetime.now(), "second activity", "location2", "image2", False)
     myActivities = [activity1, activity2]
@@ -330,11 +344,41 @@ if __name__ == '__main__':
     
     myDays = [day1, day2, day3]
 
-    myTrip = classes.Trip("Israel", 3, datetime.now(), datetime.now(), myDays, 3*4507, 1234)
-    myTrip2 = classes.Trip("Israel", 3, datetime.now(), datetime.now(), myDays, 3*4507, 1234)
+    myTrip = classes.Trip("shaked4-Israel", "Israel", 3, datetime.now(), datetime.now(), myDays, 3*4507, 1234)
+    return myTrip
+
+def printTripObject(tripID):
+    trip = getTrip(tripID)
+    print(trip.__dict__)
+    print()
+    print()
+    for day in trip.days:
+        print(day.__dict__)
+        print()
+        for act in day.activities:
+            print(act.__dict__)
+        print()
+        for trans in day.transportation:
+            print(trans.__dict__)
+        print()
+        print(day.placeOfStay.__dict__)
 
 
-    # tripID = insertTrip(myTrip2).inserted_id
+if __name__ == '__main__':
+    # app.run(debug=True)
+    # print(signUp("shaked", "moked"))
+    # print(signIn("shaked", "moked"))
+    # input()
+    # print(changePassword("shaked", "moked", "noded"))
+    # print(signUp("shaked4", "moked"))
+    # print(signIn("shaked4", "moked"))
+    # print(Trips())
+
+    myTrip = mockTrip()
+    myTrip2 = mockTrip()
+
+
+    tripID = insertTrip(myTrip2).inserted_id
 
 
     # trip = trips.find_one({'_id':tripID})
@@ -343,29 +387,17 @@ if __name__ == '__main__':
     # trip = trips.find_one({'destination':'Israel'})
     # print(trip)
 
-    # trip = getTrip(ObjectId('6283b41a23876f4403012a2b'))
-    # print(trip.__dict__)
-    # print()
-    # print()
-    # for day in trip.days:
-    #     print(day.__dict__)
-    #     print()
-    #     for act in day.activities:
-    #         print(act.__dict__)
-    #     print()
-    #     for trans in day.transportation:
-    #         print(trans.__dict__)
-    #     print()
-    #     print(day.placeOfStay.__dict__)
+    printTripObject(tripID)
 
-    print(getTripsByusername("shaked4"))
-    addTripToUser("shaked4", ObjectId('6296391a2a9317f48543073f'))
-    addTripToUser("shaked4", ObjectId('62963935ed1317e541f491be'))
-    addTripToUser("shaked4", ObjectId('6283b41a23876f4403012a2b'))
+
+    # # trip-user
+    # print(getTripsByusername("shaked4"))
+    # addTripToUser("shaked4", ObjectId('6296391a2a9317f48543073f'))
+    # addTripToUser("shaked4", ObjectId('62963935ed1317e541f491be'))
     # addTripToUser("shaked4", ObjectId('6283b41a23876f4403012a2b'))
-    print(getTripsByusername("shaked4"))
-    removeTripfromUser("shaked4", ObjectId('62963935ed1317e541f491be'))
-    print(getTripsByusername("shaked4"))
+    # print(getTripsByusername("shaked4"))
+    # removeTripfromUser("shaked4", ObjectId('62963935ed1317e541f491be'))
+    # print(getTripsByusername("shaked4"))
 
     
 
