@@ -59,7 +59,7 @@
 .logout-div {
     display: flex;
     flex-direction: column;
-    font-size: min(5vh, 3vw);
+    font-size: min(4.2vh, 3vw);
     text-align: center;
 }
 

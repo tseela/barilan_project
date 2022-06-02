@@ -13,7 +13,7 @@
     text-align: center;
     margin-right: 3%;
     margin-bottom: 10%;
-    font-size: calc(20px + 2vmin);
+    font-size: calc(5vmin);
 }
 
 .header span {
@@ -23,7 +23,7 @@
 
 .text {
     margin-top: 10%;
-    font-size: calc(12px + 2vmin);;
+    font-size: calc(4vmin);;
 }
 
 .click {
@@ -31,5 +31,5 @@
 }
 
 .pic {
-    height: 80%;
+    height: min(80vh, 40vw);
 }
