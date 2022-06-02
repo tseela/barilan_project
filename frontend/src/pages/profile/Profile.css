@@ -1,13 +1,39 @@
-.profile {
+.profile-page {
     font-size: calc(10px + 2vmin);
     color: white;
     background-color: #252525;
     min-height: 100vh;
 }
 
-.body {
-    text-align: center;
+body {
+    display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: left;
+}
+
+.connect {
+    align-items: center;
+    text-align: center;
+}
+
+.profile {
+    text-align: auto;
+
+    margin-top: 5vh;
+    margin-left: 3vw;
+}
+
+.profile-username {
+    font-size: min(15vh, 8vw);
+    font-weight: bold;
+    margin-left: 5vw;
+}
+
+.profile-trips {
+    display: flex;
+    flex-direction: row;
+}
+
+.profile-trips ul {
+    list-style-type: none;
 }
