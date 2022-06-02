@@ -362,7 +362,7 @@ if __name__ == '__main__':
     addTripToUser("shaked4", ObjectId('6296391a2a9317f48543073f'))
     addTripToUser("shaked4", ObjectId('62963935ed1317e541f491be'))
     addTripToUser("shaked4", ObjectId('6283b41a23876f4403012a2b'))
-    # addTripToUser("shaked4", ObjectId('6283b41a23876f4403012a2b'))x
+    # addTripToUser("shaked4", ObjectId('6283b41a23876f4403012a2b'))
     print(getTripsByusername("shaked4"))
     removeTripfromUser("shaked4", ObjectId('62963935ed1317e541f491be'))
     print(getTripsByusername("shaked4"))
