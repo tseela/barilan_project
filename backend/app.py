@@ -229,9 +229,18 @@ def updateTrip(tripId, newTrip):
     return trips.find_one_and_update({'_id':tripId}, {'$set':newTrip.__dict__})
 
 
-@app.route('./getTripsByUser')
+@app.route('/getTripsByUser')
 def GetTripsByUser():
     return getTripsByusername(request.json['username'])
+
+app.route('/getTripsAndNamesByUser')
+def GetTripsAndNamesByUser():
+    tripsIDS = getTripsByusername(request.json['username'])
+    ret = []
+    for tripID in tripsIDS:
+        trip = getTrip(tripID)
+        ret.append({'tripID':tripID, 'tripName':trip.name})
+    return ret
 
 # @return trips objects
 def getTripsByusername(name):
@@ -398,6 +407,8 @@ if __name__ == '__main__':
     # print(getTripsByusername("shaked4"))
     # removeTripfromUser("shaked4", ObjectId('62963935ed1317e541f491be'))
     # print(getTripsByusername("shaked4"))
+    request.json['username'] = "shaked4"
+    print(GetTripsAndNamesByUser())
 
     
 
