@@ -13,6 +13,9 @@ export default function Forbidden() {
                         <br></br>
                         Maybe you got here by mistake? Try to <a href="/login">login</a> if you are not connected yet.
                     </div>
+                    <div className="more-text">
+                        If you are connected, know that you are getting this message because you are trying to view a trip of another user.
+                    </div>
                 </h1>
                 <img src={pic} className="pic" alt="404 not found" />
             </div>

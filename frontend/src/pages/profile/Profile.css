@@ -48,7 +48,7 @@ body {
 }
 
 .profile-trips a {
-    background-color: blue;
+    background-image: url(./planes.jpg);
 
     padding-left: min(10vw, 17vh);
     padding-right: min(10vw, 17vh);
@@ -58,5 +58,13 @@ body {
     border-radius: 50px;
     font-size: min(3.5vw, 5vh);
     text-decoration: none;
-    color: white;
+    color: rgb(185, 252, 255);
+    font-weight: bold;
+    -webkit-text-stroke: 2.3px black;
+}
+
+.profile-trips a:hover {
+    font-size: min(4vw, 6vh);
+    color: rgb(131, 249, 255);
+    -webkit-text-stroke: 3px black;
 }
