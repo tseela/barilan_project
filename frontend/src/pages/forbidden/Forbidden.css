@@ -29,11 +29,16 @@
 
 .text {
     margin-top: 10%;
-    font-size: calc(4vmin);;
+    font-size: calc(4vmin);
 }
 
 .click {
     font-size: large;
+}
+
+.more-text {
+    margin-top: 8%;
+    font-size: calc(2.5vmin);
 }
 
 .pic {
