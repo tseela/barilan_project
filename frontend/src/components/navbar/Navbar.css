@@ -13,7 +13,7 @@
     justify-content: center;
     align-items: center;
     margin-left: 5vw;
-    font-size: max(4vh, 3vw);
+    font-size: max(5vh, 3vw);
 }
 
 .logo-icon {
@@ -38,13 +38,13 @@
 }
   
 .nav-links li {
-    margin-left: 2vw;
     margin-right: 2vw;
+    margin-left: 2vw;
     list-style: none;
 }
   
 .nav-links a {
-    font-size: min(4vh, 2vw);
+    font-size: max(2.5vh, 1.7vw);
     font-weight: 300;
     color: black;
     text-decoration: none;
@@ -67,4 +67,8 @@
     font-size: min(calc(2vh + 3px), 2vw);
     font-weight: bold;
     color: darkblue;
+}
+
+#logout:hover {
+    color: blue;
 }

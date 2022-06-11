@@ -5,18 +5,10 @@
     max-height: fit-content;
 }
 
-body {
+.profile-body {
     display: flex;
     flex-direction: column;
     justify-content: left;
-}
-
-.connect {
-    align-items: center;
-    text-align: center;
-}
-
-.profile {
     text-align: auto;
 
     margin-top: 5vh;
