@@ -49,5 +49,24 @@ def signIn(username, password):
     return jsonify({'token' : token})
 
 
+@app.route('/gettrip')
+def getTrip(id):
+    # return the trip
+
+    return "trip"
+
+
+@app.route('/getusertrips', methods=['POST'])
+def getTripsByusername():
+    user = request.json['username']
+    print("\nRequested user trips: " + user)
+    trips = []
+    for i in range(1, 9):
+        trips.append({"id":i, "name":f'trip{i}'})
+    print(trips)
+
+    return jsonify(trips)
+
+
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

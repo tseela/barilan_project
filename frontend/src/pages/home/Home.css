@@ -1,5 +1,4 @@
 .home {
-    font-size: calc(10px + 2vmin);
     color: white;
     background-color: #252525;
     min-height: 100vh;
@@ -16,6 +15,7 @@
     margin-top: 8vh;
     margin-left: 12vw;
     margin-right: 12vw;
+    font-size: calc(10px + 2vmin);
 }
 
 .text-left {
