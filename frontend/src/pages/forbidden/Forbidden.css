@@ -1,0 +1,46 @@
+.page-forbidden {
+    background-color: white;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+}
+
+.body-forbidden {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 10vw;
+}
+
+.header {
+    font-weight: normal;
+    text-align: center;
+    margin-right: 3vw;
+    margin-bottom: 10%;
+    font-size: calc(5vmin);
+}
+
+.header span {
+    color: red;
+    font-weight: bold;
+}
+
+.text {
+    margin-top: 10%;
+    font-size: calc(4vmin);
+}
+
+.click {
+    font-size: large;
+}
+
+.more-text {
+    margin-top: 8%;
+    font-size: calc(2.5vmin);
+}
+
+.pic {
+    height: min(80vh, 40vw);
+}

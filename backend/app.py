@@ -1,6 +1,6 @@
 # from flask import Flask
 # import pymongo
-
+from typing import List
 from flask import Flask , request, jsonify,make_response, render_template, session
 import jwt
 from datetime import datetime, timedelta
@@ -50,16 +50,16 @@ def example():
 def token_required(func):
     @wraps(func)
     def decorated(*args, **kwargs):
-        token = request.args.get('token')
+        token = request.json['token']
         if not token:
             return jsonify({'Alert!' : 'Token is missing!'})
-        try :
-            payload = jwt.decode(token, app.config['SECRET_KEY'])
+        try:
+            payload = jwt.decode(token.json['secret'], app.config['SECRET_KEY'])
+            return func(*args, **kwargs)
         except:
             return jsonify({'Alert!' : 'Invalid Token!'})
-        
     return decorated
-            
+
 
 
 
@@ -117,20 +117,22 @@ def signIn(username, password):
 
     session['logged_in'] = True
 
-    token = jwt.encode({
+    token = {
         'user' : username,
-        'expiration' : str(datetime.utcnow() + timedelta(seconds=120))
-    },
-    app.config['SECRET_KEY'])
+        'secret' : jwt.encode({'pass' : password,
+                'expiration' : str(datetime.utcnow() + timedelta(seconds=120))}, app.config['SECRET_KEY'])
+    }
 
-    return jsonify({'token' : token.decode('utf-8')})
+    return jsonify({'token' : token})
 
 
-@app.route('/createtrip')
+@app.route('/createtrip', methods=['POST'])
+@token_required
 # @return tripID
 def createTrip():
     #this is from ron
     # trip = createTrip()
+    return jsonify({'hey':'hii'}), 200
 
     # trip = classes.Trip()
     trip = classes.Trip(1,2,3,4,5,6)
