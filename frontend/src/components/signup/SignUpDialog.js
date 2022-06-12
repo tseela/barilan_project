@@ -58,7 +58,7 @@ export default function SignUpDialog({ setToken }) {
         </label>
         <p></p>
         <label>
-          <input className='form' type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
+          <input className='form' type="password" placeholder="Password" maxlength="18" onChange={e => setPassword(e.target.value)} />
         </label>
         <br></br>
         <label>
