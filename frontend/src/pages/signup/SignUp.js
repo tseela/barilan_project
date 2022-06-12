@@ -1,8 +1,8 @@
-import './Login.css';
+import './SignUp.css';
 import { Navbar } from '../../components';
-import { LoginDialog } from '../../components';
+import { SignUpDialog } from '../../components';
 import { useToken } from '../../hooks';
-import { Navigate } from "react-router-dom";
+import { Navigate } from 'react-router-dom';
 
 export default function Login() {
     const { token, setToken } = useToken();
@@ -11,13 +11,13 @@ export default function Login() {
         return(<Navigate to="/home" />);
     }
 
-    return(
-        <main className='login'>
+    return (
+        <main className='signup'>
             <header className='navbar'>
                 <Navbar />
             </header>
-            <div className='login-dialog'>
-                <LoginDialog setToken={setToken} />
+            <div className='signup-dialog'>
+                <SignUpDialog setToken={setToken} />
             </div>
         </main>
     );
