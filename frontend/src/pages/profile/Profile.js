@@ -10,7 +10,7 @@ export default function Profile() {
 
     useEffect(() => {
         if (token) {
-            fetch('/getusertrips', {
+            fetch('/getTripsAndNamesByUser', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json'
