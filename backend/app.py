@@ -1,5 +1,6 @@
 # from flask import Flask
 # import pymongo
+# from crypt import methods
 from typing import List
 from flask import Flask , request, jsonify,make_response, render_template, session
 import jwt
@@ -52,12 +53,14 @@ def token_required(func):
     def decorated(*args, **kwargs):
         token = request.json['token']
         if not token:
-            return jsonify({'Alert!' : 'Token is missing!'})
+            return jsonify({'Alert!' : 'Token is missing!'}), 405
         try:
-            payload = jwt.decode(token.json['secret'], app.config['SECRET_KEY'])
+            payload = jwt.decode(token['secret'], app.config['SECRET_KEY'], algorithms="HS256")
+            if payload['user'] != token['user']:
+                raise Exception("Decoded username doesn't match the encoded one.")
             return func(*args, **kwargs)
-        except:
-            return jsonify({'Alert!' : 'Invalid Token!'})
+        except Exception as inst:
+            return jsonify({'Alert!' : 'Invalid Token!'}), 405
     return decorated
 
 
@@ -119,11 +122,11 @@ def signIn(username, password):
 
     token = {
         'user' : username,
-        'secret' : jwt.encode({'pass' : password,
-                'expiration' : str(datetime.utcnow() + timedelta(seconds=120))}, app.config['SECRET_KEY'])
+        'secret' : jwt.encode({'pass' : password, 'user' : username,
+                'expiration' : str(datetime.utcnow() + timedelta(seconds=120))}, app.config['SECRET_KEY'], algorithm="HS256")
     }
 
-    return jsonify({'token' : token})
+    return jsonify({'token' : token}), 200
 
 
 @app.route('/createtrip', methods=['POST'])
@@ -235,18 +238,19 @@ def updateTrip(tripId, newTrip):
 def GetTripsByUser():
     return getTripsByusername(request.json['username'])
 
-app.route('/getTripsAndNamesByUser')
-def GetTripsAndNamesByUser():
+@app.route('/getTripsAndNamesByUser', methods=['POST'])
+@token_required
+def getTripsAndNamesByUser():
     username = request.json['username']
     user = users.find_one({"username" : username})
 
     trips = []
     if (user['trips'] == None):
-        return trips
+        return jsonify([]), 200
 
     for trip in user['trips']:
         trips.append({'id':trip, 'name':getTrip(trip).name})
-    return trips
+    return jsonify(trips), 200
 
 # @return trips objects
 def getTripsByusername(name):
@@ -380,7 +384,7 @@ def printTripObject(tripID):
 
 
 if __name__ == '__main__':
-    # app.run(debug=True)
+    app.run(debug=True)
     # print(signUp("shaked", "moked"))
     # print(signIn("shaked", "moked"))
     # input()
@@ -414,8 +418,8 @@ if __name__ == '__main__':
     # removeTripfromUser("shaked4", ObjectId('62963935ed1317e541f491be'))
     # print(getTripsByusername("shaked4"))
     # request.json['username'] = "shaked4"s
-    print(GetTripsAndNamesByUser())
-    print(getTripsByusername("shaked4"))
+    # print(GetTripsAndNamesByUser())
+    # print(getTripsByusername("shaked4"))
 
     
 
