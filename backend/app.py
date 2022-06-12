@@ -237,12 +237,16 @@ def GetTripsByUser():
 
 app.route('/getTripsAndNamesByUser')
 def GetTripsAndNamesByUser():
-    tripsIDS = getTripsByusername(request.json['username'])
-    ret = []
-    for tripID in tripsIDS:
-        trip = getTrip(tripID)
-        ret.append({'tripID':tripID, 'tripName':trip.name})
-    return ret
+    username = request.json['username']
+    user = users.find_one({"username" : username})
+
+    trips = []
+    if (user['trips'] == None):
+        return trips
+
+    for trip in user['trips']:
+        trips.append({'id':trip, 'name':getTrip(trip).name})
+    return trips
 
 # @return trips objects
 def getTripsByusername(name):
@@ -385,11 +389,11 @@ if __name__ == '__main__':
     # print(signIn("shaked4", "moked"))
     # print(Trips())
 
-    myTrip = mockTrip()
-    myTrip2 = mockTrip()
+    # myTrip = mockTrip()
+    # myTrip2 = mockTrip()
 
 
-    tripID = insertTrip(myTrip2).inserted_id
+    # tripID = insertTrip(myTrip2).inserted_id
 
 
     # trip = trips.find_one({'_id':tripID})
@@ -398,7 +402,7 @@ if __name__ == '__main__':
     # trip = trips.find_one({'destination':'Israel'})
     # print(trip)
 
-    printTripObject(tripID)
+    # printTripObject(tripID)
 
 
     # # trip-user
@@ -409,8 +413,9 @@ if __name__ == '__main__':
     # print(getTripsByusername("shaked4"))
     # removeTripfromUser("shaked4", ObjectId('62963935ed1317e541f491be'))
     # print(getTripsByusername("shaked4"))
-    request.json['username'] = "shaked4"
+    # request.json['username'] = "shaked4"s
     print(GetTripsAndNamesByUser())
+    print(getTripsByusername("shaked4"))
 
     
 
