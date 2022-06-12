@@ -12,7 +12,7 @@ export default function Navbar() {
 
     var link = <a href="/login">Login</a>; //login
     if (token) { // logout // may need to change that one
-        link = <div className="logout-div">{token[0]?.user}
+        link = <div className="logout-div">{token.user}
         <a href="/login" id="logout" onClick={logout}>Logout</a>
         </div>;
     }

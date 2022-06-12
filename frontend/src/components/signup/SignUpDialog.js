@@ -10,10 +10,6 @@ async function signUser(credentials) {
     },
     body: JSON.stringify(credentials)
   });
-
-  if (res.status !== 200) {
-    return null;
-  }
   
   let ret = res.json();
   return ret;
@@ -37,16 +33,12 @@ export default function SignUpDialog({ setToken }) {
       return;
     }
 
-    const token = await signUser({
+    const res = await signUser({
       'username' : username,
       'password' : password,
     });
 
-    if (token) {
-      setToken(token);
-    } else {
-      alert("REGISTRATION FAILED: This username is taken. Choose a different one.");
-    }
+    alert(res?.message);
   }
 
   return(
@@ -54,11 +46,11 @@ export default function SignUpDialog({ setToken }) {
       <header className="headline" >Sign Up</header>
       <form onSubmit={handleSubmit}>
         <label>
-          <input className='form' type="text" placeholder="Username" maxlength="10" onChange={e => setUserName(e.target.value)} />
+          <input className='form' type="text" placeholder="Username" maxLength="10" onChange={e => setUserName(e.target.value)} />
         </label>
         <p></p>
         <label>
-          <input className='form' type="password" placeholder="Password" maxlength="18" onChange={e => setPassword(e.target.value)} />
+          <input className='form' type="password" placeholder="Password" maxLength="18" onChange={e => setPassword(e.target.value)} />
         </label>
         <br></br>
         <label>
