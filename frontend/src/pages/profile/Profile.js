@@ -15,7 +15,7 @@ export default function Profile() {
                 headers: {
                   'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({username: token[0].user})
+                body: JSON.stringify({username: token.user, token:token})
             }).then((res) => res.json()).then((res) => {
                 setTrips(res);
             });
@@ -39,7 +39,7 @@ export default function Profile() {
             </header>
             <div className='profile-body'>
                 <div className='profile-username'>
-                    {token[0]?.user}
+                    {token.user}
                 </div>
                 <div className='profile-trips'>
                     <ul className='trips-ul'>

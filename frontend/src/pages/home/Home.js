@@ -8,7 +8,7 @@ export default function Home() {
             <header className='navbar'>
                 <Navbar />
             </header>
-            <body className="page-body">
+            <div className="page-body">
                 <div className="page">
                     <div className="text-left">
                         The <span>BEST</span> way to plan your trip is here!
@@ -32,7 +32,7 @@ export default function Home() {
                         you can sign up any time
                     </div>
                 </div>
-            </body>
+            </div>
         </main>
     )
 }

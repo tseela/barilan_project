@@ -1,7 +1,5 @@
 # from flask import Flask
 # import pymongo
-from curses import cbreak
-from stat import FILE_ATTRIBUTE_SPARSE_FILE
 from typing import List
 from flask import Flask , request, jsonify,make_response, render_template, session
 import jwt
@@ -13,7 +11,6 @@ from flask_bcrypt import bcrypt
 # import sys
 import sys
 
-from sqlalchemy import false
 # from classes import Activity, Day
 # sys.path.append('../algo/libs/classes.py')
 import classes
@@ -53,16 +50,16 @@ def example():
 def token_required(func):
     @wraps(func)
     def decorated(*args, **kwargs):
-        token = request.args.get('token')
+        token = request.json['token']
         if not token:
             return jsonify({'Alert!' : 'Token is missing!'})
-        try :
-            payload = jwt.decode(token, app.config['SECRET_KEY'])
+        try:
+            payload = jwt.decode(token.json['secret'], app.config['SECRET_KEY'])
+            return func(*args, **kwargs)
         except:
             return jsonify({'Alert!' : 'Invalid Token!'})
-        
     return decorated
-            
+
 
 
 
@@ -121,21 +118,22 @@ def signIn(username, password):
 
     session['logged_in'] = True
 
-    token = jwt.encode({
+    token = {
         'user' : username,
-        'expiration' : str(datetime.utcnow() + timedelta(seconds=120))
-    },
-    app.config['SECRET_KEY'])
+        'secret' : jwt.encode({'pass' : password,
+                'expiration' : str(datetime.utcnow() + timedelta(seconds=120))}, app.config['SECRET_KEY'])
+    }
 
-    return jsonify({'token' : token.decode('utf-8')})
+    return jsonify({'token' : token})
 
 
-# @app.route('/createtrip')
-# @token_required
+@app.route('/createtrip', methods=['POST'])
+@token_required
 # @return tripID
 def createTrip():
     #this is from ron
     # trip = createTrip()
+    return jsonify({'hey':'hii'}), 200
 
     # trip = classes.Trip()
     trip = classes.Trip(1,2,3,4,5,6)
@@ -178,8 +176,8 @@ def insertDay(day):
     return days.insert_one(day).inserted_id
 
 
-# @app.route('/gettrip')
-# @token_required
+@app.route('/gettrip', methods=['POST'])
+@token_required
 # @return trip object
 def getTrip(id):
     trip = trips.find_one({'_id':id})
@@ -221,6 +219,8 @@ def getDay(dayID):
     return day
 
 
+@app.route("/getusertrips", methods=['POST'])
+@token_required
 # @return trips objects
 def getTripsByusername(name):
     user = users.find_one({"username" : name})
@@ -307,7 +307,7 @@ def createTripAndAdd(name):
 
 
 if __name__ == '__main__':
-    # app.run(debug=True)
+    app.run(debug=True)
     # print(signUp("shaked", "moked"))
     # print(signIn("shaked", "moked"))
     # input()
@@ -315,57 +315,6 @@ if __name__ == '__main__':
     # print(signUp("shaked4", "moked"))
     # print(signIn("shaked4", "moked"))
     # print(Trips())
-
-    activity1 = classes.Activity(2, 2000, datetime.now(), datetime.now(), "first activity", "location1", "image1", False)
-    activity2 = classes.Activity(2, 2000, datetime.now(), datetime.now(), "second activity", "location2", "image2", False)
-    myActivities = [activity1, activity2]
-
-    myTransformation = classes.Transport(0.5, 7, datetime.now(),datetime.now(), "1->2", "location 1.5", "image 1.5", False, "first activity", 1, "second activity")
-    
-    myPlace = classes.PlaceOfStay(1, 500, datetime.now(), datetime.now(), "hotel", "location sleep", "image sleep", True, "Israel")
-
-    day1 = classes.Day(myActivities, [myTransformation], 4507, datetime.now(),datetime.now(),4.5, myPlace)
-    day2 = classes.Day(myActivities, [myTransformation], 4507, datetime.now(),datetime.now(),4.5, myPlace)
-    day3 = classes.Day(myActivities, [myTransformation], 4507, datetime.now(),datetime.now(),4.5, myPlace)
-    
-    myDays = [day1, day2, day3]
-
-    myTrip = classes.Trip("Israel", 3, datetime.now(), datetime.now(), myDays, 3*4507, 1234)
-    myTrip2 = classes.Trip("Israel", 3, datetime.now(), datetime.now(), myDays, 3*4507, 1234)
-
-
-    # tripID = insertTrip(myTrip2).inserted_id
-
-
-    # trip = trips.find_one({'_id':tripID})
-    # trip = trips.find_one({'_id':ObjectId('6283b41a23876f4403012a2b')})
-    # print(trip)
-    # trip = trips.find_one({'destination':'Israel'})
-    # print(trip)
-
-    # trip = getTrip(ObjectId('6283b41a23876f4403012a2b'))
-    # print(trip.__dict__)
-    # print()
-    # print()
-    # for day in trip.days:
-    #     print(day.__dict__)
-    #     print()
-    #     for act in day.activities:
-    #         print(act.__dict__)
-    #     print()
-    #     for trans in day.transportation:
-    #         print(trans.__dict__)
-    #     print()
-    #     print(day.placeOfStay.__dict__)
-
-    print(getTripsByusername("shaked4"))
-    addTripToUser("shaked4", ObjectId('6296391a2a9317f48543073f'))
-    addTripToUser("shaked4", ObjectId('62963935ed1317e541f491be'))
-    addTripToUser("shaked4", ObjectId('6283b41a23876f4403012a2b'))
-    # addTripToUser("shaked4", ObjectId('6283b41a23876f4403012a2b'))
-    print(getTripsByusername("shaked4"))
-    removeTripfromUser("shaked4", ObjectId('62963935ed1317e541f491be'))
-    print(getTripsByusername("shaked4"))
 
     
 
