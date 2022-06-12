@@ -48,11 +48,11 @@ export default function LoginDialog({ setToken }) {
       <header className="headline" >Log In</header>
       <form onSubmit={handleSubmit}>
         <label>
-          <input className='form' type="text" placeholder="Username" onChange={e => setUserName(e.target.value)} />
+          <input className='form' type="text" placeholder="Username" maxlength="10" onChange={e => setUserName(e.target.value)} />
         </label>
         <p></p>
         <label>
-          <input className='form' type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
+          <input className='form' type="password" placeholder="Password" maxlength="18" onChange={e => setPassword(e.target.value)} />
         </label>
         <div className='login-btn-div'>
           <button className='login-btn' type="submit">Login</button>
