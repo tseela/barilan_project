@@ -50,7 +50,6 @@ def signIn(username, password):
 
 
 @app.route('/getTrip')
-@token_required
 def getTrip():
     id = request.json('tripID');
 
