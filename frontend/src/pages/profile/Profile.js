@@ -9,7 +9,9 @@ export default function Profile() {
     const [ trips, setTrips ] = useState([]);
 
     useEffect(() => {
+        // if user connected
         if (token) {
+            // get name&id of user's trips
             fetch('/getTripsAndNamesByUser', {
                 method: 'POST',
                 headers: {
@@ -17,13 +19,12 @@ export default function Profile() {
                 },
                 body: JSON.stringify({username: token.user, token:token})
             }).then((res) => res.json()).then((res) => {
-                setTrips(res);
+                setTrips(res); // update trips
             });
-        } else {
-            setTrips([]);
         }
     }, [token]);
 
+    // don't allow when user isn't connected
     if (!token) {
         alert("You need to log in first.");
         return(

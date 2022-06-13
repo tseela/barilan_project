@@ -1,6 +1,7 @@
 import './Loading.css';
 import pic from './plane_loading.gif';
 
+// show user we are loading data
 export default function Loading() {
     return(
     <div className="loading">

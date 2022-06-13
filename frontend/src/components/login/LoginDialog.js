@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './LoginDialog.css';
 
+// get login token from backend server
 async function loginUser(credentials) {
   let res = await fetch('/signin', {
     method: 'POST',
@@ -19,6 +20,7 @@ async function loginUser(credentials) {
   return ret;
 }
 
+// setToken- func to set parent token(which should be updated in session storage too)
 export default function LoginDialog({ setToken }) {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();

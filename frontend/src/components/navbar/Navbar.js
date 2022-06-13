@@ -3,6 +3,7 @@ import './Navbar.css';
 import { ImAirplane } from 'react-icons/im';
 import { useToken } from '../../hooks';
 
+// app navbar
 export default function Navbar() {
     const { token, setToken } = useToken();
 
@@ -10,11 +11,15 @@ export default function Navbar() {
         setToken(null);
     }
 
+    // last link in navbar will be login/logout depends of token state
+    // profile link won't be pressable if user is not connected
     var link = <a href="/login">Login</a>; //login
-    if (token) { // logout // may need to change that one
+    var profile = <div className="profile-div">My Profile</div> // not pressable
+    if (token) { // user connected
         link = <div className="logout-div">{token.user}
         <a href="/login" id="logout" onClick={logout}>Logout</a>
-        </div>;
+        </div>; // logout
+        profile = <a href="/profile">My Profile</a>; // pressable
     }
 
     return (
@@ -34,7 +39,7 @@ export default function Navbar() {
                     <a href="/trip_planning">Trip Planning</a>
                 </li>
                 <li>
-                    <a href="/profile">My Profile</a>
+                    {profile}
                 </li>
                 <li className="login-link">
                     {link}

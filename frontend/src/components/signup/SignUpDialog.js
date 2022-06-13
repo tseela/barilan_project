@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './SignUpDialog.css';
 
+// request server to sign up user
 async function signUser(credentials) {
   let res = await fetch('/signup', {
     method: 'POST',
@@ -15,7 +16,7 @@ async function signUser(credentials) {
   return ret;
 }
 
-export default function SignUpDialog({ setToken }) {
+export default function SignUpDialog() {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
   const [confirm_password, setConfirmPassword] = useState();
@@ -38,7 +39,7 @@ export default function SignUpDialog({ setToken }) {
       'password' : password,
     });
 
-    alert(res?.message);
+    alert(res?.message); // alert user about registration state
   }
 
   return(
