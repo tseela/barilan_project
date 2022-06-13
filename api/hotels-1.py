@@ -40,7 +40,8 @@ def getHotels(city, adult):
 
         return offers
     except ResponseError as error:
-        raise error
+        # raise error
+        return []
 
 
 
@@ -67,7 +68,8 @@ def getActivities(latitude, longitude, radius):
         # print(response.data)
         return activities
     except ResponseError as error:
-        raise error
+        # raise error
+        return []
 
 
 # maybe use to get another activities
