@@ -1,10 +1,7 @@
 # test server to use as backend for fronntend testings
 
-from flask import Flask , request, jsonify,make_response, render_template
-import jwt
-from datetime import datetime, timedelta
-
-from backend.app import token_required
+from flask import Flask , request, jsonify,make_response
+from datetime import datetime
 
 # server
 app = Flask(__name__)

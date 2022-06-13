@@ -1,0 +1,15 @@
+.loading-container {
+    color: white;
+    background-color: #252525;
+    min-height: 100vh;
+    max-height: fit-content;
+}
+
+.loading-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: left;
+    margin-top: 12vh;
+    font-size: calc(10px + 2vmin);
+}
