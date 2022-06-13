@@ -8,7 +8,7 @@ export default function Forbidden() {
                 <h1 className="header">
                     <span>403</span> Forbidden!
                     <br></br>
-                    <div className="text">
+                    <div className="text-forbidden">
                         Well... It appears that someone is on the naughty list this year...
                         <br></br>
                         Maybe you got here by mistake? Try to <a href="/login">login</a> if you are not connected yet.
