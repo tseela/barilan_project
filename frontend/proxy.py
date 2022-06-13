@@ -1,7 +1,8 @@
 # test server to use as backend for fronntend testings
-
+from __future__ import print_function
 from flask import Flask , request, jsonify,make_response
 from datetime import datetime
+import sys
 
 # server
 app = Flask(__name__)
@@ -46,9 +47,9 @@ def signIn(username, password):
     return jsonify({'token' : token})
 
 
-@app.route('/getTrip')
+@app.route('/getTrip', methods=['POST'])
 def getTrip():
-    id = request.json('tripID');
+    id = request.json['tripID'];
 
     return jsonify({
         'id' : id,

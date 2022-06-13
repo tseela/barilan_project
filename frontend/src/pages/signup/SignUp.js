@@ -7,6 +7,7 @@ import { Navigate } from 'react-router-dom';
 export default function Login() {
     const { token, setToken } = useToken();
 
+    // don't allow if user is allready connected
     if (token) {
         return(<Navigate to="/home" />);
     }
@@ -17,7 +18,7 @@ export default function Login() {
                 <Navbar />
             </header>
             <div className='signup-dialog'>
-                <SignUpDialog setToken={setToken} />
+                <SignUpDialog setToken />
             </div>
         </main>
     );

@@ -5,6 +5,13 @@
     max-height: fit-content;
 }
 
+.viewtrip {
+    color: white;
+    background-color: #252525;
+    min-height: 100vh;
+    max-height: fit-content;
+}
+
 .loading-div {
     display: flex;
     flex-direction: column;
