@@ -90,7 +90,7 @@ def getTrip():
             'activities' : [{
                 'cost' : 250,
                 'duration' : 2,
-                'orderInAdvance' : False,
+                'orderInAdvance' : True,
                 'googleMapsImageLink' : ['https://upload.wikimedia.org/wikipedia/commons/1/19/TelAM.jpg'],
                 'googleMapsLink' : ['https://www.google.co.il/maps/place/%D7%9E%D7%95%D7%96%D7%99%D7%90%D7%95%D7%9F+%D7%AA%D7%9C+%D7%90%D7%91%D7%99%D7%91+%D7%9C%D7%90%D7%9E%D7%A0%D7%95%D7%AA%E2%80%AD/@32.0771846,34.7906177,17z/data=!3m1!4b1!4m5!3m4!1s0x151d4b9b02453fa7:0xf74ba430787ab813!8m2!3d32.0771761!4d34.7861374?hl=iw'],
                 'title' : 'act1',

@@ -1,0 +1,56 @@
+.displayactivity-container {
+    color: black;
+    background-color: bisque;
+    height: fit-content;
+    border-style: solid;
+    border-width: 0.2vmin;
+    border-radius: 0.5vmin;
+    border-color: gray;
+}
+
+.act-row {
+    display: flex;
+    flex-direction: row;
+    margin-left: 0.5vw;
+    margin-right: 0.5vw;
+}
+
+.act-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.act-title {
+    font-size: 5vh;
+    font-weight: bold;
+}
+
+.act-pic {
+    font-size: 3vh;
+    margin-left: 1vw;
+    color: darkblue;
+}
+
+.time {
+    font-size: 2vh;
+}
+
+.cost {
+    font-size: 2vh;
+}
+
+.total {
+    margin-left: 3vw;
+}
+
+.total span {
+    font-size: 1.5vh;
+}
+
+.dash {
+    margin-left: 20vw;
+}
+
+.order {
+    font-size: 1.7vh;
+}
