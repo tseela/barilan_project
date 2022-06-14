@@ -1,0 +1,32 @@
+.displaytrip-container {
+    color: white;
+    background-color: #252525;
+}
+
+.activities-display {
+    display: flex;
+    text-align: left;
+    flex-direction: column;
+    align-items: center;
+    font-size: calc(10px + 2vmin);
+    width: fit-content;
+    height: 85vh;
+    overflow: auto;
+    border: 0.3vmin;
+    border-color: white;
+    border-style: solid;
+    border-radius: 0.7vmin;
+}
+
+.day {
+    background-color: lightblue;
+    color: black;
+    font-size: max(2vw, 4vh);
+    font-weight: bold;
+    width: 100%;
+    text-align: center;
+    border-style: solid;
+    border-width: 0.2vmin;
+    border-radius: 0.5vmin;
+    border-color: gray;
+}

@@ -2,7 +2,7 @@ import './ViewTrip.css';
 import { useToken } from '../../hooks';
 import { Forbidden } from '../index';
 import { useState, useEffect } from 'react';
-import { Loading, Navbar } from '../../components';
+import { Loading, Navbar, DisplayTrip } from '../../components';
 
 export default function ViewTrip() {
     const { token, setToken } = useToken();
@@ -59,7 +59,7 @@ export default function ViewTrip() {
     // else, everything is ok and we are ready to display the trip
     return(
         <div className='viewtrip'>
-            {JSON.stringify(trip, undefined, 1)}
+            <DisplayTrip trip={trip} setTrip={setTrip} />
         </div>
     )
 }
