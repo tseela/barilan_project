@@ -14,6 +14,9 @@ def getTransport(latitude1, longitude1, latitude2, longitude2):
     response = requests.get(url)
     trans = ast.literal_eval(response.text)
 
+    if len(trans["routes"]) == 0:
+        return []
+
     way = trans["routes"][0]
 
     sections = way["sections"]
@@ -40,6 +43,10 @@ def createTransportation(section):
         mode = section["transport"]["mode"]
         if mode == "bus":
             transType = classes.Transportation.BUS
+        elif mode == "regionalTrain":
+            transType = classes.Transportation.TRAIN
+        elif mode == "subway":
+            transType = classes.Transportation.RAM
 
 
     startTime = section["departure"]["time"].split("+")[0]
