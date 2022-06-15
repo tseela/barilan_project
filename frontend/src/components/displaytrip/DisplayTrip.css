@@ -1,9 +1,18 @@
 .displaytrip-container {
     color: white;
     background-color: #252525;
+    position: relative;
+    left: 0;
+    top: 0;
+}
+
+.reg-page-container {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    position: relative;
+    left: 0;
+    top: 0;
 }
 
 .activities-display {
@@ -36,4 +45,60 @@
 .row-dash {
     margin-left: 0.5vw;
     margin-right: 0.5vw;
+}
+
+.displayImages {
+    position: absolute;
+}
+
+.left-button {
+    position: absolute;
+    top: 45%;
+    left: 20%;
+    font-size: 3vw;
+    font-weight: bold;
+    background-color: gray;
+    color: white;
+}
+
+.left-button:hover {
+    background-color: #252525;
+}
+
+.image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50vw;
+    height: auto;
+    transform: translate(-50%, -50%);
+}
+
+.right-button {
+    position: absolute;
+    top: 45%;
+    left: 77%;
+    font-size: 3vw;
+    font-weight: bold;
+    background-color: gray;
+    color: white;
+}
+
+.right-button:hover {
+    background-color: #252525;
+}
+
+.close-button {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    font-size: 3vw;
+    font-weight: bold;
+    background-color: gray;
+    color: white;
+    transform: translate(-50%, 0%);
+}
+
+.close-button:hover {
+    background-color: #252525;
 }

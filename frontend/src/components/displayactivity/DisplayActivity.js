@@ -12,12 +12,8 @@ function getHour(date) {
 }
 
 // display one activity
-export default function DisplayActivity({ activity, notifyPressed }) {
+export default function DisplayActivity({ activity, iconPressed, notifyPressed }) {
     if (!activity) {
-        return;
-    }
-
-    function iconPressed() {
         return;
     }
 
@@ -27,7 +23,7 @@ export default function DisplayActivity({ activity, notifyPressed }) {
             <div className='act-row row-dash'>
                 <div className='act-title'>
                     {activity?.title}
-                    <div className='act-pic' onClick={iconPressed} color='blue'><FaAvianex /></div>
+                    <div className='act-pic' onClick={() => iconPressed(activity?.googleMapsImageLink)} color='blue'><FaAvianex /></div>
                 </div>
             </div>
             <div className='act-row row-dash'>
@@ -55,5 +51,6 @@ export default function DisplayActivity({ activity, notifyPressed }) {
 
 DisplayActivity.propTypes = {
     activity: PropTypes.object,
+    iconPressed: PropTypes.func,
     notifyPressed: PropTypes.func
 }
