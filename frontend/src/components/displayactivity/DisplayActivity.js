@@ -13,26 +13,33 @@ function getHour(date) {
 
 // display one activity
 export default function DisplayActivity({ activity, iconPressed }) {
+    if (!activity) {
+        return;
+    }
     return(
     <div className="displayactivity-container">
         <div className='act-col'>
-            <div className='act-row'>
-                <div className='act-title'>{activity?.title}</div>
-                <div className='act-pic' onClick={iconPressed} color='blue'><FaAvianex /></div>
+            <div className='act-row row-dash'>
+                <div className='act-title'>
+                    {activity?.title}
+                    <div className='act-pic' onClick={iconPressed} color='blue'><FaAvianex /></div>
+                </div>
             </div>
-            <div className='act-row'>
-                <div className='time line'>
-                    {getHour(activity?.timeStart)}{' => '}{getHour(activity?.timeEnd)}
+            <div className='act-row row-dash'>
+                <div className='act-row'>
+                    <div className='act-time line'>
+                        {getHour(activity?.timeStart)}{' => '}{getHour(activity?.timeEnd)}
+                    </div>
+                    <div className='act-total act-time'>
+                        total: {activity?.duration}<span>hr</span>
+                    </div>
                 </div>
-                <div className='total time'>
-                    total: {activity?.duration}<span>hr</span>
-                </div>
-                <div className='cost dash'>
+                <div className='act-cost'>
                     cost: {activity?.cost}$
                 </div>
             </div>
-            <div className='act-row'>
-                <div className='order'>
+            <div className='act-row row-dash'>
+                <div className='act-order'>
                     {activity?.orderInAdvance ? '*need to order reservation':''}
                 </div>
             </div>
@@ -42,6 +49,6 @@ export default function DisplayActivity({ activity, iconPressed }) {
 }
 
 DisplayActivity.propTypes = {
-    activity: PropTypes.object.isRequired,
-    iconPressed: PropTypes.func.isRequired
+    activity: PropTypes.object,
+    iconPressed: PropTypes.func
 }

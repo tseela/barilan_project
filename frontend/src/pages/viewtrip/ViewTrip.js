@@ -59,7 +59,10 @@ export default function ViewTrip() {
     // else, everything is ok and we are ready to display the trip
     return(
         <div className='viewtrip'>
-            <DisplayTrip trip={trip} setTrip={setTrip} />
+            <Navbar />
+            <div className='displaytrip'>
+                <DisplayTrip trip={trip} setTrip={setTrip} />
+            </div>
         </div>
     )
 }

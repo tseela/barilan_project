@@ -2,6 +2,7 @@
     color: black;
     background-color: bisque;
     height: fit-content;
+    min-width: 100%;
     border-style: solid;
     border-width: 0.2vmin;
     border-radius: 0.5vmin;
@@ -11,8 +12,9 @@
 .act-row {
     display: flex;
     flex-direction: row;
-    margin-left: 0.5vw;
-    margin-right: 0.5vw;
+    align-items: center;
+
+    justify-content: space-between;
 }
 
 .act-col {
@@ -21,36 +23,37 @@
 }
 
 .act-title {
-    font-size: 5vh;
+    font-size: 2.5vh;
     font-weight: bold;
+
+    display: flex;
+    flex-direction: row;
 }
 
 .act-pic {
-    font-size: 3vh;
+    font-size: 2vh;
     margin-left: 1vw;
     color: darkblue;
 }
 
-.time {
-    font-size: 2vh;
+.act-time {
+    font-size: 1.7vh;
 }
 
-.cost {
-    font-size: 2vh;
+.act-cost {
+    font-size: 1.7vh;
+    margin-right: 1vw;
 }
 
-.total {
+.act-total {
     margin-left: 3vw;
 }
 
-.total span {
+.act-total span {
     font-size: 1.5vh;
 }
 
-.dash {
-    margin-left: 20vw;
-}
-
-.order {
-    font-size: 1.7vh;
+.act-order {
+    font-size: 1.4vh;
+    font-weight: bold;
 }
