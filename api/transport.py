@@ -70,6 +70,19 @@ def createTransportation(section):
 
 
 
+def getNZfromCity(city):
+    url = "http://api.positionstack.com/v1/forward?access_key=e40fa43000e24098607004614faabc0f&query=" + city
+    response = requests.get(url)
+
+
+    response = json.loads(response.text)
+     
+    latitude = float(response["data"][0]["latitude"])
+    longitude = float(response["data"][0]["longitude"])
+
+    return latitude, longitude
+    
+
 
 
 # url = "https://transit.router.hereapi.com/v8/routes?apiKey=pGwbEV9EnOVSNh94i8prG-B4oBd8RSO8bP6lk_u6NXI&origin=41.79457,12.25473&destination=41.90096,12.50243"
@@ -86,9 +99,14 @@ def createTransportation(section):
 # print(json.dumps(d, sort_keys=False, indent=4))
 # print(response.__dict__)
 
-tr = getTransport(32.0845191,34.8037962,32.0791345,34.7924341)
-print(tr)
-for t in tr:
-    for a in t.__dict__:
-        print(t.__dict__[a])
+# tr = getTransport(32.0845191,34.8037962,32.0791345,34.7924341)
+# print(tr)
+# for t in tr:
+#     for a in t.__dict__:
+#         print(t.__dict__[a])
     # print(json.dumps(t.__dict__, sort_keys=False, indent=4))
+
+print(getNZfromCity("Tel Aviv"))
+print(getNZfromCity("meskin 21, petah tikva"))
+print(getNZfromCity("rishon le zion"))
+print(getNZfromCity("gadera"))

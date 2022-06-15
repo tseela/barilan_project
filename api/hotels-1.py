@@ -10,9 +10,9 @@ import json
 
 import sys
 import os
-print('/'.join(os.getcwd().split('/')[:-1]))
-sys.path.append('/'.join(os.getcwd().split('/')[:-1]))
-from algo.libs.classes import *
+# print('/'.join(os.getcwd().split('/')[:-1]))
+# sys.path.append('/'.join(os.getcwd().split('/')[:-1]))
+# from algo.libs.classes import *
 
 
 
@@ -26,8 +26,8 @@ def getHotels(city, adult):
         offers = []
         for hotel in hotels_by_city.data:
             url = hotel["hotel"]["media"][0]['uri']
-
-            price = hotel["offers"][0]["price"]["base"]
+            # print(hotel["offers"][0]["price"])
+            price = hotel["offers"][0]["price"]["total"]
             price = float(price)
 
             checkIn = hotel["offers"][0]["checkInDate"]
@@ -42,6 +42,8 @@ def getHotels(city, adult):
     except ResponseError as error:
         # raise error
         return []
+    except:
+        return offers
 
 
 
@@ -70,6 +72,60 @@ def getActivities(latitude, longitude, radius):
     except ResponseError as error:
         # raise error
         return []
+    except:
+        return activities
+
+
+def getHotelsByGeocode(latitude, longitude):
+    try:
+        # Get list of Hotels by city code
+        hotels_by_city = amadeus.reference_data.locations.hotels.by_geocode.get(longitude=longitude,latitude=latitude)
+        # print(hotels_by_city.data)
+        offers = []
+        for hotelID in hotels_by_city.data:
+            # print(hotelID)
+            id = hotelID["hotelId"]
+
+            hotel = getHotelByID(id)
+
+            if (type(hotel) is list):
+                continue
+
+            url = hotel["hotel"]["media"][0]['uri']
+            # print(hotel["offers"][0]["price"])
+            price = hotel["offers"][0]["price"]["total"]
+            price = float(price)
+
+            checkIn = hotel["offers"][0]["checkInDate"]
+            checkOut = hotel["offers"][0]["checkOutDate"]
+
+            title = hotel["hotel"]["name"]
+
+            city = str(latitude) + "," + str(longitude)
+            hotel = classes.PlaceOfStay(None, price, checkIn, checkOut, title, url, None, True, city)
+            # print (hotel.__dict__)
+            offers.append(hotel)
+
+        return offers
+    except ResponseError as error:
+        # raise error
+        return []
+    except:
+        return offers
+
+
+def getHotelByID(hotelID):
+    try:
+        # Get list of Hotels by city code
+        hotel = amadeus.shopping.hotel_offers.get(hotelIds=hotelID)
+
+        if (type(hotel.data) is list and len(hotel.data) > 0):
+            return hotel.data[0]
+
+        return hotel.data
+    except ResponseError as error:
+        # raise error
+        return []
 
 
 # maybe use to get another activities
@@ -90,9 +146,18 @@ if __name__ == '__main__':
         client_secret='rKvILHDsjxcCh6yq'
     )
     # hotels = getHotels('TLV',2)
+    # print(hotels)
+
 
     # res = getActivities(32.079664, 34.767410, 0)
     # print(res)
     # print(res[0])
     # print(res[0]['price'])
+
+
+    # x = getHotelByID('BWTLV023')
+    # print(x)
+
+    hotels = getHotelsByGeocode(40.418612, -3.711334)
+    print(hotels)
 
