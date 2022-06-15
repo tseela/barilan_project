@@ -43,6 +43,7 @@
 .act-cost {
     font-size: 1.7vh;
     margin-right: 1vw;
+    font-weight: bold;
 }
 
 .act-total {

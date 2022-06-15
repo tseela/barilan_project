@@ -12,12 +12,17 @@ function getHour(date) {
 }
 
 // display one activity
-export default function DisplayActivity({ activity, iconPressed }) {
+export default function DisplayActivity({ activity, notifyPressed }) {
     if (!activity) {
         return;
     }
+
+    function iconPressed() {
+        return;
+    }
+
     return(
-    <div className="displayactivity-container">
+    <div className="displayactivity-container" onClick={() => notifyPressed(activity?.title, activity?.googleMapsLink)}>
         <div className='act-col'>
             <div className='act-row row-dash'>
                 <div className='act-title'>
@@ -50,5 +55,5 @@ export default function DisplayActivity({ activity, iconPressed }) {
 
 DisplayActivity.propTypes = {
     activity: PropTypes.object,
-    iconPressed: PropTypes.func
+    notifyPressed: PropTypes.func
 }

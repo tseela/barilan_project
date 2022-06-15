@@ -41,8 +41,9 @@
 }
 
 .trns-cost {
-    font-size: 1.5vh;
+    font-size: 1.7vh;
     margin-right: 1vw;
+    font-weight: bold;
 }
 
 .trns-total {

@@ -25,3 +25,8 @@
     margin-top: 5vh;
     margin-left: 5vw;
 }
+
+.display {
+    display: flex;
+    flex-direction: row;
+}

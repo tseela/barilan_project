@@ -8,6 +8,7 @@ export default function ViewTrip() {
     const { token, setToken } = useToken();
     const [ trip, setTrip ] = useState(null);
     const [ status, setStatus ] = useState(true); // true->all good, false->forbidden access
+
     const id = window.location.pathname;
 
     useEffect(() => {
@@ -60,8 +61,10 @@ export default function ViewTrip() {
     return(
         <div className='viewtrip'>
             <Navbar />
-            <div className='displaytrip'>
-                <DisplayTrip trip={trip} setTrip={setTrip} />
+            <div className='display'>
+                <div className='displaytrip'>
+                    <DisplayTrip trip={trip} setEditedTrip={setTrip} />
+                </div>
             </div>
         </div>
     )
