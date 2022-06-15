@@ -158,6 +158,6 @@ if __name__ == '__main__':
     # x = getHotelByID('BWTLV023')
     # print(x)
 
-    hotels = getHotelsByGeocode(40.418612, -3.711334)
+    hotels = getHotelsByGeocode(32.079664, 34.767410)
     print(hotels)
 

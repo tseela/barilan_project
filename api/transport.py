@@ -31,11 +31,15 @@ def getTransport(latitude1, longitude1, latitude2, longitude2):
         
 
 def createTransportation(section):
+    # print(section)
     mode = section["type"]
 
     cost = None
     transType = classes.Transportation.NONE
     order = False
+
+    baseStation = ""
+    arrivalStation = ""
     if mode == "pedestrian":
         cost = 0
 
@@ -48,6 +52,10 @@ def createTransportation(section):
         elif mode == "subway":
             transType = classes.Transportation.RAM
 
+        baseStation = section["departure"]["place"]["name"]
+        arrivalStation = section["arrival"]["place"]["name"]
+
+    # print(baseStation, arrivalStation)
 
     startTime = section["departure"]["time"].split("+")[0]
     startTime = datetime.strptime(startTime, '%Y-%m-%dT%H:%M:%S')
@@ -109,4 +117,8 @@ def getNZfromCity(city):
 print(getNZfromCity("Tel Aviv"))
 print(getNZfromCity("meskin 21, petah tikva"))
 print(getNZfromCity("rishon le zion"))
-print(getNZfromCity("gadera"))
+print(getNZfromCity("oxford 56, london"))
+
+tel = getNZfromCity("Tel Aviv")
+haifa = getNZfromCity("haifa")
+getTransport(tel[0], tel[1], haifa[0], haifa[1])
