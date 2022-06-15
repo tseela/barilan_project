@@ -29,11 +29,11 @@ export default function DisplayDay({ day, index, iconPressed, notifyPressed, can
     transport.push([]); // to make length equal to avtivities
     let trans_html = []; // each cell is a display transportation element
     transport.map((trans, i) => {
-        trans_html[i] = trans.map((tran, j) => { return <DisplayTransport key={i.toString() + ',' + j.toString()} transport={tran} notifyPressed={notifyPressed} />});
+        trans_html[i] = trans.map((tran, j) => { return <DisplayTransport key={i.toString() + ',' + j.toString()} transport={tran} iconPressed={iconPressed} notifyPressed={notifyPressed} />});
     });
 
     let act_html = []; // each cell is a display activity element
-    activities.map((act, i) => { act_html[i] = <DisplayActivity key={i} activity={act} notifyPressed={notifyPressed} /> });
+    activities.map((act, i) => { act_html[i] = <DisplayActivity key={i} activity={act} iconPressed={iconPressed} notifyPressed={notifyPressed} /> });
 
     let act_trans_joined = [];  // each cell is a display element (ordered)
     for (let i = 0; i < activities.length; ++i) {
@@ -57,7 +57,7 @@ export default function DisplayDay({ day, index, iconPressed, notifyPressed, can
             <div className='pos-row row-dash'>
                 <div className='pos-row'>
                     <div className='pos-title'>{pos?.title}</div>
-                    <div className='pos-pic' onClick={iconPressed} color='blue'><FaAvianex /></div>
+                    <div className='pos-pic' onClick={() => iconPressed(pos?.googleMapsImageLink)} color='blue'><FaAvianex /></div>
                 </div>
                 <div className='pos-cost day-dash'>
                     cost: {pos?.cost}$
