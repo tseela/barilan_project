@@ -19,7 +19,7 @@ import { FaAvianex } from 'react-icons/fa';
                 'title' : 'DAN Hotel'
             }
  */
-export default function DisplayDay({ day, index, iconPressed, canSort, setEditedTrip }) {
+export default function DisplayDay({ day, index, iconPressed, notifyPressed, canSort, setEditedTrip }) {
     if (!day) {
         return;
     }
@@ -29,11 +29,11 @@ export default function DisplayDay({ day, index, iconPressed, canSort, setEdited
     transport.push([]); // to make length equal to avtivities
     let trans_html = []; // each cell is a display transportation element
     transport.map((trans, i) => {
-        trans_html[i] = trans.map((tran, j) => { return <DisplayTransport key={i.toString() + ',' + j.toString()} transport={tran} />});
+        trans_html[i] = trans.map((tran, j) => { return <DisplayTransport key={i.toString() + ',' + j.toString()} transport={tran} notifyPressed={notifyPressed} />});
     });
 
     let act_html = []; // each cell is a display activity element
-    activities.map((act, i) => { act_html[i] = <DisplayActivity key={i} activity={act} /> });
+    activities.map((act, i) => { act_html[i] = <DisplayActivity key={i} activity={act} notifyPressed={notifyPressed} /> });
 
     let act_trans_joined = [];  // each cell is a display element (ordered)
     for (let i = 0; i < activities.length; ++i) {
@@ -53,7 +53,7 @@ export default function DisplayDay({ day, index, iconPressed, canSort, setEdited
                 cost: {day?.cost}$
             </div>
         </div>
-        <div className='pos'>
+        <div className='pos' onClick={() => notifyPressed(pos?.title, pos?.googleMapsLink)}>
             <div className='pos-row row-dash'>
                 <div className='pos-row'>
                     <div className='pos-title'>{pos?.title}</div>
@@ -82,5 +82,6 @@ DisplayDay.propTypes = {
     index: PropTypes.number,
     iconPressed: PropTypes.func,
     canSort: PropTypes.bool,
-    setEditedTrip: PropTypes.func
+    setEditedTrip: PropTypes.func,
+    notifyPressed: PropTypes.func
 }

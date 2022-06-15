@@ -3,11 +3,11 @@
 }
 
 .day {
-    font-size: max(2vw, 4vh);
+    font-size: 3vh;
 }
 
 .day-cost {
-    font-size: 2vh;
+    font-size: 1.7vh;
     margin-right: 1vw;
 }
 

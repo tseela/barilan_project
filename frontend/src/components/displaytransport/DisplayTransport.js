@@ -11,9 +11,9 @@ function getHour(date) {
     return date.substring(i, i + 5);
 }
 
-export default function DisplayTransport({ transport }) {
+export default function DisplayTransport({ transport, notifyPressed }) {
     return(
-    <div className="displaytransport-container">
+    <div className="displaytransport-container" onClick={() => notifyPressed(transport?.title, transport?.googleMapsLink)}>
         <div className='trns-col'>
             <div className='trns-row row-dash'>
                 <div className='trns-title'>
@@ -49,5 +49,6 @@ export default function DisplayTransport({ transport }) {
 }
 
 DisplayTransport.propTypes = {
-    transport: PropTypes.object.isRequired
+    transport: PropTypes.object.isRequired,
+    notifyPressed: PropTypes.func
 }

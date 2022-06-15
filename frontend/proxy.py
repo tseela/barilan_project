@@ -86,7 +86,7 @@ def getTrip():
                 'title' : '1->1.5',
                 'timeStart' : datetime.now(),
                 'timeEnd' : datetime.now()
-            }], [{
+            }, {
                 'cost' : 7,
                 'destination' : 'act2',
                 'duration' : 0.5,
