@@ -20,3 +20,8 @@
     margin-top: 12vh;
     font-size: calc(10px + 2vmin);
 }
+
+.displaytrip {
+    margin-top: 5vh;
+    margin-left: 5vw;
+}

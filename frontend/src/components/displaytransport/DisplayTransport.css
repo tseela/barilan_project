@@ -1,0 +1,67 @@
+.displaytransport-container {
+    color: black;
+    background-color: lightgray;
+    height: fit-content;
+    min-width: 100%;
+    border-style: solid;
+    border-width: 0.2vmin;
+    border-radius: 0.5vmin;
+    border-color: gray;
+}
+
+.trns-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    justify-content: space-between;
+}
+
+.trns-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.trns-title {
+    font-size: 2vh;
+    font-weight: bold;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.trns-pic {
+    font-size: 2vh;
+    margin-left: 1vw;
+    color: darkblue;
+}
+
+.trns-time {
+    font-size: 1.5vh;
+}
+
+.trns-cost {
+    font-size: 1.5vh;
+    margin-right: 1vw;
+}
+
+.trns-total {
+    margin-left: 3vw;
+}
+
+.trns-total span {
+    font-size: 1.3vh;
+}
+
+.trns-method {
+    font-size: 1.5vh;
+}
+
+.trns-places span {
+    font-weight: bold;
+}
+
+.trns-order {
+    font-size: 1.3vh;
+    font-weight: bold;
+}

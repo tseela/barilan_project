@@ -12,29 +12,34 @@ function getHour(date) {
 }
 
 export default function DisplayTransport({ transport }) {
-    function nothing() {
-
-    }
     return(
     <div className="displaytransport-container">
         <div className='trns-col'>
-            <div className='trns-row'>
-                <div className='trns-title'>{transport?.title}</div>
-                <div className='trns-pic' onClick={nothing} color='blue'><FaAvianex /></div>
+            <div className='trns-row row-dash'>
+                <div className='trns-title'>
+                    {transport?.title}<div className='trns-pic' color='blue'><FaAvianex /></div>
+                </div>
             </div>
-            <div className='trns-row'>
-                <div className='time line'>
-                    {getHour(transport?.timeStart)}{' => '}{getHour(transport?.timeEnd)}
+            <div className='trns-row row-dash'>
+                <div className='trns-row'>
+                    <div className='trns-time line'>
+                        {getHour(transport?.timeStart)}{' => '}{getHour(transport?.timeEnd)}
+                    </div>
+                    <div className='trns-total trns-time'>
+                        total: {transport?.duration}<span>hr</span>
+                    </div>
                 </div>
-                <div className='total time'>
-                    total: {transport?.duration}<span>hr</span>
-                </div>
-                <div className='cost dash'>
+                <div className='trns-cost'>
                     cost: {transport?.cost}$
                 </div>
             </div>
-            <div className='trns-row'>
-                <div className='order'>
+            <div className='trns-row row-dash'>
+                <div className='trns-method trns-places'>
+                    Take the {transport?.methodOfTransportation} from <span>{transport?.placeOfOrigin}</span> to <span>{transport?.destination}</span>
+                </div>
+            </div>
+            <div className='trns-row row-dash'>
+                <div className='trns-order'>
                     {transport?.orderInAdvance ? '*need to order reservation':''}
                 </div>
             </div>
