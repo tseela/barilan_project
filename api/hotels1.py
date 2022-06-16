@@ -58,7 +58,7 @@ class hotelFunctions:
             '''
             response = self.amadeus.shopping.activities.get(latitude = latitude, longitude = longitude)
 
-            print(json.dumps(response.data, sort_keys=False, indent=4))
+            #print(json.dumps(response.data, sort_keys=False, indent=4))
 
             activities = []
             for activity in response.data:
@@ -68,7 +68,7 @@ class hotelFunctions:
                 photos = activity['pictures']
 
                 act = classes.Activity(None, cost, None, None, title, url, photos, True)
-                print(act.__dict__)
+                #print(act.__dict__)
                 activities.append(act)
 
             # print(response.data)
