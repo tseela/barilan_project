@@ -33,33 +33,6 @@ class transportFunctions:
         return transportations
 
 
-    def getTransport(self, latitude1, longitude1, latitude2, longitude2, time):
-        origin = str(latitude1) + "," + str(longitude1)
-        destination = str(latitude2) + "," + str(longitude2)
-        url = "https://transit.router.hereapi.com/v8/routes?apiKey=pGwbEV9EnOVSNh94i8prG-B4oBd8RSO8bP6lk_u6NXI&origin=" + origin + "&destination=" + destination + "&departureTime=" + time
-<<<<<<< HEAD
-=======
-
-        response = requests.get(url)
-        trans = ast.literal_eval(response.text)
-
-        if len(trans["routes"]) == 0:
-            return []
-
-        way = trans["routes"][0]
-
-        sections = way["sections"]
-
-
-        transportations = []
-        for section in sections:
-            transResults = self.createTransportation(section)
-            transportations.append(transResults)
-
-
-        return transportations
-
-
     def createTransportation(self, section):
         # print(section)
         mode = section["type"]
@@ -90,26 +63,22 @@ class transportFunctions:
         startTime = section["departure"]["time"].split("+")[0]
         startTime = datetime.strptime(startTime, '%Y-%m-%dT%H:%M:%S')
         startPlace = str(section["departure"]["place"]["location"]["lat"]) + "," + str(section["departure"]["place"]["location"]["lng"])
->>>>>>> c98f4d1256019254803c419308b55b7401295f5f
-
-        response = requests.get(url)
-        trans = ast.literal_eval(response.text)
-
-        if len(trans["routes"]) == 0:
-            return []
-
-        way = trans["routes"][0]
-
-        sections = way["sections"]
 
 
-        transportations = []
-        for section in sections:
-            transResults = self.createTransportation(section)
-            transportations.append(transResults)
+        endTime = section["arrival"]["time"].split("+")[0]
+        endTime = datetime.strptime(endTime, '%Y-%m-%dT%H:%M:%S')
+        endPlace = str(section["arrival"]["place"]["location"]["lat"])+ "," + str(section["arrival"]["place"]["location"]["lng"])
 
 
-        return transportations
+        duration = endTime - startTime
+
+        googleMaps = "https://www.google.com/maps/@" + startPlace + ",17z"
+        googleMaps2 = "https://www.google.com/maps/@" + endPlace + ",17z"
+        transportation = classes.Transport(duration, cost, startTime, endTime, mode, googleMaps, googleMaps2, order, startPlace, transType, endPlace)
+
+        return transportation
+
+
 
 
 def getNZfromCity(city):
