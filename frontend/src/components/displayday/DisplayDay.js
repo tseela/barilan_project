@@ -3,24 +3,21 @@ import PropTypes from 'prop-types';
 import DisplayActivity from '../displayactivity/DisplayActivity';
 import DisplayTransport from '../displaytransport/DisplayTransport';
 import { FaAvianex } from 'react-icons/fa';
+import { useEffect, useRef } from 'react';
+import Sortable from 'sortablejs';
 
-/**
- * 'cost' : 123,
-    'duration' : 1.5,
-    'timeStart' : datetime.now(),
-    'timeEnd' : datetime.now(),
-    'placeOfStay' : {
-                'cost' : 50,
-                'destination' : 'Israel',
-                'duration' : 1,
-                'googleMapsImageLink' : ['https://www.danhotels.co.il/sites/default/files/styles/full_page_3_8/public/2018-08/DTGallery1.jpg?itok=0_WynAai'],
-                'googleMapsLink' : ['https://www.google.co.il/travel/hotels/entity/CgsI74CAlc6F1erQARAB?g2lb=2502405%2C2502548%2C4208993%2C4254308%2C4258168%2C4260007%2C4270442%2C4271060%2C4274032%2C4285990%2C4288513%2C4289525%2C4291318%2C4296668%2C4301054%2C4302823%2C4305595%2C4308216%2C4313006%2C4314836%2C4315873%2C4317816%2C4317915%2C4324289%2C4329288%2C4329495%2C4333234%2C4270859%2C4284970%2C4291517%2C4292955%2C4316256%2C4333106&hl=iw&gl=il&un=1&rp=EPOJxP-ega-d9QE4AUAASAE&ictx=1&sa=X&tcfs=EhoaGAoKMjAxOS0xMS0yNxIKMjAxOS0xMS0yOFIA&utm_campaign=sharing&utm_medium=link&utm_source=htls&ts=CAESABp9Cl8SWzIlMHgxNTFlYTBmNTEzZDk0ZDBiOjB4ZjUzYWJjMDllZmYxMDRmMzoy15DXptecINeQ157Xmdeo15Qg15XXkifXldeo15InINeX15PXqNeZINeQ15nXqNeV15caABIaEhQKBwjmDxAIGBsSBwjmDxAIGBwYATICEAAqCwoHKAE6A0lMUxoA&ap=iAEC&ved=0CAAQ5JsGahcKEwiQ4s3y9an4AhUAAAAAHQAAAAAQAw'],
-                'orderInAdvance' : True,
-                'title' : 'DAN Hotel'
-            }
- */
+
 export default function DisplayDay({ day, index, iconPressed, notifyPressed, canSort, setEditedTrip }) {
-    if (!day) {
+    const sortActivities = useRef();
+    useEffect( () => {
+        if (typeof canSort !== 'undefined' && canSort) {
+            new Sortable(sortActivities.current, {
+                animation: 150,
+                ghostClass: 'yellow-background-class'
+            });
+        }}, [sortActivities]);
+
+    if (typeof day === 'undefined') {
         return;
     }
 
@@ -69,8 +66,8 @@ export default function DisplayDay({ day, index, iconPressed, notifyPressed, can
                 </div>
             </div>
         </div>
-        <div className='maybe-sorted'>
-            {canSort ? act_html.map((html) => { return html; }) 
+        <div className='maybe-sorted' ref={sortActivities}>
+            {canSort ? act_html.map((html, i) => { return <div key={i} className='div-act-sort'>{html}</div>; }) 
                 : act_trans_joined.map((html) => { return html; })}
         </div>
     </div>
