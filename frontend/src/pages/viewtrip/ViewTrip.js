@@ -63,7 +63,7 @@ export default function ViewTrip() {
             <Navbar />
             <div className='display'>
                 <div className='displaytrip'>
-                    <DisplayTrip trip={trip} setEditedTrip={setTrip} />
+                    <DisplayTrip trip={trip} setEditedTrip={setTrip} canSort={true} />
                 </div>
             </div>
         </div>
