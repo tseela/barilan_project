@@ -100,7 +100,7 @@ class Activity:
     def toActivity(activity):
         return Activity(activity.duration , activity.cost, activity.timeStart, activity.timeEnd, activity.title, activity.googleMapsLink, activity.googleMapsImageLink, activity.orderInAdvance)
     def __str__(self):
-        return str({"Duration" : self.duration, "Cost" : self.cost, "Times:" : [self.timeStart, self.timeEnd], "Title" : self.title "Dest" : self.destination})
+        return str({"Duration" : self.duration, "Cost" : self.cost, "Times:" : [self.timeStart, self.timeEnd], "Title" : self.title, "Dest" : self.destination})
     def DictToActivity(activity):
         return Activity(activity['duration'] , activity['cost'], activity['timeStart'], activity['timeEnd'], activity['title'], activity['googleMapsLink'], activity['googleMapsImageLink'], activity['orderInAdvance'], activity['destination'])
 
