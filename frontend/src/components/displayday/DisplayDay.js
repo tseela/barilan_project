@@ -67,8 +67,8 @@ export default function DisplayDay({ day, index, iconPressed, notifyPressed, can
             </div>
         </div>
         <div className='maybe-sorted' ref={sortActivities}>
-            {canSort ? act_html.map((html, i) => { return <div key={i} className='div-act-sort'>{html}</div>; }) 
-                : act_trans_joined.map((html) => { return html; })}
+            {canSort ? act_html.map((html, i) => { return <div key={i} className='fill-width'>{html}</div>; }) 
+                : act_trans_joined.map((html, i) => { return <div key={i} className='fill-width'>{html}</div>; })}
         </div>
     </div>
     )
