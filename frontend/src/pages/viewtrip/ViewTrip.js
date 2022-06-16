@@ -7,6 +7,7 @@ import { Loading, Navbar, DisplayTrip } from '../../components';
 export default function ViewTrip() {
     const { token, setToken } = useToken();
     const [ trip, setTrip ] = useState(null);
+    const [ editedTrip, setEditedTrip ] = useState(null);
     const [ status, setStatus ] = useState(true); // true->all good, false->forbidden access
 
     const id = window.location.pathname;
@@ -63,7 +64,8 @@ export default function ViewTrip() {
             <Navbar />
             <div className='display'>
                 <div className='displaytrip'>
-                    <DisplayTrip trip={trip} setEditedTrip={setTrip} canSort={false} />
+                    <DisplayTrip trip={trip} setEditedTrip={setEditedTrip} canSort={true} />
+                    <button onClick={() => console.log(editedTrip)}>log</button>
                 </div>
             </div>
         </div>

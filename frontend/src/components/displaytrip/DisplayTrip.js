@@ -2,12 +2,22 @@ import './DisplayTrip.css';
 import PropTypes from 'prop-types';
 import DisplayDay from '../displayday/DisplayDay';
 import { useState } from 'react';
+import cloneDeep from 'lodash/cloneDeep';
 
-// {JSON.stringify(trip.days[0].activities[0])}
 export default function DisplayTrip({ trip, canSort, setEditedTrip }) {
     const [ displayed, setDisplayed ] = useState({ title:'', link:'' });
     const [ picArray, setPicArray ] = useState([]);
     const [ picIndex, setPicIndex ] = useState(-1);
+
+    // report on trip change
+    function report(sortedInts, dayIndex) { // using cloneDeep to copy nested arrays and jsons
+        let reorderedActivities = sortedInts.map((i) => { return cloneDeep(trip?.days[dayIndex]?.activities[i]); })
+        let newTrip = cloneDeep(trip);
+        newTrip.days[dayIndex] = {
+            activities: cloneDeep(reorderedActivities)
+        }
+        setEditedTrip(newTrip);
+    }
 
     // move to previous pic if u can
     function clickLeft() {
@@ -28,7 +38,7 @@ export default function DisplayTrip({ trip, canSort, setEditedTrip }) {
     <div className="displaytrip-container">
         <div className='reg-page-container' style={{opacity: picIndex === -1 ? 1 : 0.5}}>
             <div className='activities-display'>
-                {trip?.days.map((d, i) => { return <DisplayDay day={d} index={i} key={i} canSort={canSort} iconPressed={(img_array) => {setPicArray(img_array); setPicIndex(0); console.log("pressed");}} setEditedTrip={setEditedTrip} notifyPressed={(_title, _link) => setDisplayed({ title:_title, link:_link })} /> })}
+                {trip?.days.map((d, i) => { return <DisplayDay reportSorting={(sortedInts) => report(sortedInts, i)} day={d} index={i} key={i} canSort={canSort} iconPressed={(img_array) => {setPicArray(img_array); setPicIndex(0); console.log("pressed");}} setEditedTrip={setEditedTrip} notifyPressed={(_title, _link) => setDisplayed({ title:_title, link:_link })} /> })}
             </div>
             <div className='displayitem'>
                 <iframe className='googlemaps' title='info' src={displayed.link[0]}></iframe>
