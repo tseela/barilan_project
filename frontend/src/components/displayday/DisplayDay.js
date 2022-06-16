@@ -7,18 +7,26 @@ import { useEffect, useRef } from 'react';
 import Sortable from 'sortablejs';
 
 
-export default function DisplayDay({ day, index, iconPressed, notifyPressed, canSort, setEditedTrip }) {
+export default function DisplayDay({ day, index, iconPressed, notifyPressed, canSort, reportSorting }) {
     const sortActivities = useRef();
+    let sortedActivities;
     useEffect( () => {
         if (typeof canSort !== 'undefined' && canSort) {
-            new Sortable(sortActivities.current, {
+            sortedActivities = Sortable.create(sortActivities.current, {
                 animation: 150,
-                ghostClass: 'yellow-background-class'
+                ghostClass: 'yellow-background-class',
+                onUpdate: report
             });
-        }}, [sortActivities]);
+    }}, [sortActivities]);
 
     if (typeof day === 'undefined') {
         return;
+    }
+
+    function report() {
+        let sortedInts = [];
+        sortedActivities.toArray().map((stringNum, i) => { sortedInts[i] = parseInt(stringNum); })
+        reportSorting(sortedInts);
     }
 
     let activities = day?.activities;
@@ -30,7 +38,7 @@ export default function DisplayDay({ day, index, iconPressed, notifyPressed, can
     });
 
     let act_html = []; // each cell is a display activity element
-    activities.map((act, i) => { act_html[i] = <DisplayActivity key={i} activity={act} iconPressed={iconPressed} notifyPressed={notifyPressed} /> });
+    activities.map((act, i) => { act_html[i] = <DisplayActivity dataID={i.toString()} key={i} activity={act} iconPressed={iconPressed} notifyPressed={notifyPressed} /> });
 
     let act_trans_joined = [];  // each cell is a display element (ordered)
     for (let i = 0; i < activities.length; ++i) {
@@ -67,8 +75,8 @@ export default function DisplayDay({ day, index, iconPressed, notifyPressed, can
             </div>
         </div>
         <div className='maybe-sorted' ref={sortActivities}>
-            {canSort ? act_html.map((html, i) => { return <div key={i} className='fill-width'>{html}</div>; }) 
-                : act_trans_joined.map((html, i) => { return <div key={i} className='fill-width'>{html}</div>; })}
+            {canSort ? act_html.map((html) => { return html; }) 
+                : act_trans_joined.map((html) => { return html; })}
         </div>
     </div>
     )
@@ -79,6 +87,6 @@ DisplayDay.propTypes = {
     index: PropTypes.number,
     iconPressed: PropTypes.func,
     canSort: PropTypes.bool,
-    setEditedTrip: PropTypes.func,
-    notifyPressed: PropTypes.func
+    notifyPressed: PropTypes.func,
+    reportSorting: PropTypes.func
 }

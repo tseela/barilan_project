@@ -22,12 +22,12 @@ export default function Home() {
                         <br></br>
                         So... are you ready to begin?
                         <div className="start-div">
-                            <a href="trip_planning" className="btn-start">start planning</a>
+                            <a href="/signup" className="btn-start">start planning</a>
                         </div>
                     </div>
                 </div>
                 <div className="signup-section">
-                    <a href="signup" className="btn-signup">sign up</a>
+                    <a href="/signup" className="btn-signup">sign up</a>
                     <div className="signup-text">
                         you can sign up any time
                     </div>
