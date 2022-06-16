@@ -37,6 +37,60 @@ class transportFunctions:
         origin = str(latitude1) + "," + str(longitude1)
         destination = str(latitude2) + "," + str(longitude2)
         url = "https://transit.router.hereapi.com/v8/routes?apiKey=pGwbEV9EnOVSNh94i8prG-B4oBd8RSO8bP6lk_u6NXI&origin=" + origin + "&destination=" + destination + "&departureTime=" + time
+<<<<<<< HEAD
+=======
+
+        response = requests.get(url)
+        trans = ast.literal_eval(response.text)
+
+        if len(trans["routes"]) == 0:
+            return []
+
+        way = trans["routes"][0]
+
+        sections = way["sections"]
+
+
+        transportations = []
+        for section in sections:
+            transResults = self.createTransportation(section)
+            transportations.append(transResults)
+
+
+        return transportations
+
+
+    def createTransportation(self, section):
+        # print(section)
+        mode = section["type"]
+
+        cost = None
+        transType = classes.Transportation.NONE
+        order = False
+
+        baseStation = ""
+        arrivalStation = ""
+        if mode == "pedestrian":
+            cost = 0
+
+        else:
+            mode = section["transport"]["mode"]
+            if mode == "bus":
+                transType = classes.Transportation.BUS
+            elif mode == "regionalTrain":
+                transType = classes.Transportation.TRAIN
+            elif mode == "subway":
+                transType = classes.Transportation.RAM
+
+            baseStation = section["departure"]["place"]["name"]
+            arrivalStation = section["arrival"]["place"]["name"]
+
+        # print(baseStation, arrivalStation)
+
+        startTime = section["departure"]["time"].split("+")[0]
+        startTime = datetime.strptime(startTime, '%Y-%m-%dT%H:%M:%S')
+        startPlace = str(section["departure"]["place"]["location"]["lat"]) + "," + str(section["departure"]["place"]["location"]["lng"])
+>>>>>>> c98f4d1256019254803c419308b55b7401295f5f
 
         response = requests.get(url)
         trans = ast.literal_eval(response.text)
