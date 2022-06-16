@@ -86,7 +86,8 @@ class Activity:
         self.googleMapsLink = str("")
         self.googleMapsImageLink = str("")
         self.orderInAdvance = bool(False)
-    def __init__(self, duration, cost, timeStart, timeEnd, title, googleMapsLink, googleMapsImageLink, orderInAdvance):
+        self.destination = str("")
+    def __init__(self, duration, cost, timeStart, timeEnd, title, googleMapsLink, googleMapsImageLink, orderInAdvance, destination):
         self.duration = duration
         self.cost = cost
         self.timeStart = timeStart
@@ -95,12 +96,13 @@ class Activity:
         self.googleMapsLink = googleMapsLink
         self.googleMapsImageLink = googleMapsImageLink
         self.orderInAdvance = orderInAdvance
+        self.destination = destination
     def toActivity(activity):
         return Activity(activity.duration , activity.cost, activity.timeStart, activity.timeEnd, activity.title, activity.googleMapsLink, activity.googleMapsImageLink, activity.orderInAdvance)
     def __str__(self):
         return str({"Duration" : self.duration, "Cost" : self.cost, "Times:" : [self.timeStart, self.timeEnd], "Title" : self.title})
     def DictToActivity(activity):
-        return Activity(activity['duration'] , activity['cost'], activity['timeStart'], activity['timeEnd'], activity['title'], activity['googleMapsLink'], activity['googleMapsImageLink'], activity['orderInAdvance'])
+        return Activity(activity['duration'] , activity['cost'], activity['timeStart'], activity['timeEnd'], activity['title'], activity['googleMapsLink'], activity['googleMapsImageLink'], activity['orderInAdvance'], activity['destination'])
 
 
 class Day:
