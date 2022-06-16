@@ -66,7 +66,7 @@ class hotelFunctions:
                 cost = float(activity['price']['amount'])
                 url = activity['bookingLink']
                 photos = activity['pictures']
-                dest = activity["geoCode"]["latitude"] + "," + activity["geoCode"]["latitude"]
+                dest = activity["geoCode"]["latitude"] + "," + activity["geoCode"]["longitude"]
 
                 act = classes.Activity(None, cost, None, None, title, url, photos, True, dest)
                 #print(act.__dict__)
