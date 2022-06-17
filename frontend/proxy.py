@@ -245,12 +245,12 @@ def getTripsByusernameFail():
     return jsonify({}), 405
 
 
-@app.route('/insertTrip', methods=['POST'])
+@app.route('/insertTripToUser', methods=['POST'])
 def insertTrip():
     return jsonify({}), 200
 
 
-@app.route('/insertTrip-fail', methods=['POST'])
+@app.route('/insertTripToUser-fail', methods=['POST'])
 def insertTripFail():
     return jsonify({}), 404
 
