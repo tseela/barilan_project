@@ -35,6 +35,8 @@ class Transport:
         self.destination = destination
     def toTransport(trans):
         return Transport(trans.duration, trans.cost, trans.timeStart, trans.timeEnd, trans.title, trans.googleMapsLink, trans.googleMapsImageLink, trans.orderInAdvance, trans.placeOfOrigin, trans.methodOfTransportation, trans.destination)
+    def __str__(self):
+        return str({"Duration" : self.duration, "Cost" : self.cost, "Times:" : [self.timeStart, self.timeEnd], "Title" : self.title, "Dest" : self.destination})
     def DictToTransport(trans):
         return Transport(trans['duration'], trans['cost'], trans['timeStart'], trans['timeEnd'], trans['title'], trans['googleMapsLink'], trans['googleMapsImageLink'], trans['orderInAdvance'], trans['placeOfOrigin'], trans['methodOfTransportation'], trans['destination'])
 
@@ -68,6 +70,8 @@ class PlaceOfStay:
         self.destination = destination
     def toPlace(place):
         return PlaceOfStay(place.duration, place.cost, place.timeStart, place.timeEnd, place.title, place.googleMapsLink, place.googleMapsImageLink, place.orderInAdvance, place.destination)
+    def __str__(self):
+        return str({"Duration" : self.duration, "Cost" : self.cost, "Times:" : [self.timeStart, self.timeEnd], "Title" : self.title, "Dest" : self.destination})
     def DictToPlace(place):
         return PlaceOfStay(place['duration'], place['cost'], place['timeStart'], place['timeEnd'], place['title'], place['googleMapsLink'], place['googleMapsImageLink'], place['orderInAdvance'], place['destination'])
 
@@ -82,7 +86,8 @@ class Activity:
         self.googleMapsLink = str("")
         self.googleMapsImageLink = str("")
         self.orderInAdvance = bool(False)
-    def __init__(self, duration, cost, timeStart, timeEnd, title, googleMapsLink, googleMapsImageLink, orderInAdvance):
+        self.destination = str("")
+    def __init__(self, duration, cost, timeStart, timeEnd, title, googleMapsLink, googleMapsImageLink, orderInAdvance, destination):
         self.duration = duration
         self.cost = cost
         self.timeStart = timeStart
@@ -91,10 +96,13 @@ class Activity:
         self.googleMapsLink = googleMapsLink
         self.googleMapsImageLink = googleMapsImageLink
         self.orderInAdvance = orderInAdvance
+        self.destination = destination
     def toActivity(activity):
         return Activity(activity.duration , activity.cost, activity.timeStart, activity.timeEnd, activity.title, activity.googleMapsLink, activity.googleMapsImageLink, activity.orderInAdvance)
+    def __str__(self):
+        return str({"Duration" : self.duration, "Cost" : self.cost, "Times:" : [self.timeStart, self.timeEnd], "Title" : self.title, "Dest" : self.destination})
     def DictToActivity(activity):
-        return Activity(activity['duration'] , activity['cost'], activity['timeStart'], activity['timeEnd'], activity['title'], activity['googleMapsLink'], activity['googleMapsImageLink'], activity['orderInAdvance'])
+        return Activity(activity['duration'] , activity['cost'], activity['timeStart'], activity['timeEnd'], activity['title'], activity['googleMapsLink'], activity['googleMapsImageLink'], activity['orderInAdvance'], activity['destination'])
 
 
 class Day:
@@ -116,6 +124,8 @@ class Day:
         self.placeOfStay = placeOfStay
     def toDay(day):
         return Day(day.activities, day.transportation, day.cost, day.timeStart, day.timeEnd, day.duration, day.placeOfStay)
+    def __str__(self):
+        return str({"Duration" : self.duration, "Cost" : self.cost, "Times:" : [self.timeStart, self.timeEnd], "Title" : self.title, "Dest" : self.destination})
     def DictToDay(day):
         return Day(day['activities'], day['transportation'], day['cost'], day['timeStart'], day['timeEnd'], day['duration'], day['placeOfStay'])
 
@@ -141,5 +151,7 @@ class Trip:
         self.userId = userId
     def toTrip(trip) -> Trip:
         return Trip(trip.name, trip.destination, trip.duration, trip.startDate, trip.endDate, trip.days, trip.cost, trip.userId)
+    def __str__(self):
+        return str({"Duration" : self.duration, "Cost" : self.cost, "Times:" : [self.startDate, self.endDate], "Name" : self.name, "Dest" : self.destination})
     def DictToTrip(trip) -> Trip:
         return Trip(trip['name'], trip['destination'], trip['duration'], trip['startDate'], trip['endDate'], trip['days'], trip['cost'], trip['userId'])
