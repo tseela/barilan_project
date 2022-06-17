@@ -16,6 +16,7 @@ export default function DisplayTrip({ trip, canSort, setEditedTrip }) {
         }
     }, []);
 
+    let mapLink = "http://www.openstreetmap.org/export/embed.html?bbox=99.01707172393799%2C18.812250694616786%2C99.04603958129883%2C18.827077370495342&amp;layer=mapnik&amp;marker=18.819664196007352%2C99.03155565261841";
 
     // report on trip change
     function report(sortedInts, dayIndex) { // using cloneDeep to copy nested arrays and jsons
@@ -42,6 +43,7 @@ export default function DisplayTrip({ trip, canSort, setEditedTrip }) {
     }
 
     // can use openstreetmap instead of google maps but they don't have a marker...
+    // <iframe className='googlemaps' title='info' src={'https://maps.google.com/maps?q=' + parseFloat(displayed.latitude) + ',' + parseFloat(displayed.longitude) + '&t=&z=13&ie=UTF8&iwloc=&output=embed'}></iframe>
     return(
     <div className="displaytrip-container">
         <div className='reg-page-container' style={{opacity: picIndex === -1 ? 1 : 0.5}}>
@@ -49,7 +51,7 @@ export default function DisplayTrip({ trip, canSort, setEditedTrip }) {
                 {trip?.days.map((d, i) => { return <DisplayDay reportSorting={(sortedInts) => report(sortedInts, i)} day={d} index={i} key={i} canSort={canSort} iconPressed={(img_array) => {setPicArray(img_array); setPicIndex(0);}} setEditedTrip={setEditedTrip} notifyPressed={(_title, _coordinates) => setDisplayed({ 'title':_title, 'latitude':_coordinates.split(",").pop(), 'longitude':_coordinates.split(",")[0] })} /> })}
             </div>
             <div className='displayitem'>
-                <iframe className='googlemaps' title='info' src={'https://maps.google.com/maps?q=' + parseFloat(displayed.latitude) + ',' + parseFloat(displayed.longitude) + '&t=&z=13&ie=UTF8&iwloc=&output=embed'}></iframe>
+                <iframe className='googlemaps' title='info' src={mapLink}></iframe>
             </div>
         </div>
         {picIndex === -1 ? '': 
