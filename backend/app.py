@@ -144,6 +144,22 @@ def createTrip():
     return insertTrip(trip)
 
 
+
+app.route("/insertTripToUser")
+@token_required
+def insertTripToUser():
+    try:
+        trip = JsonToTrip(request.json["trip"])
+
+        tripID = insertTrip(trip)
+
+        addTripToUser(request.json["token"]["user"], tripID)
+        return 200
+    except:
+        return "Cannot insert trip", 403
+
+
+
 # @return tripID
 def insertTrip(trip):
     trip = classes.Trip.toTrip(trip)
@@ -153,6 +169,11 @@ def insertTrip(trip):
         tripDays.append(insertDay(day))
         
     trip.days = tripDays
+
+
+    # set the user of the trip
+    user = users.find_one({"username" : request.json["token"]["user"]})
+    trip.userId = user["_id"]
 
     return trips.insert_one(trip.__dict__) 
 
@@ -180,10 +201,18 @@ def insertDay(day):
     return days.insert_one(day).inserted_id
 
 
+
+
 @app.route('/getTrip')
+@token_required
 def GetTrip():
     # return getTrip(request.args.get('tripID'))
-    return getTrip(request.json('tripID'))
+    try:
+        return getTrip(request.json('tripID')), 200
+    except:
+        return "Cant get trip", 403
+    
+
 
 # @return trip object
 def getTrip(id):
@@ -227,32 +256,52 @@ def getDay(dayID):
 
 
 
+
 @app.route('/updateTrip', methods=['POST'])
+@token_required
 def UpdateTrip():
-    return updateTrip(request.json['tripID'], request.json['trip'])
+    try:
+        return updateTrip(request.json['tripID'], request.json['trip']), 200
+    except:
+        return "Cant update trip", 403
+
 
 def updateTrip(tripId, newTrip):
     newTrip = classes.Trip.DictToTrip(newTrip)
     return trips.find_one_and_update({'_id':tripId}, {'$set':newTrip.__dict__})
 
 
+
+
+
 @app.route('/getTripsByUser')
+@token_required
 def GetTripsByUser():
-    return getTripsByusername(request.json['username'])
+    try:
+        return getTripsByusername(request.json['username']), 200
+    except:
+        return "Cant get trips", 403
+
+
 
 @app.route('/getTripsAndNamesByUser', methods=['POST'])
 @token_required
 def getTripsAndNamesByUser():
-    username = request.json['username']
-    user = users.find_one({"username" : username})
+    try:
+        username = request.json['username']
+        user = users.find_one({"username" : username})
 
-    trips = []
-    if (user['trips'] == None):
-        return jsonify([]), 200
+        trips = []
+        if (user['trips'] == None):
+            return jsonify([]), 200
 
-    for trip in user['trips']:
-        trips.append({'id':trip, 'name':getTrip(trip).name})
-    return jsonify(trips), 200
+        for trip in user['trips']:
+            trips.append({'id':trip, 'name':getTrip(trip).name})
+        return jsonify(trips), 200
+    except:
+        return "Cant get trips", 403
+
+
 
 # @return trips objects
 def getTripsByusername(name):
@@ -269,8 +318,13 @@ def getTripsByusername(name):
 
 
 app.route('/addTripToUser')
+@token_required
 def AddTripToUser():
-    return addTripToUser(request.json['username'], request.json['tripID'])
+    try:
+        return addTripToUser(request.json['username'], request.json['tripID']), 200
+    except:
+        return "Cant add trips", 403
+
 
 # add the id of trip to user
 def addTripToUser(name, tripID):
@@ -287,9 +341,15 @@ def addTripToUser(name, tripID):
     user = users.find_one_and_update({"username" : name}, update={ "$set": {"trips" : user['trips']}})
 
 
+
+
 app.route('/removeTripFromUser')
+@token_required
 def RemoveTripFromUser():
-    return removeTripfromUser(request.json['username'], request.json['tripID'])
+    try:
+        return removeTripfromUser(request.json['username'], request.json['tripID']), 200
+    except:
+        return "Cant romve trip", 403
 
 
 def removeTripfromUser(name, tripID):
@@ -307,9 +367,14 @@ def removeTripfromUser(name, tripID):
     user = users.find_one_and_update({"username" : name}, update={ "$set": {"trips" : user['trips']}})
 
 
+
 app.route('./createTripAndAdd')
+@token_required
 def CreateTripAndAdd():
-    return createTripAndAdd(request.json['username'])
+    try:
+        return createTripAndAdd(request.json['username']), 200
+    except:
+        return "Cant create and insert", 403
 
 def createTripAndAdd(name):
     id = createTrip()
