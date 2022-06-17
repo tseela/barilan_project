@@ -5,11 +5,12 @@
     max-height: fit-content;
 }
 
-.viewtrip {
+.edittrip {
     color: white;
     background-color: #252525;
     min-height: 100vh;
     max-height: fit-content;
+    margin-top: 0;
 }
 
 .loading-div {
@@ -21,7 +22,7 @@
     font-size: calc(10px + 2vmin);
 }
 
-.displaytrip {
+.display-edittrip {
     margin-top: 5vh;
     margin-left: 5vw;
 }
@@ -31,7 +32,7 @@
     flex-direction: column;
 }
 
-.display-row {
+.edit-row {
     display: flex;
     flex-direction: row;
     margin-top: 3vh;
@@ -39,25 +40,24 @@
     margin-right: 7vw;
 }
 
-.display-name {
+.edit-name {
     font-size: 5vh;
     font-weight: bold;
 }
 
-.display-name span {
+.edit-name span {
     text-decoration: underline;
 }
 
-.edittrip-div {
+.savetrip {
     flex: 1;
     text-align: right;
     margin-top: 2vh;
 }
 
-.edittrip-button {
+.savetrip-button {
     font-size: 4vh;
     font-weight: bold;
-    text-decoration: none;
     background-color: lightcyan;
     color: darkslateblue;
     border-top: 1px solid #CCCCCC;
@@ -65,11 +65,12 @@
     border-bottom: 1px solid #333333;
     border-left: 1px solid #CCCCCC;
     border-radius: 20px;
-    padding-left: 5px;
-    padding-right: 5px;
-    padding-bottom: 5px;
+
+    margin-bottom: 0.6vh;
 }
 
-.edittrip-button:hover {
+.savetrip-button:hover {
     color: darkblue;
+    font-size: 4.5vh;
+    margin-bottom: 0;
 }

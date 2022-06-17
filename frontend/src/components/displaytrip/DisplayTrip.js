@@ -9,6 +9,8 @@ export default function DisplayTrip({ trip, canSort, setEditedTrip }) {
     const [ picArray, setPicArray ] = useState([]);
     const [ picIndex, setPicIndex ] = useState(-1);
 
+    setEditedTrip(cloneDeep(trip));
+
     // report on trip change
     function report(sortedInts, dayIndex) { // using cloneDeep to copy nested arrays and jsons
         let reorderedActivities = sortedInts.map((i) => { return cloneDeep(trip?.days[dayIndex]?.activities[i]); })

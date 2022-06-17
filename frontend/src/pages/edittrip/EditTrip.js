@@ -1,13 +1,15 @@
-import './ViewTrip.css';
+import './EditTrip.css';
 import { useToken } from '../../hooks';
 import { Forbidden } from '../index';
 import { useState, useEffect } from 'react';
 import { Loading, Navbar, DisplayTrip } from '../../components';
 
-export default function ViewTrip() {
+export default function EditTrip() {
     const { token, setToken } = useToken();
     const [ trip, setTrip ] = useState(null);
+    const [ editedTrip, setEditedTrip ] = useState(null);
     const [ status, setStatus ] = useState(true); // true->all good, false->forbidden access
+    const [ editedTripName, setEditedTripName ] = useState('');
 
     const id = window.location.pathname.split("/").pop();
 
@@ -54,7 +56,15 @@ export default function ViewTrip() {
         }
     }, [token]);
 
-    // can't viewTrip if you are not connected
+    function saveEditedTrip() {
+        let et = editedTrip;
+        if (editedTripName === '' || editedTripName === trip?.name) {
+            et.name = editedTripName;
+        }
+        // send et to backend for save
+    }
+
+    // can't edittrip if you are not connected
     // can't also if the requested trip is not yours
     if (!token || !status) {
         return(<Forbidden />);
@@ -74,14 +84,22 @@ export default function ViewTrip() {
 
     // else, everything is ok and we are ready to display the trip
     return(
-        <div className='viewtrip'>
+        <div className='edittrip'>
             <Navbar />
             <div className='display'>
-                <div className='display-row'>
-                    <div className='edittrip-div'><a className='edittrip-button' href={'/edittrip/' + id}>Edit Trip</a></div>
+                <div className='edit-row'>
+                    <form onSubmit={saveEditedTrip}>
+                        <label>
+                                <div className='display-name'>
+                                    Trip name:
+                                </div>
+                                <input className='form' type="text" placeholder={trip?.name} maxLength="16" onChange={e => setEditedTripName(e.target.value)} />
+                        </label>
+                        <div className='savetrip'><button className='savetrip-button' type={"submit"}>Save</button></div>
+                    </form>
                 </div>
-                <div className='displaytrip'>
-                    <DisplayTrip trip={trip} />
+                <div className='display-edittrip'>
+                    <DisplayTrip trip={trip} canSort={true} setEditedTrip={setEditedTrip} />
                 </div>
             </div>
         </div>
