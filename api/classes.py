@@ -152,6 +152,6 @@ class Trip:
     def toTrip(trip) -> Trip:
         return Trip(trip.name, trip.destination, trip.duration, trip.startDate, trip.endDate, trip.days, trip.cost, trip.userId)
     def __str__(self):
-        return str({"Duration" : self.duration, "Cost" : self.cost, "Times:" : [self.timeStart, self.timeEnd], "Title" : self.title, "Dest" : self.destination})
+        return str({"Duration" : self.duration, "Cost" : self.cost, "Times:" : [self.startDate, self.endDate], "Name" : self.name, "Dest" : self.destination})
     def DictToTrip(trip) -> Trip:
         return Trip(trip['name'], trip['destination'], trip['duration'], trip['startDate'], trip['endDate'], trip['days'], trip['cost'], trip['userId'])
