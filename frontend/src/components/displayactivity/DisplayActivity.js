@@ -18,12 +18,12 @@ export default function DisplayActivity({ activity, iconPressed, notifyPressed, 
     }
 
     return(
-    <div className="displayactivity-container" data-id={dataID} onClick={() => notifyPressed(activity?.title, activity?.googleMapsLink)}>
+    <div className="displayactivity-container" data-id={dataID} onClick={() => notifyPressed(activity?.title, activity?.destination)}>
         <div className='act-col'>
             <div className='act-row row-dash'>
                 <div className='act-title'>
                     {activity?.title}
-                    <div className='act-pic' onClick={() => iconPressed(activity?.googleMapsImageLink)} color='blue'><FaAvianex /></div>
+                    <div className='act-pic' onClick={() => iconPressed(activity?.images)} color='blue'><FaAvianex /></div>
                 </div>
             </div>
             <div className='act-row row-dash'>
@@ -34,6 +34,7 @@ export default function DisplayActivity({ activity, iconPressed, notifyPressed, 
                     <div className='act-total act-time'>
                         total: {activity?.duration}<span>hr</span>
                     </div>
+                    <a className='act-link' href={activity?.link} target="_blank" rel="noopener noreferrer">link</a>
                 </div>
                 <div className='act-cost'>
                     cost: {activity?.cost}$
