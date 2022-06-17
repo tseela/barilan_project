@@ -1,6 +1,7 @@
 # from flask import Flask
 # import pymongo
 # from crypt import methods
+import re
 from typing import List
 from flask import Flask , request, jsonify,make_response, render_template, session
 import jwt
@@ -16,6 +17,7 @@ import sys
 # sys.path.append('../algo/libs/classes.py')
 import classes
 from bson import ObjectId
+import json
 
 
 
@@ -315,6 +317,14 @@ def createTripAndAdd(name):
 
 
 
+def editTrip(jsonTrip):
+    trip = JsonToTrip(jsonTrip)
+    # send ron request to update the trip
+    # trip = ron.updateTrip(trip)
+    trip = TripToJson(trip)
+    return trip
+
+
 # @app.route('/changePassword', methods=['POST'])
 # def changepassword():
 #     return changePassword(request.json['username'], request.json['password'], request.json['newPassword'])
@@ -349,21 +359,21 @@ def createTripAndAdd(name):
 
 
 def mockTrip():
-    activity1 = classes.Activity(2, 2000, datetime.now(), datetime.now(), "first activity", "location1", "image1", False)
-    activity2 = classes.Activity(2, 2000, datetime.now(), datetime.now(), "second activity", "location2", "image2", False)
+    activity1 = classes.Activity(2, 2000, str(datetime.now()), str(datetime.now()), "first activity", "location1", "image1", False)
+    activity2 = classes.Activity(2, 2000, str(datetime.now()), str(datetime.now()), "second activity", "location2", "image2", False)
     myActivities = [activity1, activity2]
 
-    myTransformation = classes.Transport(0.5, 7, datetime.now(),datetime.now(), "1->2", "location 1.5", "image 1.5", False, "first activity", 1, "second activity")
+    myTransformation = classes.Transport(0.5, 7, str(datetime.now()),str(datetime.now()), "1->2", "location 1.5", "image 1.5", False, "first activity", 1, "second activity")
     
-    myPlace = classes.PlaceOfStay(1, 500, datetime.now(), datetime.now(), "hotel", "location sleep", "image sleep", True, "Israel")
+    myPlace = classes.PlaceOfStay(1, 500, str(datetime.now()), str(datetime.now()), "hotel", "location sleep", "image sleep", True, "Israel")
 
-    day1 = classes.Day(myActivities, [myTransformation], 4507, datetime.now(),datetime.now(),4.5, myPlace)
-    day2 = classes.Day(myActivities, [myTransformation], 4507, datetime.now(),datetime.now(),4.5, myPlace)
-    day3 = classes.Day(myActivities, [myTransformation], 4507, datetime.now(),datetime.now(),4.5, myPlace)
+    day1 = classes.Day(myActivities, [myTransformation], 4507, str(datetime.now()),str(datetime.now()),4.5, myPlace)
+    day2 = classes.Day(myActivities, [myTransformation], 4507, str(datetime.now()),str(datetime.now()),4.5, myPlace)
+    day3 = classes.Day(myActivities, [myTransformation], 4507, str(datetime.now()),str(datetime.now()),4.5, myPlace)
     
     myDays = [day1, day2, day3]
 
-    myTrip = classes.Trip("shaked4-Israel", "Israel", 3, datetime.now(), datetime.now(), myDays, 3*4507, 1234)
+    myTrip = classes.Trip("shaked4-Israel", "Israel", 3, str(datetime.now()), str(datetime.now()), myDays, 3*4507, 1234)
     return myTrip
 
 def printTripObject(tripID):
@@ -383,8 +393,55 @@ def printTripObject(tripID):
         print(day.placeOfStay.__dict__)
 
 
+def TripToJson(trip):
+    newDays = []
+    for day in trip.days:
+
+        newacts = []
+        for act in day.activities:
+            actson = act.__dict__
+            newacts.append(actson)
+        day.activities = newacts
+
+        newtrans = []
+        for trans in day.transportation:
+            transon = trans.__dict__
+            newtrans.append(transon)
+        day.transportation = newtrans
+
+        day.placeOfStay = day.placeOfStay.__dict__
+
+        newDays.append(day.__dict__)
+    trip.days = newDays
+    return json.dumps(trip.__dict__)
+
+
+def JsonToTrip(jsonTrip):
+    trip = json.loads(jsonTrip)
+    newDays = []
+    for day in trip['days']:
+        newacts = []
+        for act in day['activities']:
+            actson = classes.Activity.DictToActivity(act)
+            newacts.append(actson)
+        day['activities'] = newacts
+
+        newtrans = []
+        for trans in day["transportation"]:
+            transon = classes.Transport.DictToTransport(trans)
+            newtrans.append(transon)
+        day["transportation"] = newtrans
+
+        day["placeOfStay"] = classes.PlaceOfStay.DictToPlace(day["placeOfStay"])
+
+        newday = classes.Day.DictToDay(day)
+        newDays.append(newday)
+    trip['days'] = newDays
+    return classes.Trip.DictToTrip(trip)
+
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    # app.run(debug=True)
     # print(signUp("shaked", "moked"))
     # print(signIn("shaked", "moked"))
     # input()
@@ -420,6 +477,14 @@ if __name__ == '__main__':
     # request.json['username'] = "shaked4"s
     # print(GetTripsAndNamesByUser())
     # print(getTripsByusername("shaked4"))
+
+    t = mockTrip()
+    t = TripToJson(t)
+    parsed = json.loads(t)
+    print(json.dumps(parsed, indent=4, sort_keys=True))
+
+    trip = JsonToTrip(t)
+    
 
     
 
