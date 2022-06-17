@@ -90,6 +90,7 @@ def getHotelsByGeocode(latitude, longitude):
 
             if (type(hotel) is list):
                 continue
+            
 
             url = hotel["hotel"]["media"][0]['uri']
             # print(hotel["offers"][0]["price"])
@@ -101,7 +102,10 @@ def getHotelsByGeocode(latitude, longitude):
 
             title = hotel["hotel"]["name"]
 
-            city = str(latitude) + "," + str(longitude)
+
+            hotelLatitude = hotel["hotel"]["latitude"]
+            hotelLongitude = hotel["hotel"]["longitude"]
+            city = str(hotelLatitude) + "," + str(hotelLongitude)
             hotel = classes.PlaceOfStay(None, price, checkIn, checkOut, title, url, None, True, city)
             # print (hotel.__dict__)
             offers.append(hotel)
@@ -149,7 +153,7 @@ if __name__ == '__main__':
     # print(hotels)
 
 
-    # res = getActivities(32.079664, 34.767410, 0)
+    res = getActivities(32.079664, 34.767410, 0)
     # print(res)
     # print(res[0])
     # print(res[0]['price'])
