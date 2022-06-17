@@ -22,7 +22,7 @@ export default function Home() {
                         <br></br>
                         So... are you ready to begin?
                         <div className="start-div">
-                            <a href="/signup" className="btn-start">start planning</a>
+                            <a href="/plantrip" className="btn-start">start planning</a>
                         </div>
                     </div>
                 </div>

@@ -9,6 +9,8 @@ import Sortable from 'sortablejs';
 
 export default function DisplayDay({ day, index, iconPressed, notifyPressed, canSort, reportSorting }) {
     const sortActivities = useRef();
+
+    // make activities sortable in needed
     let sortedActivities;
     useEffect( () => {
         if (typeof canSort !== 'undefined' && canSort) {

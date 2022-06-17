@@ -6,3 +6,4 @@ export { default as PageNotFound } from './404/PageNotFound';
 export { default as Forbidden } from './forbidden/Forbidden';
 export { default as ViewTrip } from './viewtrip/ViewTrip';
 export { default as EditTrip } from './edittrip/EditTrip';
+export { default as OfflineEditTrip } from './edittrip/OfflineEditTrip';
