@@ -254,6 +254,14 @@ def insertTrip():
 def insertTripFail():
     return jsonify({}), 404
 
+@app.route('/removeTripFromUser', methods=['POST'])
+def RemoveTripFromUser():
+    return jsonify({}), 200
+
+@app.route('/removeTripFromUser-fail', methods=['POST'])
+def RemoveTripFromUserFail():
+    return "Cant romve trip", 403
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

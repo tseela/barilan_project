@@ -55,6 +55,7 @@
 }
 
 .edittrip-button {
+    margin-right: 3vw;
     font-size: 4vh;
     font-weight: bold;
     text-decoration: none;
@@ -71,5 +72,26 @@
 }
 
 .edittrip-button:hover {
+    color: darkblue;
+}
+
+.deletetrip-button {
+    font-size: 4vh;
+    font-weight: bold;
+    text-decoration: none;
+    background-color: rgb(255, 203, 182);
+    color: darkred;
+    border-top: 1px solid #CCCCCC;
+    border-right: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+    border-left: 1px solid #CCCCCC;
+    border-radius: 20px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+.deletetrip-button:hover {
     color: darkblue;
 }

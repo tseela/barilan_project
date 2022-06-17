@@ -58,7 +58,7 @@
 }
 
 .savetrip-button {
-    margin-left: 5vw;
+    margin-left: 3vw;
     font-size: 4vh;
     font-weight: bold;
     background-color: lightcyan;
@@ -74,6 +74,26 @@
 
 .savetrip-button:hover {
     color: darkblue;
+    font-size: 4.5vh;
+    margin-bottom: 0;
+}
+
+.cancel-button {
+    margin-left: 5vw;
+    font-size: 4vh;
+    font-weight: bold;
+    background-color: rgb(255, 203, 182);
+    color: darkred;
+    border-top: 1px solid #CCCCCC;
+    border-right: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+    border-left: 1px solid #CCCCCC;
+    border-radius: 20px;
+
+    margin-bottom: 0.6vh;
+}
+
+.cancel-button:hover {
     font-size: 4.5vh;
     margin-bottom: 0;
 }

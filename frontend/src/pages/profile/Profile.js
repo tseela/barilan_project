@@ -17,7 +17,7 @@ export default function Profile() {
                 headers: {
                   'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({username: token.user, token:token})
+                body: JSON.stringify({'username': token.user, 'token':token})
             }).then((res) => res.json()).then((res) => {
                 setTrips(res); // update trips
             });

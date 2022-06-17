@@ -3,11 +3,13 @@ import { useToken } from '../../hooks';
 import { Forbidden } from '../index';
 import { useState, useEffect } from 'react';
 import { Loading, Navbar, DisplayTrip } from '../../components';
+import { Navigate } from 'react-router-dom';
 
 export default function ViewTrip() {
     const { token, setToken } = useToken();
     const [ trip, setTrip ] = useState(null);
     const [ status, setStatus ] = useState(true); // true->all good, false->forbidden access
+    const [ wasDeleted, setWasDeleted ] = useState(false);
 
     const id = window.location.pathname.split("/").pop();
 
@@ -22,7 +24,7 @@ export default function ViewTrip() {
                 headers: {
                   'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({username: token.user, token:token})
+                body: JSON.stringify({'username': token.user, 'token':token})
             }).then((res) => res.json()).then((res) => {
                 for (let i = 0; i < res.length; ++i) {
                     if (res[i]?.id == id) {
@@ -35,7 +37,7 @@ export default function ViewTrip() {
                 headers: {
                   'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({tripID: id, token:token})
+                body: JSON.stringify({'tripID': id, 'token':token})
             }).then((res) => {
                 if (res.status === 200) {
                     return res.json();
@@ -53,6 +55,28 @@ export default function ViewTrip() {
             }));
         }
     }, [token]);
+
+    function deleteTrip() {
+        fetch('/removeTripFromUser', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({'trip-ID': id, 'token':token})
+        }).then((res) => {
+            if (res.status === 200) {
+                alert("Trip deleted successfully");
+                setWasDeleted(true);
+            } else {
+                alert("ERROR: Couldn't delete trip.")
+            }
+        });
+    }
+
+    // if trip is deleted, get back to profile
+    if (wasDeleted) {
+        return(<Navigate to="/profile" />)
+    }
 
     // can't viewTrip if you are not connected
     // can't also if the requested trip is not yours
@@ -79,7 +103,10 @@ export default function ViewTrip() {
             <div className='display'>
                 <div className='display-row'>
                     <div className='display-name'>Trip name: <span>{trip?.name}</span></div>
-                    <div className='edittrip-div'><a className='edittrip-button' href={'/edittrip/' + id}>Edit Trip</a></div>
+                    <div className='edittrip-div'>
+                        <a className='edittrip-button' href={'/edittrip/' + id}>Edit Trip</a>
+                        <button className='deletetrip-button' onClick={deleteTrip}>Delete Trip</button>
+                    </div>
                 </div>
                 <div className='displaytrip'>
                     <DisplayTrip trip={trip} />

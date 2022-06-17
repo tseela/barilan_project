@@ -11,7 +11,7 @@ export default function EditTrip() {
     const [ editedTrip, setEditedTrip ] = useState(null);
     const [ status, setStatus ] = useState(true); // true->all good, false->forbidden access
     const [ editedTripName, setEditedTripName ] = useState('');
-    const [ isSaved, setIsSaved ] = useState(false);
+    const [ isDone, setIsDone ] = useState(false);
 
     const id = window.location.pathname.split("/").pop();
 
@@ -26,7 +26,7 @@ export default function EditTrip() {
                 headers: {
                   'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({username: token.user, token:token})
+                body: JSON.stringify({'username': token.user, 'token':token})
             }).then((res) => res.json()).then((res) => {
                 for (let i = 0; i < res.length; ++i) {
                     if (res[i]?.id == id) {
@@ -39,7 +39,7 @@ export default function EditTrip() {
                 headers: {
                   'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({tripID: id, token:token})
+                body: JSON.stringify({'tripID': id, 'token':token})
             }).then((res) => {
                 if (res.status === 200) {
                     return res.json();
@@ -71,11 +71,11 @@ export default function EditTrip() {
             headers: {
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify({token:token, trip:et})
+            body: JSON.stringify({'token':token, 'trip':et})
         }).then((res) => {
             if (res.status === 200) {
                 alert("Success! Trip saved.");
-                setIsSaved(true);
+                setIsDone(true);
             } else {
                 alert("Something went wrong... Your trip couldn't be saved.");
             }
@@ -83,7 +83,7 @@ export default function EditTrip() {
     }
 
     // trip is already saved-> return to viewtrip of it
-    if (isSaved) {
+    if (isDone) {
         return(<Navigate to={"/viewtrip/" + id} />)
     }
 
@@ -114,7 +114,10 @@ export default function EditTrip() {
                     <form onSubmit={saveEditedTrip} className="form-horizontal">
                         <label className='edit-name'>Trip name:</label>
                         <input className='edited-name' type="text" placeholder={trip?.name} maxLength="16" onChange={e => setEditedTripName(e.target.value)} />
-                        <label className='savetrip'><button className='savetrip-button' type={"submit"}>Save</button></label>
+                        <button className='cancel-button' onClick={() => setIsDone(true)}>Cancel Changes</button>
+                        <label className='savetrip'>
+                            <button className='savetrip-button' type={"submit"}>Save</button>
+                        </label>
                     </form>
                 </div>
                 <div className='display-edittrip'>
