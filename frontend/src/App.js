@@ -11,7 +11,7 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/trip/:id" element={<ViewTrip />} />
+          <Route path="/viewtrip/:id" element={<ViewTrip />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Router>
