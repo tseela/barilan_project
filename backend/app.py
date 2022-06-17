@@ -1,6 +1,7 @@
 # from flask import Flask
 # import pymongo
 # from crypt import methods
+from crypt import methods
 import re
 from typing import List
 from flask import Flask , request, jsonify,make_response, render_template, session
@@ -145,7 +146,7 @@ def createTrip():
 
 
 
-app.route("/insertTripToUser")
+@app.route("/insertTripToUser", methods=['POST'])
 @token_required
 def insertTripToUser():
     try:
@@ -203,12 +204,12 @@ def insertDay(day):
 
 
 
-@app.route('/getTrip')
+@app.route('/getTrip', methods=['POST'])
 @token_required
 def GetTrip():
     # return getTrip(request.args.get('tripID'))
     try:
-        return getTrip(request.json('tripID')), 200
+        return getTrip(request.json['tripID']), 200
     except:
         return "Cant get trip", 403
     
@@ -273,7 +274,7 @@ def updateTrip(tripId, newTrip):
 
 
 
-
+############### out of use ###############
 @app.route('/getTripsByUser')
 @token_required
 def GetTripsByUser():
@@ -317,7 +318,7 @@ def getTripsByusername(name):
     return trips
 
 
-app.route('/addTripToUser')
+@app.route('/addTripToUser', methods=['POST'])
 @token_required
 def AddTripToUser():
     try:
@@ -343,7 +344,7 @@ def addTripToUser(name, tripID):
 
 
 
-app.route('/removeTripFromUser')
+@app.route('/removeTripFromUser', methods=['POST'])
 @token_required
 def RemoveTripFromUser():
     try:
@@ -368,7 +369,7 @@ def removeTripfromUser(name, tripID):
 
 
 
-app.route('./createTripAndAdd')
+@app.route('./createTripAndAdd', methods=['POST'])
 @token_required
 def CreateTripAndAdd():
     try:
