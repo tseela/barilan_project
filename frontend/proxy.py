@@ -2,7 +2,6 @@
 from __future__ import print_function
 from flask import Flask , request, jsonify,make_response
 from datetime import datetime
-import sys
 
 # server
 app = Flask(__name__)
@@ -16,7 +15,7 @@ def signup():
 
 def signUp(username, password):
     print("\nNew user trying to sign up:\nUsername:" + username + "\nPassword:" + password)
-    return signIn(username, password)
+    return jsonify({'status': "successful", "message": "User created successfuly"}), 200
 
 
 @app.route('/signup-fail', methods=['POST'])
@@ -55,7 +54,6 @@ def getTrip():
         'id' : id,
         'name' : 'for display',
         'cost' : 11111,
-        'destonation' : 'Israel',
         'duration' : 3,
         'userId' : 1234,
         'endDate' : datetime.now(),
@@ -239,7 +237,22 @@ def getTripsByusername():
         trips.append({"id":i, "name":f'trip{i}'})
     print(trips)
 
-    return jsonify(trips)
+    return jsonify(trips), 200
+
+
+@app.route('/getTripsAndNamesByUser-fail', methods=['POST'])
+def getTripsByusernameFail():
+    return jsonify({}), 405
+
+
+@app.route('/insertTrip', methods=['POST'])
+def insertTrip():
+    return jsonify({}), 200
+
+
+@app.route('/insertTrip-fail', methods=['POST'])
+def insertTripFail():
+    return jsonify({}), 404
 
 
 if __name__ == '__main__':

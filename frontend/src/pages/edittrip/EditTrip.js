@@ -3,6 +3,7 @@ import { useToken } from '../../hooks';
 import { Forbidden } from '../index';
 import { useState, useEffect } from 'react';
 import { Loading, Navbar, DisplayTrip } from '../../components';
+import { Navigate } from 'react-router-dom';
 
 export default function EditTrip() {
     const { token, setToken } = useToken();
@@ -10,6 +11,7 @@ export default function EditTrip() {
     const [ editedTrip, setEditedTrip ] = useState(null);
     const [ status, setStatus ] = useState(true); // true->all good, false->forbidden access
     const [ editedTripName, setEditedTripName ] = useState('');
+    const [ isSaved, setIsSaved ] = useState(false);
 
     const id = window.location.pathname.split("/").pop();
 
@@ -56,12 +58,33 @@ export default function EditTrip() {
         }
     }, [token]);
 
-    function saveEditedTrip() {
+    const saveEditedTrip = async (e) => {
+        e.preventDefault();
+
         let et = editedTrip;
-        if (editedTripName === '' || editedTripName === trip?.name) {
+        if (editedTripName !== '' && editedTripName !== trip?.name) {
             et.name = editedTripName;
         }
-        // send et to backend for save
+
+        fetch('/insertTrip', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({token:token, trip:et})
+        }).then((res) => {
+            if (res.status === 200) {
+                alert("Success! Trip saved.");
+                setIsSaved(true);
+            } else {
+                alert("Something went wrong... Your trip couldn't be saved.");
+            }
+        });
+    }
+
+    // trip is already saved-> return to viewtrip of it
+    if (isSaved) {
+        return(<Navigate to={"/viewtrip/" + id} />)
     }
 
     // can't edittrip if you are not connected
@@ -88,14 +111,10 @@ export default function EditTrip() {
             <Navbar />
             <div className='display'>
                 <div className='edit-row'>
-                    <form onSubmit={saveEditedTrip}>
-                        <label>
-                                <div className='display-name'>
-                                    Trip name:
-                                </div>
-                                <input className='form' type="text" placeholder={trip?.name} maxLength="16" onChange={e => setEditedTripName(e.target.value)} />
-                        </label>
-                        <div className='savetrip'><button className='savetrip-button' type={"submit"}>Save</button></div>
+                    <form onSubmit={saveEditedTrip} className="form-horizontal">
+                        <label className='edit-name'>Trip name:</label>
+                        <input className='edited-name' type="text" placeholder={trip?.name} maxLength="16" onChange={e => setEditedTripName(e.target.value)} />
+                        <label className='savetrip'><button className='savetrip-button' type={"submit"}>Save</button></label>
                     </form>
                 </div>
                 <div className='display-edittrip'>

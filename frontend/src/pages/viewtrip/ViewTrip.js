@@ -78,6 +78,7 @@ export default function ViewTrip() {
             <Navbar />
             <div className='display'>
                 <div className='display-row'>
+                    <div className='display-name'>Trip name: <span>{trip?.name}</span></div>
                     <div className='edittrip-div'><a className='edittrip-button' href={'/edittrip/' + id}>Edit Trip</a></div>
                 </div>
                 <div className='displaytrip'>

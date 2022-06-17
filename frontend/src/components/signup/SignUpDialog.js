@@ -2,24 +2,30 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './SignUpDialog.css';
 
-// request server to sign up user
-async function signUser(credentials) {
-  let res = await fetch('/signup', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(credentials)
-  });
-  
-  let ret = res.json();
-  return ret;
-}
-
-export default function SignUpDialog() {
+export default function SignUpDialog({ alertSignUp }) {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
   const [confirm_password, setConfirmPassword] = useState();
+
+  // request server to sign up user
+  async function signUser(credentials) {
+    let res = await fetch('/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(credentials)
+    });
+
+    if (res.status === 200) { // if ok, alert sign up is good
+      setTimeout(() => {
+        alertSignUp();
+      }, 1000); //wait 1 sec
+    }
+  
+    let ret = res.json();
+    return ret;
+  }
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -69,5 +75,5 @@ export default function SignUpDialog() {
 }
 
 SignUpDialog.propTypes = {
-  setToken: PropTypes.func.isRequired
+  alertSignUp: PropTypes.func
 }
