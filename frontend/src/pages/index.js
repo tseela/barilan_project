@@ -5,4 +5,4 @@ export { default as Profile } from './profile/Profile';
 export { default as PageNotFound } from './404/PageNotFound';
 export { default as Forbidden } from './forbidden/Forbidden';
 export { default as ViewTrip } from './viewtrip/ViewTrip';
-
+export { default as EditTrip } from './edittrip/EditTrip';

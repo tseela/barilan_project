@@ -7,16 +7,30 @@ import { Loading, Navbar, DisplayTrip } from '../../components';
 export default function ViewTrip() {
     const { token, setToken } = useToken();
     const [ trip, setTrip ] = useState(null);
-    const [ editedTrip, setEditedTrip ] = useState(null);
     const [ status, setStatus ] = useState(true); // true->all good, false->forbidden access
 
-    const id = window.location.pathname;
+    const id = window.location.pathname.split("/").pop();
 
+    // get the trip from backend server
     useEffect(() => {
         // if the user is connected
         if (token) {
-            // ask for the trip
-            fetch('/getTrip', {
+            // make sure the trip belongs to the user
+            // get name&id of user's trips
+            fetch('/getTripsAndNamesByUser', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({username: token.user, token:token})
+            }).then((res) => res.json()).then((res) => {
+                for (let i = 0; i < res.length; ++i) {
+                    if (res[i]?.id == id) {
+                        return;
+                    }
+                }
+                setStatus(false);
+            }).then(fetch('/getTrip', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json'
@@ -28,7 +42,7 @@ export default function ViewTrip() {
                 }
                 return null;
             }).then((res) => {
-                if (!res) { // if response status is not ok update
+                if (!res || !status) { // if response status is not ok update
                     setStatus(false);
                 } else { // status ok, update trip in 1 sec
                 let delay_res = res;
@@ -36,7 +50,7 @@ export default function ViewTrip() {
                         setTrip(res);
                     }, 1000); //wait 1 sec
                 }
-            });
+            }));
         }
     }, [token]);
 
@@ -63,9 +77,11 @@ export default function ViewTrip() {
         <div className='viewtrip'>
             <Navbar />
             <div className='display'>
+                <div className='display-row'>
+                    <div className='edittrip-div'><a className='edittrip-button' href={'/edittrip/' + id}>Edit Trip</a></div>
+                </div>
                 <div className='displaytrip'>
-                    <DisplayTrip trip={trip} setEditedTrip={setEditedTrip} canSort={true} />
-                    <button onClick={() => console.log(editedTrip)}>log</button>
+                    <DisplayTrip trip={trip} />
                 </div>
             </div>
         </div>
