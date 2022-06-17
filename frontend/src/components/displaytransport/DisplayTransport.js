@@ -1,6 +1,5 @@
 import './DisplayTransport.css';
 import PropTypes from 'prop-types';
-import { FaAvianex } from 'react-icons/fa';
 
 // get full date and return just hours and mins
 function getHour(date) {
@@ -11,13 +10,16 @@ function getHour(date) {
     return date.substring(i, i + 5);
 }
 
-export default function DisplayTransport({ transport, iconPressed, notifyPressed }) {
+export default function DisplayTransport({ transport, notifyPressed }) {
     return(
-    <div className="displaytransport-container" onClick={() => notifyPressed(transport?.title, transport?.googleMapsLink)}>
+    <div className="displaytransport-container">
         <div className='trns-col'>
             <div className='trns-row row-dash'>
-                <div className='trns-title'>
-                    {transport?.title}<div className='trns-pic' color='blue' onClick={() => iconPressed(transport?.googleMapsImageLink)}><FaAvianex /></div>
+                <div className='align-left'>
+                    <div className='trns-title'>{transport?.title + ' | '}</div>
+                    <div className='trns-title' onClick={() => notifyPressed(transport?.baseStation, transport?.placeOfOrigin)}>{transport?.baseStation}</div>
+                    <div className='trns-title'>{' -> '}</div>
+                    <div className='trns-title' onClick={() => notifyPressed(transport?.baseStation, transport?.destination)}>{transport?.arrivalStation}</div>
                 </div>
             </div>
             <div className='trns-row row-dash'>
@@ -35,7 +37,7 @@ export default function DisplayTransport({ transport, iconPressed, notifyPressed
             </div>
             <div className='trns-row row-dash'>
                 <div className='trns-method trns-places'>
-                    Take the {transport?.methodOfTransportation} from <span>{transport?.placeOfOrigin}</span> to <span>{transport?.destination}</span>
+                    Take the {transport?.methodOfTransportation} from <a className='trns-link' href={transport?.originLink} target="_blank" rel="noopener noreferrer">{transport?.baseStation}</a> to <a className='trns-link' href={transport?.destinationLink} target="_blank" rel="noopener noreferrer">{transport?.arrivalStation}</a>
                 </div>
             </div>
             <div className='trns-row row-dash'>
@@ -50,6 +52,5 @@ export default function DisplayTransport({ transport, iconPressed, notifyPressed
 
 DisplayTransport.propTypes = {
     transport: PropTypes.object.isRequired,
-    iconPressed: PropTypes.func,
     notifyPressed: PropTypes.func
 }

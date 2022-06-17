@@ -61,6 +61,12 @@
     color: darkblue;
 }
 
+.pos-link {
+    font-size: 1.7vh;
+    margin-left: 3vw;
+    font-weight: bold;
+}
+
 .pos-cost {
     font-size: 1.7vh;
     margin-right: 1vw;

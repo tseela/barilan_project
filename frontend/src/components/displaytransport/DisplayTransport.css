@@ -17,6 +17,13 @@
     justify-content: space-between;
 }
 
+.trns-row .align-left {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: left;
+}
+
 .trns-col {
     display: flex;
     flex-direction: column;
@@ -28,12 +35,6 @@
 
     display: flex;
     flex-direction: row;
-}
-
-.trns-pic {
-    font-size: 2vh;
-    margin-left: 1vw;
-    color: darkblue;
 }
 
 .trns-time {
@@ -52,6 +53,10 @@
 
 .trns-total span {
     font-size: 1.3vh;
+}
+
+.trns-link {
+    font-weight: bold;
 }
 
 .trns-method {

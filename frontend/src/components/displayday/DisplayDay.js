@@ -36,7 +36,7 @@ export default function DisplayDay({ day, index, iconPressed, notifyPressed, can
     transport.push([]); // to make length equal to avtivities
     let trans_html = []; // each cell is a display transportation element
     transport.map((trans, i) => {
-        trans_html[i] = trans.map((tran, j) => { return <DisplayTransport key={i.toString() + ',' + j.toString()} transport={tran} iconPressed={iconPressed} notifyPressed={notifyPressed} />});
+        trans_html[i] = trans.map((tran, j) => { return <DisplayTransport key={i.toString() + ',' + j.toString()} transport={tran} notifyPressed={notifyPressed} />});
     });
 
     let act_html = []; // each cell is a display activity element
@@ -60,11 +60,12 @@ export default function DisplayDay({ day, index, iconPressed, notifyPressed, can
                 cost: {day?.cost}$
             </div>
         </div>
-        <div className='pos' onClick={() => notifyPressed(pos?.title, pos?.googleMapsLink)}>
+        <div className='pos' onClick={() => notifyPressed(pos?.title, pos?.destination)}>
             <div className='pos-row row-dash'>
                 <div className='pos-row'>
                     <div className='pos-title'>{pos?.title}</div>
-                    <div className='pos-pic' onClick={() => iconPressed(pos?.googleMapsImageLink)} color='blue'><FaAvianex /></div>
+                    <div className='pos-pic' onClick={() => iconPressed(pos?.images)} color='blue'><FaAvianex /></div>
+                    <a className='pos-link' href={pos?.link} target="_blank" rel="noopener noreferrer">link</a>
                 </div>
                 <div className='pos-cost day-dash'>
                     cost: {pos?.cost}$

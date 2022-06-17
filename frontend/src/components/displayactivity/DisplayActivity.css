@@ -54,6 +54,12 @@
     font-size: 1.5vh;
 }
 
+.act-link {
+    font-size: 1.7vh;
+    margin-left: 3vw;
+    font-weight: bold;
+}
+
 .act-order {
     font-size: 1.4vh;
     font-weight: bold;

@@ -5,7 +5,7 @@ import { useRef, useState } from 'react';
 import cloneDeep from 'lodash/cloneDeep';
 
 export default function DisplayTrip({ trip, canSort, setEditedTrip }) {
-    const [ displayed, setDisplayed ] = useState({ title:'', link:'' });
+    const [ displayed, setDisplayed ] = useState({ 'title':'', 'latitude':'32.0684408', 'longitude':'34.7740717' });
     const [ picArray, setPicArray ] = useState([]);
     const [ picIndex, setPicIndex ] = useState(-1);
 
@@ -15,6 +15,7 @@ export default function DisplayTrip({ trip, canSort, setEditedTrip }) {
             setEditedTrip(cloneDeep(trip));
         }
     }, []);
+
 
     // report on trip change
     function report(sortedInts, dayIndex) { // using cloneDeep to copy nested arrays and jsons
@@ -40,15 +41,15 @@ export default function DisplayTrip({ trip, canSort, setEditedTrip }) {
         }
     }
 
-    // src="https://maps.google.com/maps?q=COORDINATES&t=&z=13&ie=UTF8&iwloc=&output=embed"
+    // can use openstreetmap instead of google maps but they don't have a marker...
     return(
     <div className="displaytrip-container">
         <div className='reg-page-container' style={{opacity: picIndex === -1 ? 1 : 0.5}}>
             <div className='activities-display'>
-                {trip?.days.map((d, i) => { return <DisplayDay reportSorting={(sortedInts) => report(sortedInts, i)} day={d} index={i} key={i} canSort={canSort} iconPressed={(img_array) => {setPicArray(img_array); setPicIndex(0);}} setEditedTrip={setEditedTrip} notifyPressed={(_title, _link) => setDisplayed({ title:_title, link:_link })} /> })}
+                {trip?.days.map((d, i) => { return <DisplayDay reportSorting={(sortedInts) => report(sortedInts, i)} day={d} index={i} key={i} canSort={canSort} iconPressed={(img_array) => {setPicArray(img_array); setPicIndex(0);}} setEditedTrip={setEditedTrip} notifyPressed={(_title, _coordinates) => setDisplayed({ 'title':_title, 'latitude':_coordinates.split(",").pop(), 'longitude':_coordinates.split(",")[0] })} /> })}
             </div>
             <div className='displayitem'>
-                <iframe className='googlemaps' title='info' src={displayed.link[0]}></iframe>
+                <iframe className='googlemaps' title='info' src={'https://maps.google.com/maps?q=' + parseFloat(displayed.latitude) + ',' + parseFloat(displayed.longitude) + '&t=&z=13&ie=UTF8&iwloc=&output=embed'}></iframe>
             </div>
         </div>
         {picIndex === -1 ? '': 
