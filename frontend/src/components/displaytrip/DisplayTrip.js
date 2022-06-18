@@ -6,7 +6,7 @@ import { useRef, useState } from 'react';
 import cloneDeep from 'lodash/cloneDeep';
 
 export default function DisplayTrip({ trip, canSort, setEditedTrip }) {
-    const [ displayed, setDisplayed ] = useState({ 'title':'', 'latitude':'32.0684408', 'longitude':'34.7740717' });
+    const [ displayed, setDisplayed ] = useState({ 'title':'', 'latitude':'', 'longitude':'' });
     const [ picArray, setPicArray ] = useState([]);
     const [ picIndex, setPicIndex ] = useState(-1);
 
