@@ -36,11 +36,11 @@ export default function DisplayDay({ day, index, iconPressed, notifyPressed, can
     transport.push([]); // to make length equal to avtivities
     let trans_html = []; // each cell is a display transportation element
     transport.map((trans, i) => {
-        trans_html[i] = trans.map((tran, j) => { return <DisplayTransport key={i.toString() + ',' + j.toString()} transport={tran} notifyPressed={notifyPressed} />});
+        trans_html[i] = trans.map((tran, j) => { return <div className='fill-width' key={i.toString() + ',' + j.toString()}><DisplayTransport transport={tran} notifyPressed={notifyPressed} /></div>});
     });
 
     let act_html = []; // each cell is a display activity element
-    activities.map((act, i) => { act_html[i] = <DisplayActivity dataID={i.toString()} key={i} activity={act} iconPressed={iconPressed} notifyPressed={notifyPressed} /> });
+    activities.map((act, i) => { act_html[i] = <div className='fill-width' key={i} data-id={i}><DisplayActivity activity={act} iconPressed={iconPressed} notifyPressed={notifyPressed} /></div> });
 
     let act_trans_joined = [];  // each cell is a display element (ordered)
     for (let i = 0; i < activities.length; ++i) {

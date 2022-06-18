@@ -12,13 +12,13 @@ function getHour(date) {
 }
 
 // display one activity
-export default function DisplayActivity({ activity, iconPressed, notifyPressed, dataID }) {
+export default function DisplayActivity({ activity, iconPressed, notifyPressed }) {
     if (!activity) {
         return;
     }
 
     return(
-    <div className="displayactivity-container" data-id={dataID} onClick={() => notifyPressed(activity?.title, activity?.destination)}>
+    <div className="displayactivity-container" onClick={() => notifyPressed(activity?.title, activity?.destination)}>
         <div className='act-col'>
             <div className='act-row row-dash'>
                 <div className='act-title'>
@@ -53,6 +53,5 @@ export default function DisplayActivity({ activity, iconPressed, notifyPressed, 
 DisplayActivity.propTypes = {
     activity: PropTypes.object,
     iconPressed: PropTypes.func,
-    notifyPressed: PropTypes.func,
-    dataID: PropTypes.string
+    notifyPressed: PropTypes.func
 }
