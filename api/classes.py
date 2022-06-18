@@ -97,6 +97,9 @@ class Activity:
         self.googleMapsImageLink = googleMapsImageLink
         self.orderInAdvance = orderInAdvance
         self.destination = destination
+    def insertTime(self, timeStart, timeEnd):
+        self.timeStart = timeStart
+        self.timeEnd = timeEnd
     def toActivity(activity):
         return Activity(activity.duration , activity.cost, activity.timeStart, activity.timeEnd, activity.title, activity.googleMapsLink, activity.googleMapsImageLink, activity.orderInAdvance)
     def __str__(self):
