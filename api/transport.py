@@ -31,7 +31,30 @@ class transportFunctions:
 
 
         return transportations
+    
+    def getTransportByTime(self, latitude1, longitude1, latitude2, longitude2, depTime):
+        origin = str(latitude1) + "," + str(longitude1)
+        destination = str(latitude2) + "," + str(longitude2)
+        url = "https://transit.router.hereapi.com/v8/routes?apiKey=pGwbEV9EnOVSNh94i8prG-B4oBd8RSO8bP6lk_u6NXI&origin=" + origin + "&destination=" + destination + "&departureTime=" + depTime
 
+        response = requests.get(url)
+        trans = ast.literal_eval(response.text)
+        print(trans)
+        if len(trans["routes"]) == 0:
+            return []
+
+        way = trans["routes"][0]
+
+        sections = way["sections"]
+
+
+        transportations = []
+        for section in sections:
+            transResults = self.createTransportation(section)
+            transportations.append(transResults)
+
+
+        return transportations
 
     def createTransportation(self, section):
         # print(section)
