@@ -84,6 +84,8 @@ class transportFunctions:
         # print(baseStation, arrivalStation)
 
         startTime = section["departure"]["time"].split("+")[0]
+        if (len(section["departure"]["time"].split("-")) == 4):
+            endTime = '-'.join(section["departure"]["time"].split("-")[:-1])
         startTime = datetime.strptime(startTime, '%Y-%m-%dT%H:%M:%S')
         startPlace = str(section["departure"]["place"]["location"]["lat"]) + "," + str(section["departure"]["place"]["location"]["lng"])
 
