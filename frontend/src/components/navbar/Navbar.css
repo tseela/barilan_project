@@ -45,7 +45,7 @@
   
 .nav-links a {
     font-size: max(2.5vh, 1.7vw);
-    font-weight: 300;
+    font-weight: 500;
     color: black;
     text-decoration: none;
     transition: all 0.3s;
@@ -53,13 +53,12 @@
 
 .profile-div {
     font-size: max(2.5vh, 1.7vw);
-    font-weight: 300;
-    color: black;
+    color: gray;
+    font-weight: 500;
 }
 
 .nav-links a:hover {
     color: blue;
-    font-weight: bold;
 }
 
 .logout-div {
