@@ -32,12 +32,9 @@
     border-radius: 0.7vmin;
 }
 
-.displayitem {
+.display-map {
     margin-left: 5vw;
     margin-right: 5vw;
-}
-
-.googlemaps {
     width: 30vw;
     height: 60vh;
 }

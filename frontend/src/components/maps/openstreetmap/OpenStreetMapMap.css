@@ -1,0 +1,14 @@
+.openstreetmap-container {
+    width: 100%;
+    height: 100%;
+}
+
+.openstreetmap {
+    width: 100%;
+    height: 100%;
+}
+
+.bigger-link {
+    color: aqua;
+    text-align: center;
+}
