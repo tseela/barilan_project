@@ -89,6 +89,7 @@ class transportFunctions:
 
 
         endTime = section["arrival"]["time"].split("+")[0]
+        endTime = section["arrival"]["time"].split("-")[0]
         endTime = datetime.strptime(endTime, '%Y-%m-%dT%H:%M:%S')
         endPlace = str(section["arrival"]["place"]["location"]["lat"])+ "," + str(section["arrival"]["place"]["location"]["lng"])
 
