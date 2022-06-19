@@ -21,7 +21,7 @@ async function loginUser(credentials) {
 }
 
 // setToken- func to set parent token(which should be updated in session storage too)
-export default function LoginDialog({ setToken }) {
+export default function LoginDialog({ setToken, directToRegister=true }) {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
 
@@ -60,13 +60,14 @@ export default function LoginDialog({ setToken }) {
           <button className='login-btn' type="submit">Login</button>
         </div>
       </form>
-      <div className='go-register'>
+      {directToRegister ? <div className='go-register'>
         You don't have an account? <a href='/signup'>Register</a>
-      </div>
+      </div> : ''}
     </div>
   )
 }
 
 LoginDialog.propTypes = {
-  setToken: PropTypes.func.isRequired
+  setToken: PropTypes.func.isRequired,
+  directToRegister: PropTypes.bool
 }

@@ -5,7 +5,7 @@
     color: black;
     background-color: whitesmoke;
     border-radius: 25px;
-    width: 65vh;
+    width: 100%;
     height: fit-content;
 }
 
@@ -13,16 +13,15 @@
     text-align: center;
     font-weight: bold;
     font-size: 6vh;
-    margin-bottom: 3vh;
+    margin-bottom: 3%;
 }
 
 .form {
-    height: 4vh;
-    font-size: 100%;
+    height: 4%;
 }
 
 .conf-pass {
-    margin-top: 1vh;
+    margin-top: 2%;
 }
 
 .signup-btn-div {
@@ -38,11 +37,11 @@
     border-radius: 4px;
     border-width: 0px;
     width: 45%;
-    height: 5vh;
+    height: 5%;
+    margin-bottom: 4%;
 }
 
 .go-login {
-    margin-top: 4%;
     font-size: 63%;
-    margin-bottom: 2vh;
+    margin-bottom: 2%;
 }

@@ -36,7 +36,7 @@ export default function Navbar() {
                     <a href="/home">Home</a>
                 </li>
                 <li>
-                    <a href="/trip_planning">Trip Planning</a>
+                    <a href="/plantrip">Trip Planning</a>
                 </li>
                 <li>
                     {profile}

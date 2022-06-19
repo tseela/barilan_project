@@ -11,8 +11,8 @@ export default function OfflineEditTrip({ trip, saveEditedTrip }) {
         if (editedTripName === '') {
             return;
         }
-        et.name = editedTripName;
         let et = editedTrip;
+        et.name = editedTripName;
 
         saveEditedTrip(et);
     }
@@ -24,13 +24,11 @@ export default function OfflineEditTrip({ trip, saveEditedTrip }) {
             <div className='display'>
                 <div className='edit-row'>
                     <form onSubmit={saveTrip}>
-                        <label>
-                                <div className='display-name'>
-                                    Trip name:
-                                </div>
-                                <input className='form' type="text" placeholder={trip?.name} maxLength="16" onChange={e => setEditedTripName(e.target.value)} />
+                        <label><div className='display-name'>Trip name:</div></label>
+                        <input className='form' type="text" placeholder={trip?.name} maxLength="16" onChange={e => setEditedTripName(e.target.value)} />
+                        <label className='savetrip'>
+                            <button className='savetrip-button' type={"submit"}>Save</button>
                         </label>
-                        <div className='savetrip'><button className='savetrip-button' type={"submit"}>Save</button></div>
                     </form>
                 </div>
                 <div className='display-edittrip'>

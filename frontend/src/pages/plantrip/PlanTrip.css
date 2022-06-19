@@ -1,0 +1,26 @@
+.plantrip-container {
+    color: white;
+    background-color: #252525;
+    min-height: 100vh;
+}
+
+.delayed-login-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.dialog {
+    font-size: min(3.5vh, 2vw);
+    margin-left: 5vw;
+    margin-right: 5vw;
+    margin-top: 15vh;
+}
+
+.delayed-login {
+    width: min(55vh, 43vw);
+}
+
+.delayed-signup {
+    width: min(60vh, 50vw);
+}

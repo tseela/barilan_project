@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import './SignUpDialog.css';
 
-export default function SignUpDialog({ alertSignUp }) {
+export default function SignUpDialog({ alertSignUp, directToLogin=true }) {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
   const [confirm_password, setConfirmPassword] = useState();
+  const formRef = useRef();
 
   // request server to sign up user
   async function signUser(credentials) {
@@ -46,12 +47,14 @@ export default function SignUpDialog({ alertSignUp }) {
     });
 
     alert(res?.message); // alert user about registration state
+
+    formRef.current.reset(); // clear form
   }
 
   return(
     <div className="signup-wrapper">
       <header className="headline" >Sign Up</header>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} ref={formRef}>
         <label>
           <input className='form' type="text" placeholder="Username" maxLength="10" onChange={e => setUserName(e.target.value)} />
         </label>
@@ -67,13 +70,14 @@ export default function SignUpDialog({ alertSignUp }) {
           <button className='signup-btn' type="submit">Sign Up</button>
         </div>
       </form>
-      <div className='go-login'>
+      {directToLogin ? <div className='go-login'>
         You already have an account? <a href='/login'>Login</a>
-      </div>
+      </div> : ''}
     </div>
   )
 }
 
 SignUpDialog.propTypes = {
-  alertSignUp: PropTypes.func
+  alertSignUp: PropTypes.func,
+  directToLogin: PropTypes.bool
 }
