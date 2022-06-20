@@ -440,7 +440,7 @@ def mockTrip():
     activity2 = classes.Activity(2, 2000, str(datetime.now()), str(datetime.now()), "second activity", "location2", "image2", False,"0,0")
     myActivities = [activity1, activity2]
 
-    myTransformation = classes.Transport(0.5, 7, str(datetime.now()),str(datetime.now()), "1->2", "location 1.5", "image 1.5", False, "first activity", 1, "second activity")
+    myTransformation = classes.Transport(0.5, 7, str(datetime.now()),str(datetime.now()), "1->2", "location 1.5", "image 1.5", False, "first activity", 1, "second activity","first stat", "second stat")
     
     myPlace = classes.PlaceOfStay(1, 500, str(datetime.now()), str(datetime.now()), "hotel", "location sleep", "image sleep", True, "Israel")
 
@@ -450,7 +450,7 @@ def mockTrip():
     
     myDays = [day1, day2, day3]
 
-    myTrip = classes.Trip("shaked4-Israel", "Israel", 3, str(datetime.now()), str(datetime.now()), myDays, 3*4507, ObjectId("ababcdcdefefababcdcdefef"))
+    myTrip = classes.Trip("shaked4-Israel", "Israel", 3, str(datetime.now()), str(datetime.now()), myDays, 3*4507, ObjectId("ababcdcdefefababcdcdefef"),"12","23")
     return myTrip
 
 def printTripObject(tripID):
