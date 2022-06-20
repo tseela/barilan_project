@@ -46,6 +46,7 @@ class Transportation(Enum):
     TRAIN = 2
     RAM = 3
     PUBLICTAXI = 4
+    FLIGHT = 5
 
 class PlaceOfStay:
     def __init__(self):
@@ -143,7 +144,9 @@ class Trip:
         self.days = [Day()]
         self.cost = int(0)
         self.userId = int(0)
-    def __init__(self, name, destination, duration, startDate, endDate, days, cost, userId):
+        self.initFlight = [Transport()]
+        self.finFlight = [Transport()]
+    def __init__(self, name, destination, duration, startDate, endDate, days, cost, userId, initFlight, finFlight):
         self.name = name
         self.destination = destination
         self.duration = duration
@@ -152,9 +155,11 @@ class Trip:
         self.days = days
         self.cost = cost
         self.userId = userId
+        self.initFlight = initFlight
+        self.finFlight = finFlight
     def toTrip(trip) -> Trip:
         return Trip(trip.name, trip.destination, trip.duration, trip.startDate, trip.endDate, trip.days, trip.cost, trip.userId)
     def __str__(self):
         return str({"Duration" : self.duration, "Cost" : self.cost, "Times:" : [self.startDate, self.endDate], "Name" : self.name, "Dest" : self.destination})
     def DictToTrip(trip) -> Trip:
-        return Trip(trip['name'], trip['destination'], trip['duration'], trip['startDate'], trip['endDate'], trip['days'], trip['cost'], trip['userId'])
+        return Trip(trip['name'], trip['destination'], trip['duration'], trip['startDate'], trip['endDate'], trip['days'], trip['cost'], trip['userId'], trip['initFlight'], trip['finFlight'])
