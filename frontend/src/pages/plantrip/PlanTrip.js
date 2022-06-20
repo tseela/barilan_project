@@ -3,7 +3,6 @@ import { useToken } from '../../hooks';
 import { OfflineEditTrip } from '../index';
 import { useState, useEffect } from 'react';
 import { Loading, Navbar, LoginDialog, SignUpDialog } from '../../components';
-import { Navigate } from 'react-router-dom';
 import Select from 'react-select';
 
 function getToday() {
