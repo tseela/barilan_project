@@ -186,6 +186,16 @@ def insertTrip(trip):
     user = users.find_one({"username" : theusernowis})
     
     trip.userId = user["_id"]
+    
+    newFlights = []
+    for flight in trip.initFlight:
+        newFlights.append(flight.__dict__)
+    trip.initFlight = newFlights
+
+    newflights2 = []
+    for flight in trip.finFlight:
+        newflights2.append(flight.__dict__)
+    trip.finFlight = newflights2    
 
     return trips.insert_one(trip.__dict__).inserted_id
 
@@ -236,6 +246,16 @@ def getTrip(id):
         tripDays.append(getDay(day))
 
     trip.days = tripDays
+
+    newFlights = []
+    for flight in trip.initFlight:
+        newFlights.append(classes.Transport.DictToTransport(flight))
+    trip.initFlight = newFlights
+
+    newFlights2 = []
+    for flight in trip.finFlight:
+        newFlights2.append(classes.Transport.DictToTransport(flight))
+    trip.finFlight = newFlights2
 
     return trip
 
@@ -440,17 +460,24 @@ def mockTrip():
     activity2 = classes.Activity(2, 2000, str(datetime.now()), str(datetime.now()), "second activity", "location2", "image2", False,"0,0")
     myActivities = [activity1, activity2]
 
-    myTransformation = classes.Transport(0.5, 7, str(datetime.now()),str(datetime.now()), "1->2", "location 1.5", "image 1.5", False, "first activity", 1, "second activity","first stat", "second stat")
+    myTransformation1 = classes.Transport(0.5, 7, str(datetime.now()),str(datetime.now()), "1->2", "location 1.5", "image 1.5", False, "first activity", 1, "second activity","first stat", "second stat")
+    myTransformation2 = classes.Transport(0.5, 7, str(datetime.now()),str(datetime.now()), "1->2", "location 1.5", "image 1.5", False, "first activity", 1, "second activity","first stat", "second stat")
+    myTransformation3 = classes.Transport(0.5, 7, str(datetime.now()),str(datetime.now()), "1->2", "location 1.5", "image 1.5", False, "first activity", 1, "second activity","first stat", "second stat")
     
     myPlace = classes.PlaceOfStay(1, 500, str(datetime.now()), str(datetime.now()), "hotel", "location sleep", "image sleep", True, "Israel")
 
-    day1 = classes.Day(myActivities, [myTransformation], 4507, str(datetime.now()),str(datetime.now()),4.5, myPlace)
-    day2 = classes.Day(myActivities, [myTransformation], 4507, str(datetime.now()),str(datetime.now()),4.5, myPlace)
-    day3 = classes.Day(myActivities, [myTransformation], 4507, str(datetime.now()),str(datetime.now()),4.5, myPlace)
+    day1 = classes.Day(myActivities, [myTransformation1], 4507, str(datetime.now()),str(datetime.now()),4.5, myPlace)
+    day2 = classes.Day(myActivities, [myTransformation2], 4507, str(datetime.now()),str(datetime.now()),4.5, myPlace)
+    day3 = classes.Day(myActivities, [myTransformation3], 4507, str(datetime.now()),str(datetime.now()),4.5, myPlace)
     
     myDays = [day1, day2, day3]
 
-    myTrip = classes.Trip("shaked4-Israel", "Israel", 3, str(datetime.now()), str(datetime.now()), myDays, 3*4507, ObjectId("ababcdcdefefababcdcdefef"),"12","23")
+    flight1 =classes.Transport(0.5, 7, str(datetime.now()),str(datetime.now()), "1->2", "location 1.5", "image 1.5", False, "first activity", 1, "second activity","first stat", "second stat")
+    flight2 =classes.Transport(0.5, 7, str(datetime.now()),str(datetime.now()), "1->2", "location 1.5", "image 1.5", False, "first activity", 1, "second activity","first stat", "second stat")
+    flight3 =classes.Transport(0.5, 7, str(datetime.now()),str(datetime.now()), "1->2", "location 1.5", "image 1.5", False, "first activity", 1, "second activity","first stat", "second stat")
+    flight4 =classes.Transport(0.5, 7, str(datetime.now()),str(datetime.now()), "1->2", "location 1.5", "image 1.5", False, "first activity", 1, "second activity","first stat", "second stat")
+     
+    myTrip = classes.Trip("shaked4-Israel", "Israel", 3, str(datetime.now()), str(datetime.now()), myDays, 3*4507, ObjectId("ababcdcdefefababcdcdefef"),[flight1,flight2],[flight3,flight4])
     return myTrip
 
 def printTripObject(tripID):
@@ -471,6 +498,8 @@ def printTripObject(tripID):
 
 
 def TripToJson(trip):
+    transOptions = {0 : "NONE", 1 : "BUS", 2 : "TRAIN", 3 : "RAM", 4 : "PUBLICTAXI", 5 : "FLIGHT"}
+
     newDays = []
     for day in trip.days:
 
@@ -483,6 +512,7 @@ def TripToJson(trip):
         newtrans = []
         for trans in day.transportation:
             transon = trans.__dict__
+            transon["methodOfTransportation"] = transOptions[int(transon["methodOfTransportation"])]
             newtrans.append(transon)
         day.transportation = newtrans
 
@@ -492,10 +522,27 @@ def TripToJson(trip):
     trip.days = newDays
     # print(trip.__dict__)
     trip.userId = str(trip.__dict__["userId"])
+
+    newFlights = []
+    for flight in trip.initFlight:
+        nFlight = flight.__dict__
+        nFlight["methodOfTransportation"] = transOptions.get(int(nFlight["methodOfTransportation"]))
+        newFlights.append(nFlight)
+    trip.initFlight = newFlights
+
+    newflights2 = []
+    for flight in trip.finFlight:
+        nFlight = flight.__dict__
+        nFlight["methodOfTransportation"] = transOptions.get(int(nFlight["methodOfTransportation"]))
+        newflights2.append(nFlight)
+    trip.finFlight = newflights2
     return json.dumps(trip.__dict__)
 
 
 def JsonToTrip(jsonTrip):
+    # transOptions = { "NONE" : classes.Transportation.NONE, "BUS" : classes.Transportation.BUS, "TRAIN" : classes.Transportation.TRAIN, "RAM" : classes.Transportation.RAM, "PUBLICTAXI" : classes.Transportation.PUBLICTAXI, "FLIGHT" : classes.Transportation.FLIGHT}
+    transOptions = { "NONE" : 0, "BUS" : 1, "TRAIN" : 2, "RAM" : 3, "PUBLICTAXI" : 4, "FLIGHT" : 5}
+
     trip = json.loads(jsonTrip)
     newDays = []
     for day in trip['days']:
@@ -508,6 +555,7 @@ def JsonToTrip(jsonTrip):
         newtrans = []
         for trans in day["transportation"]:
             transon = classes.Transport.DictToTransport(trans)
+            transon.methodOfTransportation = transOptions[transon.methodOfTransportation]
             newtrans.append(transon)
         day["transportation"] = newtrans
 
@@ -517,6 +565,17 @@ def JsonToTrip(jsonTrip):
         newDays.append(newday)
     trip['days'] = newDays
     trip['userId'] = ObjectId(trip['userId'])
+
+    newFlights = []
+    for flight in trip["initFlight"]:
+        newFlights.append(classes.Transport.DictToTransport(flight))
+    trip["initFlight"] = newFlights
+
+    newFlights2 = []
+    for flight in trip["finFlight"]:
+        newFlights2.append(classes.Transport.DictToTransport(flight))
+    trip["finFlight"] = newFlights2
+
     return classes.Trip.DictToTrip(trip)
 
 
@@ -586,6 +645,7 @@ if __name__ == '__main__':
 
     t2 = mockTrip()
     t2son = TripToJson(t2)
+    print(6, json.dumps(json.loads(t2son), indent=3, sort_keys=True))
     z = insertTripToUser2("billie", t2son)
-    print(6,z)
+    print(7,z)
 
