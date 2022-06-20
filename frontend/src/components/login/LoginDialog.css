@@ -38,6 +38,10 @@
     margin-bottom: 4%;
 }
 
+.login-btn:hover {
+    font-weight: bold;
+}
+
 .go-register {
     font-size: 63%;
     margin-bottom: 2%;

@@ -113,7 +113,7 @@ export default function EditTrip() {
                 <div className='edit-row'>
                     <form onSubmit={saveEditedTrip} className="form-horizontal">
                         <label className='edit-name'>Trip name:</label>
-                        <input className='edited-name' type="text" placeholder={trip?.name} maxLength="16" onChange={e => setEditedTripName(e.target.value)} />
+                        <input className='edited-name' type="text" placeholder={trip?.name} maxLength="16" onChange={(e) => setEditedTripName(e.target.value)} />
                         <button className='cancel-button' onClick={() => setIsDone(true)}>Cancel Changes</button>
                         <label className='savetrip'>
                             <button className='savetrip-button' type={"submit"}>Save</button>

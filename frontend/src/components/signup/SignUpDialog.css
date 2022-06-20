@@ -41,6 +41,10 @@
     margin-bottom: 4%;
 }
 
+.signup-btn:hover {
+    font-weight: bold;
+}
+
 .go-login {
     font-size: 63%;
     margin-bottom: 2%;

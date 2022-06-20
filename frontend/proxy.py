@@ -2,10 +2,28 @@
 from __future__ import print_function
 from flask import Flask , request, jsonify,make_response
 from datetime import datetime
+import csv
 
 # server
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '03a5t89c1pf9Uc0a0f7E'
+
+_airportsMap = []
+_countriesMap = []
+_regionsMap = []
+
+with open('metadata/regions.csv', encoding="utf-8") as f:
+    _regionsMap = [{k: v for k, v in row.items()}
+        for row in csv.DictReader(f, skipinitialspace=True)]
+
+with open('metadata/countries.csv', encoding="utf-8") as f:
+    _countriesMap = [{k: v for k, v in row.items()}
+        for row in csv.DictReader(f, skipinitialspace=True)]
+
+headers = [ 'name', 'latitude_deg', 'longitude_deg', 'iso_region', 'municipality', 'iso_country', 'iata_code' ]
+with open('metadata/airports.csv', encoding="utf-8") as f:
+    _airportsMap = [{k: v for k, v in row.items() if k in headers}
+        for row in csv.DictReader(f, skipinitialspace=True)]
 
 
 @app.route('/signup', methods=['POST'])
@@ -49,7 +67,10 @@ def signIn(username, password):
 @app.route('/getTrip', methods=['POST'])
 def getTrip():
     id = request.json['tripID'];
+    return trip(id), 200
 
+
+def trip(id):
     return jsonify({
         'id' : id,
         'name' : 'for display',
@@ -246,7 +267,7 @@ def getTrip():
                 'timeEnd' : datetime.now()
             }]
         }]
-    }), 200
+    })
 
 
 @app.route('/getTripsAndNamesByUser', methods=['POST'])
@@ -283,6 +304,14 @@ def RemoveTripFromUser():
 def RemoveTripFromUserFail():
     return "Cant romve trip", 403
 
+@app.route('/getAirportsAndDistrictsLists', methods=['GET'])
+def getAirportsAndDistrictsLists():
+    print(_regionsMap[0])
+    return jsonify({ 'airportsMap' : _airportsMap, 'countriesMap' : _countriesMap, 'regionsMap' : _regionsMap }), 200
+
+@app.route('/createtrip', methods=['POST'])
+def createTrip():
+    return trip(''), 200
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

@@ -10,7 +10,7 @@ export default function GoogleMapsMap({ latitude, longitude }) {
 
     return(
     <div className="googlemaps-container">
-        <iframe className='googlemaps' title='map' src={mapLink} loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <iframe className='googlemaps' title='map' src={mapLink} loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
     </div>
     )
 }
