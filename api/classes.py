@@ -162,7 +162,7 @@ class Trip:
         self.initFlight = initFlight
         self.finFlight = finFlight
     def toTrip(trip) -> Trip:
-        return Trip(trip.name, trip.destination, trip.duration, trip.startDate, trip.endDate, trip.days, trip.cost, trip.userId)
+        return Trip(trip.name, trip.destination, trip.duration, trip.startDate, trip.endDate, trip.days, trip.cost, trip.userId, trip.initFlight, trip.finFlight)
     def __str__(self):
         return str({"Duration" : self.duration, "Cost" : self.cost, "Times:" : [self.startDate, self.endDate], "Name" : self.name, "Dest" : self.destination})
     def DictToTrip(trip) -> Trip:
