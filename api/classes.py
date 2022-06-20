@@ -15,30 +15,34 @@ class Transport:
         self.timeStart = datetime.now()
         self.timeEnd = datetime.now()
         self.title = str("")
-        self.googleMapsLink = str("")
-        self.googleMapsImageLink = str("")
+        self.originLink = str("")
+        self.destinationLink = str("")
         self.orderInAdvance = bool(False)
         self.placeOfOrigin = str("")
         self.methodOfTransportation =  Transportation.NONE
         self.destination = str("")
-    def __init__(self, duration, cost, timeStart, timeEnd, title, googleMapsLink, googleMapsImageLink, orderInAdvance, placeOfOrigin, methodOfTransportation, destination):
+        self.baseStation = str("")
+        self.arrivalStation = str("")
+    def __init__(self, duration, cost, timeStart, timeEnd, title, originLink, destinationLink, orderInAdvance, placeOfOrigin, methodOfTransportation, destination, baseStation, arrivalStation):
         self.duration = duration
         self.cost = cost
         self.timeStart = timeStart
         self.timeEnd = timeEnd
         self.title = title
-        self.googleMapsLink = googleMapsLink
-        self.googleMapsImageLink = googleMapsImageLink
+        self.originLink = originLink
+        self.destinationLink = destinationLink
         self.orderInAdvance = orderInAdvance
         self.placeOfOrigin = placeOfOrigin
         self.methodOfTransportation = methodOfTransportation
         self.destination = destination
+        self.baseStation = baseStation
+        self.arrivalStation = arrivalStation
     def toTransport(trans):
-        return Transport(trans.duration, trans.cost, trans.timeStart, trans.timeEnd, trans.title, trans.googleMapsLink, trans.googleMapsImageLink, trans.orderInAdvance, trans.placeOfOrigin, trans.methodOfTransportation, trans.destination)
+        return Transport(trans.duration, trans.cost, trans.timeStart, trans.timeEnd, trans.title, trans.originLink, trans.destinationLink, trans.orderInAdvance, trans.placeOfOrigin, trans.methodOfTransportation, trans.destination, trans.baseStation, trans.arrivalStation)
     def __str__(self):
         return str({"Duration" : self.duration, "Cost" : self.cost, "Times:" : [self.timeStart, self.timeEnd], "Title" : self.title, "Dest" : self.destination})
     def DictToTransport(trans):
-        return Transport(trans['duration'], trans['cost'], trans['timeStart'], trans['timeEnd'], trans['title'], trans['googleMapsLink'], trans['googleMapsImageLink'], trans['orderInAdvance'], trans['placeOfOrigin'], trans['methodOfTransportation'], trans['destination'])
+        return Transport(trans['duration'], trans['cost'], trans['timeStart'], trans['timeEnd'], trans['title'], trans['originLink'], trans['destinationLink'], trans['orderInAdvance'], trans['placeOfOrigin'], trans['methodOfTransportation'], trans['destination'], trans['baseStation'], trans['arrivalStation'])
 
 class Transportation(Enum):
     NONE = 0
@@ -55,26 +59,26 @@ class PlaceOfStay:
         self.timeStart = datetime.now()
         self.timeEnd = datetime.now()
         self.title = str("")
-        self.googleMapsLink = str("")
-        self.googleMapsImageLink = str("")
+        self.link = str("")
+        self.images = str("")
         self.orderInAdvance = bool(True)
         self.destination = str("")
-    def __init__(self, duration, cost, timeStart, timeEnd, title, googleMapsLink, googleMapsImageLink, orderInAdvance, destination):
+    def __init__(self, duration, cost, timeStart, timeEnd, title, link, images, orderInAdvance, destination):
         self.duration = duration
         self.cost = cost
         self.timeStart = timeStart
         self.timeEnd = timeEnd
         self.title = title
-        self.googleMapsLink = googleMapsLink
-        self.googleMapsImageLink = googleMapsImageLink
+        self.link = link
+        self.images = images
         self.orderInAdvance = orderInAdvance
         self.destination = destination
     def toPlace(place):
-        return PlaceOfStay(place.duration, place.cost, place.timeStart, place.timeEnd, place.title, place.googleMapsLink, place.googleMapsImageLink, place.orderInAdvance, place.destination)
+        return PlaceOfStay(place.duration, place.cost, place.timeStart, place.timeEnd, place.title, place.link, place.images, place.orderInAdvance, place.destination)
     def __str__(self):
         return str({"Duration" : self.duration, "Cost" : self.cost, "Times:" : [self.timeStart, self.timeEnd], "Title" : self.title, "Dest" : self.destination})
     def DictToPlace(place):
-        return PlaceOfStay(place['duration'], place['cost'], place['timeStart'], place['timeEnd'], place['title'], place['googleMapsLink'], place['googleMapsImageLink'], place['orderInAdvance'], place['destination'])
+        return PlaceOfStay(place['duration'], place['cost'], place['timeStart'], place['timeEnd'], place['title'], place['link'], place['images'], place['orderInAdvance'], place['destination'])
 
 
 class Activity:
@@ -84,29 +88,29 @@ class Activity:
         self.timeStart = datetime.now()
         self.timeEnd = datetime.now()
         self.title = str("")
-        self.googleMapsLink = str("")
-        self.googleMapsImageLink = str("")
+        self.link = str("")
+        self.images = str("")
         self.orderInAdvance = bool(False)
         self.destination = str("")
-    def __init__(self, duration, cost, timeStart, timeEnd, title, googleMapsLink, googleMapsImageLink, orderInAdvance, destination):
+    def __init__(self, duration, cost, timeStart, timeEnd, title, link, images, orderInAdvance, destination):
         self.duration = duration
         self.cost = cost
         self.timeStart = timeStart
         self.timeEnd = timeEnd
         self.title = title
-        self.googleMapsLink = googleMapsLink
-        self.googleMapsImageLink = googleMapsImageLink
+        self.link = link
+        self.images = images
         self.orderInAdvance = orderInAdvance
         self.destination = destination
     def insertTime(self, timeStart, timeEnd):
         self.timeStart = timeStart
         self.timeEnd = timeEnd
     def toActivity(activity):
-        return Activity(activity.duration , activity.cost, activity.timeStart, activity.timeEnd, activity.title, activity.googleMapsLink, activity.googleMapsImageLink, activity.orderInAdvance)
+        return Activity(activity.duration , activity.cost, activity.timeStart, activity.timeEnd, activity.title, activity.link, activity.images, activity.orderInAdvance)
     def __str__(self):
         return str({"Duration" : self.duration, "Cost" : self.cost, "Times:" : [self.timeStart, self.timeEnd], "Title" : self.title, "Dest" : self.destination})
     def DictToActivity(activity):
-        return Activity(activity['duration'] , activity['cost'], activity['timeStart'], activity['timeEnd'], activity['title'], activity['googleMapsLink'], activity['googleMapsImageLink'], activity['orderInAdvance'], activity['destination'])
+        return Activity(activity['duration'] , activity['cost'], activity['timeStart'], activity['timeEnd'], activity['title'], activity['link'], activity['images'], activity['orderInAdvance'], activity['destination'])
 
 
 class Day:

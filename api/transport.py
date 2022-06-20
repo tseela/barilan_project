@@ -102,7 +102,7 @@ class transportFunctions:
 
         googleMaps = "https://www.google.com/maps/@" + startPlace + ",17z"
         googleMaps2 = "https://www.google.com/maps/@" + endPlace + ",17z"
-        transportation = classes.Transport(duration, cost, startTime, endTime, mode, googleMaps, googleMaps2, order, startPlace, transType, endPlace)
+        transportation = classes.Transport(duration, cost, startTime, endTime, mode, googleMaps, googleMaps2, order, startPlace, transType, endPlace, baseStation, arrivalStation)
 
         return transportation
 
