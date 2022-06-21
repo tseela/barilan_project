@@ -208,7 +208,7 @@ def insertTrip(trip):
      newflights2.append(flight.__dict__)
     trip.finFlight = newflights2
     
-    return trips.insert_one(trip.__dict__) 
+    return trips.insert_one(trip.__dict__).inserted_id
 
 
 # @return dayID
@@ -629,14 +629,16 @@ def JsonToTrip(jsonTrip):
 
     newFlights = []
     for flight in trip["initFlight"]:
+        flight["methodOfTransportation"] = transOptions[flight["methodOfTransportation"]]
         newFlights.append(classes.Transport.DictToTransport(flight))
     trip["initFlight"] = newFlights
 
     newFlights2 = []
     for flight in trip["finFlight"]:
+        flight["methodOfTransportation"] = transOptions[flight["methodOfTransportation"]]
         newFlights2.append(classes.Transport.DictToTransport(flight))
     trip["finFlight"] = newFlights2
-    
+
     return classes.Trip.DictToTrip(trip)
 
 
