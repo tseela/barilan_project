@@ -1,0 +1,51 @@
+.signup-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: black;
+    background-color: whitesmoke;
+    border-radius: 25px;
+    width: 100%;
+    height: fit-content;
+}
+
+.headline {
+    text-align: center;
+    font-weight: bold;
+    font-size: 6vh;
+    margin-bottom: 3%;
+}
+
+.form {
+    height: 4%;
+}
+
+.conf-pass {
+    margin-top: 2%;
+}
+
+.signup-btn-div {
+    text-align: center;
+    margin-top: 2%;
+}
+
+.signup-btn {
+    margin-top: 8%;
+    font-size: 100%;
+    background-color: blue;
+    color: white;
+    border-radius: 4px;
+    border-width: 0px;
+    width: 45%;
+    height: 5%;
+    margin-bottom: 4%;
+}
+
+.signup-btn:hover {
+    font-weight: bold;
+}
+
+.go-login {
+    font-size: 63%;
+    margin-bottom: 2%;
+}

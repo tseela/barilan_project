@@ -1,15 +1,19 @@
-.navbar {
+.navbar-container {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    height: 8rem;
+    align-items: stretch;
+    height: min(16vh, 12vw);
+    min-height: 100px;
+    width: 100vw;
+    background-color: lightblue;
 }
 
 .logo {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: 100px;
+    margin-left: 5vw;
+    font-size: max(5vh, 3vw);
 }
 
 .logo-icon {
@@ -18,8 +22,6 @@
 }
   
 .logo-text {
-    font-size: 40px;
-    font-weight: 300;
     color: black;
     font-weight: 500;
 }
@@ -32,24 +34,46 @@
 .nav-links {
     display: flex;
     color: black;
-    margin-right: 100px;
+    margin-right: 3vw;
 }
   
 .nav-links li {
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-right: 2vw;
+    margin-left: 2vw;
     list-style: none;
 }
   
 .nav-links a {
-    font-size: 24px;
-    font-weight: 300;
+    font-size: max(2.5vh, 1.7vw);
+    font-weight: 500;
     color: black;
     text-decoration: none;
-    margin-right: 1rem;
     transition: all 0.3s;
 }
+
+.profile-div {
+    font-size: max(2.5vh, 1.7vw);
+    color: gray;
+    font-weight: 500;
+}
+
 .nav-links a:hover {
     color: blue;
+}
+
+.logout-div {
+    display: flex;
+    flex-direction: column;
+    font-size: min(4.2vh, 3vw);
+    text-align: center;
+}
+
+#logout {
+    font-size: min(calc(2vh + 3px), 2vw);
     font-weight: bold;
+    color: darkblue;
+}
+
+#logout:hover {
+    color: blue;
 }

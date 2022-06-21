@@ -1,5 +1,14 @@
-.login-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.login {
+    color: white;
+    background-color: #252525;
+    min-height: 100vh;
+}
+
+.login-dialog {
+    font-size: calc(10px + 2vmin);
+    width: min(65vh, 55vw);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
