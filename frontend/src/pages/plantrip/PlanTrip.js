@@ -31,7 +31,7 @@ export default function PlanTrip() {
     // more to fill
     const [ numOfPeople, setNumOfPeople ] = useState(1);
     const [ date, setDate ] = useState(getToday());
-    const [ duration, setDuration ] = useState(1);
+    const [ duration, setDuration ] = useState(2);
     const [ airport, setAirport ] = useState(null);
     const [ destination, setDestination ] = useState('');
     // flight and states-distrct array-maps
@@ -213,7 +213,7 @@ export default function PlanTrip() {
                                     <input type="date" onChange={(e) => setDate(e.target.value)} />
                                     <br></br>
                                     <label>Trip Duration (in days):</label>
-                                    <input type="number" min={1} placeholder={1} onChange={(e) => setDuration(parseInt(e.target.value))} />
+                                    <input type="number" min={2} placeholder={2} onChange={(e) => setDuration(parseInt(e.target.value))} />
                                     <p></p>
                                     <label>Your Closest Airport:</label>
                                     <div className='font-smaller'><Select options={airportOptions} onChange={(e) => setAirport(e.value)} /></div>
