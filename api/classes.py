@@ -19,7 +19,7 @@ class Transport:
         self.destinationLink = str("")
         self.orderInAdvance = bool(False)
         self.placeOfOrigin = str("")
-        self.methodOfTransportation =  Transportation.NONE
+        self.methodOfTransportation = 0
         self.destination = str("")
         self.baseStation = str("")
         self.arrivalStation = str("")
