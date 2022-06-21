@@ -1,7 +1,8 @@
 import './DisplayTrip.css';
 import PropTypes from 'prop-types';
-import DisplayDay from '../displayday/DisplayDay';
+import DisplayDay from './displayday/DisplayDay';
 import GoogleMapsMap from '../maps/googlemaps/GoogleMapsMap';
+import Flights from './flights/Flights';
 import { useRef, useState } from 'react';
 import cloneDeep from 'lodash/cloneDeep';
 
@@ -46,8 +47,9 @@ export default function DisplayTrip({ trip, canSort, setEditedTrip }) {
     <div className="displaytrip-container">
         <div className='reg-page-container' style={{opacity: picIndex === -1 ? 1 : 0.5}}>
             <div className='activities-display'>
-                <div>i wonder what will happen</div>
+                <Flights transports={trip?.initFlight} notifyPressed={() => {}} />
                 {trip?.days.map((d, i) => { return <DisplayDay reportSorting={(sortedInts) => report(sortedInts, i)} day={d} index={i} key={i} canSort={canSort} iconPressed={(img_array) => {setPicArray(img_array); setPicIndex(0);}} setEditedTrip={setEditedTrip} notifyPressed={(_title, _coordinates) => setDisplayed({ 'title':_title, 'latitude':_coordinates.split(",").pop(), 'longitude':_coordinates.split(",")[0] })} /> })}
+                <Flights transports={trip?.finFlight} notifyPressed={() => {}} />
             </div>
             <div className='display-map'>
                 <GoogleMapsMap longitude={parseFloat(displayed.longitude)} latitude={parseFloat(displayed.latitude)} />

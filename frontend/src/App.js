@@ -11,9 +11,9 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/plantrip" element={<PlanTrip />} />
           <Route path="/viewtrip/:id" element={<ViewTrip />} />
           <Route path="/edittrip/:id" element={<EditTrip />} />
+          <Route path='/tripplanning' element={<PlanTrip />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Router>
