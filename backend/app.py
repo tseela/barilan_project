@@ -562,6 +562,10 @@ def TripToJson(trip):
 
     newFlights = []
     for flight in trip.initFlight:
+
+        flight.timeStart = str(flight.timeStart)
+        flight.timeEnd = str(flight.timeEnd)
+
         nFlight = flight.__dict__
         nFlight["methodOfTransportation"] = transOptions.get(int(nFlight["methodOfTransportation"]))
         newFlights.append(nFlight)
@@ -569,6 +573,10 @@ def TripToJson(trip):
 
     newflights2 = []
     for flight in trip.finFlight:
+
+        flight.timeStart = str(flight.timeStart)
+        flight.timeEnd = str(flight.timeEnd)
+
         nFlight = flight.__dict__
         nFlight["methodOfTransportation"] = transOptions.get(int(nFlight["methodOfTransportation"]))
         newflights2.append(nFlight)
