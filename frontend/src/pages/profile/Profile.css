@@ -1,0 +1,67 @@
+.profile-page {
+    color: white;
+    background-color: #252525;
+    min-height: 100vh;
+    max-height: fit-content;
+}
+
+.profile-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    text-align: auto;
+
+    margin-top: 5vh;
+    margin-left: 3vw;
+}
+
+.profile-username {
+    font-size: min(13vh, 8vw);
+    font-weight: bold;
+    margin-left: 5vw;
+}
+
+.profile-trips ul {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-basis: 33.333333%;
+}
+
+.profile-trips li {
+    margin-top: 6vh;
+    margin-bottom: 6vh;
+    margin-left: 3vw;
+    margin-right: 5vw;
+
+    flex-basis: 5%;
+}
+
+.profile-trips a {
+    background-image: url(./planes.jpg);
+
+    padding-left: min(10vw, 17vh);
+    padding-right: min(10vw, 17vh);
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+
+    border-radius: 50px;
+    font-size: min(3.5vw, 5vh);
+    text-decoration: none;
+    color: rgb(185, 252, 255);
+    font-weight: bold;
+    -webkit-text-stroke: 2.3px black;
+}
+
+.profile-trips a:hover {
+    font-size: min(4vw, 6vh);
+    color: rgb(131, 249, 255);
+    -webkit-text-stroke: 3px black;
+
+    padding-left: min(9.45vw, 15.85vh);
+    padding-right: min(9.45vw, 15.85vh);
+    padding-top: 1.6vh;
+    padding-bottom: 1.6vh;
+}

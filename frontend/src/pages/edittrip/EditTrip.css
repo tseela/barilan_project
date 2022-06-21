@@ -1,0 +1,105 @@
+.loading-container {
+    color: white;
+    background-color: #252525;
+    min-height: 100vh;
+    max-height: fit-content;
+}
+
+.edittrip {
+    color: white;
+    background-color: #252525;
+    min-height: 100vh;
+    max-height: fit-content;
+    margin-top: 0;
+}
+
+.loading-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: left;
+    margin-top: 12vh;
+    font-size: calc(10px + 2vmin);
+}
+
+.display-edittrip {
+    margin-top: 5vh;
+    margin-left: 5vw;
+}
+
+.display {
+    display: flex;
+    flex-direction: column;
+}
+
+.edit-row {
+    display: flex;
+    flex-direction: row;
+    margin-top: 3vh;
+    margin-left: 15vw;
+    margin-right: 7vw;
+}
+
+.edit-name {
+    font-size: 5vh;
+    font-weight: bold;
+}
+
+.edit-name span {
+    text-decoration: underline;
+}
+
+.edited-name {
+    font-size: 5vh;
+    margin-left: 1vw;
+    border-radius: 5px;
+    width: 20vw;
+    text-align: center;
+}
+
+.savetrip-button {
+    margin-left: 3vw;
+    font-size: 4vh;
+    font-weight: bold;
+    background-color: lightcyan;
+    color: darkslateblue;
+    border-top: 1px solid #CCCCCC;
+    border-right: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+    border-left: 1px solid #CCCCCC;
+    border-radius: 20px;
+
+    margin-bottom: 0.6vh;
+}
+
+.savetrip-button:hover {
+    color: darkblue;
+    font-size: 4.5vh;
+    margin-bottom: 0;
+}
+
+.cancel-button {
+    margin-left: 5vw;
+    font-size: 4vh;
+    font-weight: bold;
+    background-color: rgb(255, 203, 182);
+    color: darkred;
+    border-top: 1px solid #CCCCCC;
+    border-right: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+    border-left: 1px solid #CCCCCC;
+    border-radius: 20px;
+
+    margin-bottom: 0.6vh;
+}
+
+.cancel-button:hover {
+    font-size: 4.5vh;
+    margin-bottom: 0;
+}
+
+.form-inline {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+}

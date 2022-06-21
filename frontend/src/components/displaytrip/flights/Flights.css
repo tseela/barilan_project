@@ -1,0 +1,90 @@
+.flight-container {
+    color: black;
+    background-color: honeydew;
+    height: fit-content;
+    min-width: 99%;
+    border-style: solid;
+    border-width: 0.2vmin;
+    border-radius: 0.5vmin;
+    border-color: gray;
+}
+
+.flight-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    justify-content: space-between;
+}
+
+.flight-row .align-left {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: left;
+}
+
+.flight-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.flights-title {
+    font-size: 3vh;
+    font-weight: bold;
+}
+
+.flight-title {
+    font-size: 2vh;
+    font-weight: bold;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.flight-time {
+    font-size: 1.5vh;
+}
+
+.flight-cost {
+    font-size: 1.7vh;
+    margin-right: 1vw;
+    font-weight: bold;
+}
+
+.flight-total {
+    margin-left: 3vw;
+}
+
+.flight-total span {
+    font-size: 1.3vh;
+}
+
+.flight-link {
+    font-weight: bold;
+}
+
+.flight-method {
+    font-size: 1.5vh;
+}
+
+.flight-places span {
+    font-weight: bold;
+}
+
+.flight-method .flight-port {
+    margin-left: 10px;
+}
+
+.lil-margin {
+    margin-left: 8px;
+}
+
+.flight-method .dest-airport {
+    margin-left: 10px;
+}
+
+.flight-order {
+    font-size: 1.3vh;
+    font-weight: bold;
+}

@@ -1,0 +1,89 @@
+.home {
+    color: white;
+    background-color: #252525;
+    min-height: 100vh;
+}
+
+.page {
+    display: flex;
+    text-align: left;
+    flex-direction: row;
+    align-items: center;
+    flex-shrink: 1;
+    flex-grow: 1;
+    gap: 1vw;
+    margin-top: 8vh;
+    margin-left: 12vw;
+    margin-right: 12vw;
+    font-size: calc(10px + 2vmin);
+}
+
+.text-left {
+    font-size: min(12vh, 7vw);
+    margin-bottom: 5vh;
+}
+
+.text-left span {
+    font-weight: bold;
+}
+
+.text-right {
+    margin-left: 1vw;
+}
+
+.logo-name {
+    color: aqua;
+}
+
+.logo-name span {
+    color: rgb(49, 114, 255);
+}
+
+.start-div {
+    margin-top: 3vmax;
+}
+
+.btn-start {
+    font-size: calc(15px + 2vmin);
+    font-weight: bold;
+    text-decoration: none;
+    background-color: lightcyan;
+    color: darkslateblue;
+    border-top: 1px solid #CCCCCC;
+    border-right: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+    border-left: 1px solid #CCCCCC;
+    border-radius: 20px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+}
+
+.signup-section {
+    position: absolute;
+    bottom: 0;
+    flex-direction: column;
+    margin-left: 17vw;
+    margin-bottom: 4vh;
+}
+
+.btn-signup {
+    font-size: calc(15px + 2vmin);
+    font-weight: bold;
+    text-decoration: none;
+    background-color: rgb(214, 256, 214);
+    color: green;
+    border-top: 1px solid #7ac36a;
+    border-right: 1px solid #214127;
+    border-bottom: 1px solid #214127;
+    border-left: 1px solid #7ac36a;
+    border-radius: 20px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+}
+
+.signup-text {
+    margin-top: 1vmin;
+    font-size: 1.5vmin;
+}
