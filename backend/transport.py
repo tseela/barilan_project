@@ -61,7 +61,8 @@ class transportFunctions:
         mode = section["type"]
 
         cost = None
-        transType = classes.Transportation.NONE
+        # transType = classes.Transportation.NONE
+        transType = 0
         order = False
 
         baseStation = ""
@@ -72,11 +73,11 @@ class transportFunctions:
         else:
             mode = section["transport"]["mode"]
             if mode == "bus":
-                transType = classes.Transportation.BUS
+                transType = 1
             elif mode == "regionalTrain":
-                transType = classes.Transportation.TRAIN
+                transType = 2
             elif mode == "subway":
-                transType = classes.Transportation.RAM
+                transType = 3
 
             baseStation = section["departure"]["place"]["name"]
             arrivalStation = section["arrival"]["place"]["name"]
