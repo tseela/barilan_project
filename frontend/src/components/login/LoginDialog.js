@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './LoginDialog.css';
 
+// get login token from backend server
 async function loginUser(credentials) {
   let res = await fetch('/signin', {
     method: 'POST',
@@ -19,7 +20,8 @@ async function loginUser(credentials) {
   return ret;
 }
 
-export default function LoginDialog({ setToken }) {
+// setToken- func to set parent token(which should be updated in session storage too)
+export default function LoginDialog({ setToken, directToRegister=true }) {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
 
@@ -58,13 +60,14 @@ export default function LoginDialog({ setToken }) {
           <button className='login-btn' type="submit">Login</button>
         </div>
       </form>
-      <div className='go-register'>
+      {directToRegister ? <div className='go-register'>
         You don't have an account? <a href='/signup'>Register</a>
-      </div>
+      </div> : ''}
     </div>
   )
 }
 
 LoginDialog.propTypes = {
-  setToken: PropTypes.func.isRequired
+  setToken: PropTypes.func.isRequired,
+  directToRegister: PropTypes.bool
 }

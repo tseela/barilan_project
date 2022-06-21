@@ -1,8 +1,11 @@
 import React from "react";
 import './Home.css';
-import {Navbar} from "../../components"
+import { Navbar } from "../../components"
+import { useToken } from "../../hooks";
 
 export default function Home() {
+    const { token, setToken } = useToken();
+
     return (
         <main className='home'>
             <header className='navbar'>
@@ -22,16 +25,17 @@ export default function Home() {
                         <br></br>
                         So... are you ready to begin?
                         <div className="start-div">
-                            <a href="trip_planning" className="btn-start">start planning</a>
+                            <a href="/plantrip" className="btn-start">start planning</a>
                         </div>
                     </div>
                 </div>
-                <div className="signup-section">
-                    <a href="signup" className="btn-signup">sign up</a>
+                { token ? '' :  <div className="signup-section">
+                    <a href="/signup" className="btn-signup">sign up</a>
                     <div className="signup-text">
                         you can sign up any time
                     </div>
                 </div>
+                }
             </div>
         </main>
     )

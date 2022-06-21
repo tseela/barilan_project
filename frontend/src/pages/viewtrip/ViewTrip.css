@@ -1,0 +1,97 @@
+.loading-container {
+    color: white;
+    background-color: #252525;
+    min-height: 100vh;
+    max-height: fit-content;
+}
+
+.viewtrip {
+    color: white;
+    background-color: #252525;
+    min-height: 100vh;
+    max-height: fit-content;
+}
+
+.loading-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: left;
+    margin-top: 12vh;
+    font-size: calc(10px + 2vmin);
+}
+
+.displaytrip {
+    margin-top: 5vh;
+    margin-left: 5vw;
+}
+
+.display {
+    display: flex;
+    flex-direction: column;
+}
+
+.display-row {
+    display: flex;
+    flex-direction: row;
+    margin-top: 3vh;
+    margin-left: 15vw;
+    margin-right: 7vw;
+}
+
+.display-name {
+    font-size: 5vh;
+    font-weight: bold;
+}
+
+.display-name span {
+    text-decoration: underline;
+}
+
+.edittrip-div {
+    flex: 1;
+    text-align: right;
+    margin-top: 2vh;
+}
+
+.edittrip-button {
+    margin-right: 3vw;
+    font-size: 4vh;
+    font-weight: bold;
+    text-decoration: none;
+    background-color: lightcyan;
+    color: darkslateblue;
+    border-top: 1px solid #CCCCCC;
+    border-right: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+    border-left: 1px solid #CCCCCC;
+    border-radius: 20px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+}
+
+.edittrip-button:hover {
+    color: darkblue;
+}
+
+.deletetrip-button {
+    font-size: 4vh;
+    font-weight: bold;
+    text-decoration: none;
+    background-color: rgb(255, 203, 182);
+    color: darkred;
+    border-top: 1px solid #CCCCCC;
+    border-right: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+    border-left: 1px solid #CCCCCC;
+    border-radius: 20px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+.deletetrip-button:hover {
+    color: darkblue;
+}

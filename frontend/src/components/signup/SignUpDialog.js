@@ -1,24 +1,32 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import './SignUpDialog.css';
 
-async function signUser(credentials) {
-  let res = await fetch('/signup', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(credentials)
-  });
-  
-  let ret = res.json();
-  return ret;
-}
-
-export default function SignUpDialog({ setToken }) {
+export default function SignUpDialog({ alertSignUp, directToLogin=true }) {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
   const [confirm_password, setConfirmPassword] = useState();
+  const formRef = useRef();
+
+  // request server to sign up user
+  async function signUser(credentials) {
+    let res = await fetch('/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(credentials)
+    });
+
+    if (res.status === 200) { // if ok, alert sign up is good
+      setTimeout(() => {
+        alertSignUp();
+      }, 1000); //wait 1 sec
+    }
+  
+    let ret = res.json();
+    return ret;
+  }
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -38,13 +46,15 @@ export default function SignUpDialog({ setToken }) {
       'password' : password,
     });
 
-    alert(res?.message);
+    alert(res?.message); // alert user about registration state
+
+    formRef.current.reset(); // clear form
   }
 
   return(
     <div className="signup-wrapper">
       <header className="headline" >Sign Up</header>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} ref={formRef}>
         <label>
           <input className='form' type="text" placeholder="Username" maxLength="10" onChange={e => setUserName(e.target.value)} />
         </label>
@@ -60,13 +70,14 @@ export default function SignUpDialog({ setToken }) {
           <button className='signup-btn' type="submit">Sign Up</button>
         </div>
       </form>
-      <div className='go-login'>
+      {directToLogin ? <div className='go-login'>
         You already have an account? <a href='/login'>Login</a>
-      </div>
+      </div> : ''}
     </div>
   )
 }
 
 SignUpDialog.propTypes = {
-  setToken: PropTypes.func.isRequired
+  alertSignUp: PropTypes.func,
+  directToLogin: PropTypes.bool
 }

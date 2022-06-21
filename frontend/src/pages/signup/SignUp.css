@@ -5,10 +5,10 @@
 }
 
 .signup-dialog {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: left;
-    margin-top: 10vh;
     font-size: calc(10px + 2vmin);
+    width: min(70vh, 60vw);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
