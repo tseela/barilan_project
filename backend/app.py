@@ -19,6 +19,7 @@ import sys
 import classes
 from bson import ObjectId
 import json
+import tripAlgo
 
 
 
@@ -158,7 +159,10 @@ def signIn(username, password):
 def createTrip():
     #this is from ron
     # trip = createTrip()
-    return jsonify({'hey':'hii'}), 200
+    flags = request.json['flags']
+    trip = tripAlgo.getTrip(request.json['srcAirport'], request.json['startDate'], request.json['duration'], request.json['numOfPeople'], flags['isFastPaced'], flags['isMuseumOriented'], flags['isLuxuriance'], flags['isLowCost'], flags['destination'])
+    tripJSON = TripToJson(trip)
+    return tripJSON, 200
 
     # trip = classes.Trip()
     trip = classes.Trip(1,2,3,4,5,6)
