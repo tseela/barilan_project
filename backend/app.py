@@ -540,6 +540,7 @@ def TripToJson(trip):
             for trn in trans:
                 trn.timeStart = str(trn.timeStart)
                 trn.timeEnd = str(trn.timeEnd)
+                trn.duration = str(trn.duration)
 
                 transon = trn.__dict__
                 transon["methodOfTransportation"] = transOptions[int(transon["methodOfTransportation"])]
@@ -581,6 +582,8 @@ def TripToJson(trip):
         nFlight["methodOfTransportation"] = transOptions.get(int(nFlight["methodOfTransportation"]))
         newflights2.append(nFlight)
     trip.finFlight = newflights2
+    
+    print(trip.__dict__)
     return json.dumps(trip.__dict__)
 
 
