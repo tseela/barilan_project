@@ -66,7 +66,7 @@ export default function EditTrip() {
             et.name = editedTripName;
         }
 
-        fetch('/insertTripToUser', { // should by updateTrip
+        fetch('/updateTrip', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
