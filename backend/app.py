@@ -1,8 +1,6 @@
 # from flask import Flask
 # import pymongo
 # from crypt import methods
-from crypt import methods
-import re
 from typing import List
 from flask import Flask , request, jsonify,make_response, render_template, session
 import jwt
@@ -12,7 +10,6 @@ from functools import wraps
 import pymongo
 from flask_bcrypt import bcrypt
 # import sys
-import sys
 
 # from classes import Activity, Day
 # sys.path.append('../algo/libs/classes.py')
@@ -154,14 +151,14 @@ def signIn(username, password):
     return jsonify({'token' : token}), 200
 
 
-@app.route('/createtrip', methods=['POST'])
-@token_required
+@app.route('/createTrip', methods=['POST'])
 # @return tripID
 def createTrip():
     #this is from ron
     # trip = createTrip()
+    print(request.json)
     flags = request.json['flags']
-    trip = tripAlgo.getTrip(request.json['srcAirport'], request.json['startDate'], request.json['duration'], request.json['numOfPeople'], flags['isFastPaced'], flags['isMuseumOriented'], flags['isLuxuriance'], flags['isLowCost'], flags['destination'])
+    trip = tripAlgo.getTrip(request.json['srcAirport'], request.json['startDate'], request.json['duration'], request.json['numOfPeople'], flags['isFastPaced'], flags['isMuseumOriented'], flags['isLuxuriance'], flags['isLowCost'], request.json['destination'])
     tripJSON = TripToJson(trip)
     return tripJSON, 200
 
@@ -394,7 +391,7 @@ def removeTripfromUser(name, tripID):
 
 
 
-@app.route('./createTripAndAdd', methods=['POST'])
+@app.route('/createTripAndAdd', methods=['POST'])
 @token_required
 def CreateTripAndAdd():
     try:
@@ -486,18 +483,28 @@ def printTripObject(tripID):
 
 def TripToJson(trip):
     newDays = []
+    trip.endDate = str(trip.endDate)
+    trip.startDate = str(trip.startDate)
     for day in trip.days:
+        if day is None:
+            print('none')
+            continue
 
         newacts = []
         for act in day.activities:
+            act.timeStart = str(act.timeStart)
+            act.timeEnd = str(act.timeEnd)
             actson = act.__dict__
             newacts.append(actson)
         day.activities = newacts
 
         newtrans = []
         for trans in day.transportation:
-            transon = trans.__dict__
-            newtrans.append(transon)
+            subtrans = []
+            for trn in trans:
+                transon = trn.__dict__
+                subtrans.append(transon)
+            newtrans.append(subtrans)
         day.transportation = newtrans
 
         day.placeOfStay = day.placeOfStay.__dict__
@@ -519,8 +526,11 @@ def JsonToTrip(jsonTrip):
 
         newtrans = []
         for trans in day["transportation"]:
-            transon = classes.Transport.DictToTransport(trans)
-            newtrans.append(transon)
+            subtrans = []
+            for trn in trans:
+                transon = classes.Transport.DictToTransport(trn)
+                subtrans.append(transon)
+            newtrans.append(subtrans)
         day["transportation"] = newtrans
 
         day["placeOfStay"] = classes.PlaceOfStay.DictToPlace(day["placeOfStay"])
@@ -532,7 +542,7 @@ def JsonToTrip(jsonTrip):
 
 
 if __name__ == '__main__':
-    # app.run(debug=True)
+    app.run(debug=True)
     # print(signUp("shaked", "moked"))
     # print(signIn("shaked", "moked"))
     # input()
@@ -569,12 +579,12 @@ if __name__ == '__main__':
     # print(GetTripsAndNamesByUser())
     # print(getTripsByusername("shaked4"))
 
-    t = mockTrip()
-    t = TripToJson(t)
-    parsed = json.loads(t)
-    print(json.dumps(parsed, indent=4, sort_keys=True))
+    # t = mockTrip()
+    # t = TripToJson(t)
+    # parsed = json.loads(t)
+    # print(json.dumps(parsed, indent=4, sort_keys=True))
 
-    trip = JsonToTrip(t)
+    # trip = JsonToTrip(t)
     
 
     

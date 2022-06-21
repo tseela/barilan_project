@@ -113,8 +113,8 @@ def getNZfromCity(city):
     url = "http://api.positionstack.com/v1/forward?access_key=e40fa43000e24098607004614faabc0f&query=" + city
     response = requests.get(url)
 
-
     response = json.loads(response.text)
+    print(response['data'])
      
     latitude = float(response["data"][0]["latitude"])
     longitude = float(response["data"][0]["longitude"])
