@@ -12,10 +12,7 @@
     "react-icons": "^4.3.1",
     "react-router-dom": "^6.3.0",
     "react-scripts": "^5.0.1",
-<<<<<<< HEAD
     "react-select": "^5.3.2",
-=======
->>>>>>> e2eef184f56ee211481e8bd7be48390acc147b02
     "sortablejs": "^1.15.0",
     "web-vitals": "^2.1.4"
   },
