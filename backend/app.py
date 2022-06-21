@@ -490,6 +490,9 @@ def TripToJson(trip):
             print('none')
             continue
 
+        day.timeStart = str(day.timeStart)
+        day.timeEnd = str(day.timeEnd)
+        
         newacts = []
         for act in day.activities:
             act.timeStart = str(act.timeStart)
@@ -502,11 +505,15 @@ def TripToJson(trip):
         for trans in day.transportation:
             subtrans = []
             for trn in trans:
+                trn.timeStart = str(trn.timeStart)
+                trn.timeEnd = str(trn.timeEnd)
                 transon = trn.__dict__
                 subtrans.append(transon)
             newtrans.append(subtrans)
         day.transportation = newtrans
 
+        day.placeOfStay.timeStart = str(day.placeOfStay.timeStart)
+        day.placeOfStay.timeEnd = str(day.placeOfStay.timeEnd)
         day.placeOfStay = day.placeOfStay.__dict__
 
         newDays.append(day.__dict__)
@@ -517,9 +524,20 @@ def TripToJson(trip):
 def JsonToTrip(jsonTrip):
     trip = json.loads(jsonTrip)
     newDays = []
+
+    trip['endDate'] = datetime.strptime(trip['endTime'], '%Y-%m-%dT%H:%M:%S')
+    trip['startDate'] = datetime.strptime(trip['startDate'], '%Y-%m-%dT%H:%M:%S')
+
     for day in trip['days']:
+
+        day['timeStart'] = datetime.strptime(day['timeStart'], '%Y-%m-%dT%H:%M:%S')
+        day['timeEnd'] = datetime.strptime(day['timeEnd'], '%Y-%m-%dT%H:%M:%S')
+
         newacts = []
         for act in day['activities']:
+            act['timeStart'] = datetime.strptime(act['timeStart'], '%Y-%m-%dT%H:%M:%S')
+            act['timeEnd'] = datetime.strptime(act['timeEnd'], '%Y-%m-%dT%H:%M:%S')
+
             actson = classes.Activity.DictToActivity(act)
             newacts.append(actson)
         day['activities'] = newacts
@@ -528,10 +546,17 @@ def JsonToTrip(jsonTrip):
         for trans in day["transportation"]:
             subtrans = []
             for trn in trans:
+                trn['timeStart'] = datetime.strptime(trn['timeStart'], '%Y-%m-%dT%H:%M:%S')
+                trn['timeEnd'] = datetime.strptime(trn['timeEnd'], '%Y-%m-%dT%H:%M:%S')
+
                 transon = classes.Transport.DictToTransport(trn)
                 subtrans.append(transon)
             newtrans.append(subtrans)
         day["transportation"] = newtrans
+
+
+        day["placeOfStay"]["timeStart"] = datetime.strptime(day["placeOfStay"]["timeStart"], '%Y-%m-%dT%H:%M:%S')
+        day["placeOfStay"]["timeEnd"] = datetime.strptime(day["placeOfStay"]["timeEnd"], '%Y-%m-%dT%H:%M:%S')
 
         day["placeOfStay"] = classes.PlaceOfStay.DictToPlace(day["placeOfStay"])
 
