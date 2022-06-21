@@ -40,7 +40,23 @@ activities = db.Activities
 transportations = db.Transport
 placeOfStay = db.PlaceOfStay
 
+# maps of airports and cities for frontend to use
+_airportsMap = []
+_countriesMap = []
+_regionsMap = []
 
+with open('metadata/regions.csv', encoding="utf-8") as f:
+    _regionsMap = [{k: v for k, v in row.items()}
+        for row in csv.DictReader(f, skipinitialspace=True)]
+
+with open('metadata/countries.csv', encoding="utf-8") as f:
+    _countriesMap = [{k: v for k, v in row.items()}
+        for row in csv.DictReader(f, skipinitialspace=True)]
+
+headers = [ 'name', 'latitude_deg', 'longitude_deg', 'iso_region', 'municipality', 'iso_country', 'iata_code' ]
+with open('metadata/airports.csv', encoding="utf-8") as f:
+    _airportsMap = [{k: v for k, v in row.items() if k in headers}
+        for row in csv.DictReader(f, skipinitialspace=True)]
 
 # example
 @app.route('/api', methods=[ 'POST'])
@@ -67,6 +83,10 @@ def token_required(func):
     return decorated
 
 
+@app.route('/getAirportsAndDistrictsLists', methods=['GET'])
+def getAirportsAndDistrictsLists():
+    print(_regionsMap[0])
+    return jsonify({ 'airportsMap' : _airportsMap, 'countriesMap' : _countriesMap, 'regionsMap' : _regionsMap }), 200
 
 
 # acttualy the 'then' statements need to be what Tseela want.
@@ -160,15 +180,6 @@ def insertTripToUser():
         return "Cannot insert trip", 403
 
 
-def insertTripToUser2(user, trip):
-    trip = JsonToTrip(trip)
-
-    tripID = insertTrip(trip)
-
-    addTripToUser(user, tripID)
-    return 200
-
-
 
 # @return tripID
 def insertTrip(trip):
@@ -182,22 +193,10 @@ def insertTrip(trip):
 
 
     # set the user of the trip
-    # user = users.find_one({"username" : request.json["token"]["user"]})
-    user = users.find_one({"username" : theusernowis})
-    
+    user = users.find_one({"username" : request.json["token"]["user"]})
     trip.userId = user["_id"]
-    
-    newFlights = []
-    for flight in trip.initFlight:
-        newFlights.append(flight.__dict__)
-    trip.initFlight = newFlights
 
-    newflights2 = []
-    for flight in trip.finFlight:
-        newflights2.append(flight.__dict__)
-    trip.finFlight = newflights2    
-
-    return trips.insert_one(trip.__dict__).inserted_id
+    return trips.insert_one(trip.__dict__) 
 
 
 # @return dayID
@@ -246,16 +245,6 @@ def getTrip(id):
         tripDays.append(getDay(day))
 
     trip.days = tripDays
-
-    newFlights = []
-    for flight in trip.initFlight:
-        newFlights.append(classes.Transport.DictToTransport(flight))
-    trip.initFlight = newFlights
-
-    newFlights2 = []
-    for flight in trip.finFlight:
-        newFlights2.append(classes.Transport.DictToTransport(flight))
-    trip.finFlight = newFlights2
 
     return trip
 
@@ -400,7 +389,7 @@ def removeTripfromUser(name, tripID):
 
 
 
-@app.route('/createTripAndAdd', methods=['POST'])
+@app.route('./createTripAndAdd', methods=['POST'])
 @token_required
 def CreateTripAndAdd():
     try:
@@ -456,28 +445,21 @@ def editTrip(jsonTrip):
 
 
 def mockTrip():
-    activity1 = classes.Activity(2, 2000, str(datetime.now()), str(datetime.now()), "first activity", "location1", "image1", False,"0,0")
-    activity2 = classes.Activity(2, 2000, str(datetime.now()), str(datetime.now()), "second activity", "location2", "image2", False,"0,0")
+    activity1 = classes.Activity(2, 2000, str(datetime.now()), str(datetime.now()), "first activity", "location1", "image1", False)
+    activity2 = classes.Activity(2, 2000, str(datetime.now()), str(datetime.now()), "second activity", "location2", "image2", False)
     myActivities = [activity1, activity2]
 
-    myTransformation1 = classes.Transport(0.5, 7, str(datetime.now()),str(datetime.now()), "1->2", "location 1.5", "image 1.5", False, "first activity", 1, "second activity","first stat", "second stat")
-    myTransformation2 = classes.Transport(0.5, 7, str(datetime.now()),str(datetime.now()), "1->2", "location 1.5", "image 1.5", False, "first activity", 1, "second activity","first stat", "second stat")
-    myTransformation3 = classes.Transport(0.5, 7, str(datetime.now()),str(datetime.now()), "1->2", "location 1.5", "image 1.5", False, "first activity", 1, "second activity","first stat", "second stat")
+    myTransformation = classes.Transport(0.5, 7, str(datetime.now()),str(datetime.now()), "1->2", "location 1.5", "image 1.5", False, "first activity", 1, "second activity")
     
     myPlace = classes.PlaceOfStay(1, 500, str(datetime.now()), str(datetime.now()), "hotel", "location sleep", "image sleep", True, "Israel")
 
-    day1 = classes.Day(myActivities, [myTransformation1], 4507, str(datetime.now()),str(datetime.now()),4.5, myPlace)
-    day2 = classes.Day(myActivities, [myTransformation2], 4507, str(datetime.now()),str(datetime.now()),4.5, myPlace)
-    day3 = classes.Day(myActivities, [myTransformation3], 4507, str(datetime.now()),str(datetime.now()),4.5, myPlace)
+    day1 = classes.Day(myActivities, [myTransformation], 4507, str(datetime.now()),str(datetime.now()),4.5, myPlace)
+    day2 = classes.Day(myActivities, [myTransformation], 4507, str(datetime.now()),str(datetime.now()),4.5, myPlace)
+    day3 = classes.Day(myActivities, [myTransformation], 4507, str(datetime.now()),str(datetime.now()),4.5, myPlace)
     
     myDays = [day1, day2, day3]
 
-    flight1 =classes.Transport(0.5, 7, str(datetime.now()),str(datetime.now()), "1->2", "location 1.5", "image 1.5", False, "first activity", 1, "second activity","first stat", "second stat")
-    flight2 =classes.Transport(0.5, 7, str(datetime.now()),str(datetime.now()), "1->2", "location 1.5", "image 1.5", False, "first activity", 1, "second activity","first stat", "second stat")
-    flight3 =classes.Transport(0.5, 7, str(datetime.now()),str(datetime.now()), "1->2", "location 1.5", "image 1.5", False, "first activity", 1, "second activity","first stat", "second stat")
-    flight4 =classes.Transport(0.5, 7, str(datetime.now()),str(datetime.now()), "1->2", "location 1.5", "image 1.5", False, "first activity", 1, "second activity","first stat", "second stat")
-     
-    myTrip = classes.Trip("shaked4-Israel", "Israel", 3, str(datetime.now()), str(datetime.now()), myDays, 3*4507, ObjectId("ababcdcdefefababcdcdefef"),[flight1,flight2],[flight3,flight4])
+    myTrip = classes.Trip("shaked4-Israel", "Israel", 3, str(datetime.now()), str(datetime.now()), myDays, 3*4507, 1234)
     return myTrip
 
 def printTripObject(tripID):
@@ -498,8 +480,6 @@ def printTripObject(tripID):
 
 
 def TripToJson(trip):
-    transOptions = {0 : "NONE", 1 : "BUS", 2 : "TRAIN", 3 : "RAM", 4 : "PUBLICTAXI", 5 : "FLIGHT"}
-
     newDays = []
     for day in trip.days:
 
@@ -512,7 +492,6 @@ def TripToJson(trip):
         newtrans = []
         for trans in day.transportation:
             transon = trans.__dict__
-            transon["methodOfTransportation"] = transOptions[int(transon["methodOfTransportation"])]
             newtrans.append(transon)
         day.transportation = newtrans
 
@@ -520,29 +499,10 @@ def TripToJson(trip):
 
         newDays.append(day.__dict__)
     trip.days = newDays
-    # print(trip.__dict__)
-    trip.userId = str(trip.__dict__["userId"])
-
-    newFlights = []
-    for flight in trip.initFlight:
-        nFlight = flight.__dict__
-        nFlight["methodOfTransportation"] = transOptions.get(int(nFlight["methodOfTransportation"]))
-        newFlights.append(nFlight)
-    trip.initFlight = newFlights
-
-    newflights2 = []
-    for flight in trip.finFlight:
-        nFlight = flight.__dict__
-        nFlight["methodOfTransportation"] = transOptions.get(int(nFlight["methodOfTransportation"]))
-        newflights2.append(nFlight)
-    trip.finFlight = newflights2
     return json.dumps(trip.__dict__)
 
 
 def JsonToTrip(jsonTrip):
-    # transOptions = { "NONE" : classes.Transportation.NONE, "BUS" : classes.Transportation.BUS, "TRAIN" : classes.Transportation.TRAIN, "RAM" : classes.Transportation.RAM, "PUBLICTAXI" : classes.Transportation.PUBLICTAXI, "FLIGHT" : classes.Transportation.FLIGHT}
-    transOptions = { "NONE" : 0, "BUS" : 1, "TRAIN" : 2, "RAM" : 3, "PUBLICTAXI" : 4, "FLIGHT" : 5}
-
     trip = json.loads(jsonTrip)
     newDays = []
     for day in trip['days']:
@@ -555,7 +515,6 @@ def JsonToTrip(jsonTrip):
         newtrans = []
         for trans in day["transportation"]:
             transon = classes.Transport.DictToTransport(trans)
-            transon.methodOfTransportation = transOptions[transon.methodOfTransportation]
             newtrans.append(transon)
         day["transportation"] = newtrans
 
@@ -564,18 +523,6 @@ def JsonToTrip(jsonTrip):
         newday = classes.Day.DictToDay(day)
         newDays.append(newday)
     trip['days'] = newDays
-    trip['userId'] = ObjectId(trip['userId'])
-
-    newFlights = []
-    for flight in trip["initFlight"]:
-        newFlights.append(classes.Transport.DictToTransport(flight))
-    trip["initFlight"] = newFlights
-
-    newFlights2 = []
-    for flight in trip["finFlight"]:
-        newFlights2.append(classes.Transport.DictToTransport(flight))
-    trip["finFlight"] = newFlights2
-
     return classes.Trip.DictToTrip(trip)
 
 
@@ -617,35 +564,15 @@ if __name__ == '__main__':
     # print(GetTripsAndNamesByUser())
     # print(getTripsByusername("shaked4"))
 
-    # t = mockTrip()
-    # t = TripToJson(t)
-    # parsed = json.loads(t)
-    # print(json.dumps(parsed, indent=4, sort_keys=True))
-
-    # trip = JsonToTrip(t)
-    
-
-    # a, up = signUp("billie", "elish")
-    # print(1, up)
-    # a, ins = signIn("billie", "elish")
-    # print(2, ins)
-    
-    theusernowis  = "billie"
     t = mockTrip()
+    t = TripToJson(t)
+    parsed = json.loads(t)
+    print(json.dumps(parsed, indent=4, sort_keys=True))
 
-    tripID  = insertTrip(t)
-    print(3, tripID)
+    trip = JsonToTrip(t)
+    
 
-    tripObj = getTrip(tripID)
-    print(4, tripObj)
+    
 
-    tripjson =  TripToJson(tripObj)
-    parsed = json.loads(tripjson)
-    print(5, json.dumps(parsed, indent=4, sort_keys=True))
 
-    t2 = mockTrip()
-    t2son = TripToJson(t2)
-    print(6, json.dumps(json.loads(t2son), indent=3, sort_keys=True))
-    z = insertTripToUser2("billie", t2son)
-    print(7,z)
 
