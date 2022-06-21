@@ -46,6 +46,7 @@ export default function DisplayTrip({ trip, canSort, setEditedTrip }) {
     <div className="displaytrip-container">
         <div className='reg-page-container' style={{opacity: picIndex === -1 ? 1 : 0.5}}>
             <div className='activities-display'>
+                <div>i wonder what will happen</div>
                 {trip?.days.map((d, i) => { return <DisplayDay reportSorting={(sortedInts) => report(sortedInts, i)} day={d} index={i} key={i} canSort={canSort} iconPressed={(img_array) => {setPicArray(img_array); setPicIndex(0);}} setEditedTrip={setEditedTrip} notifyPressed={(_title, _coordinates) => setDisplayed({ 'title':_title, 'latitude':_coordinates.split(",").pop(), 'longitude':_coordinates.split(",")[0] })} /> })}
             </div>
             <div className='display-map'>
