@@ -1,5 +1,8 @@
 # from flask import Flask
 # import pymongo
+# from crypt import methods
+from crypt import methods
+import re
 from typing import List
 from flask import Flask , request, jsonify,make_response, render_template, session
 import jwt
@@ -15,6 +18,7 @@ import sys
 # sys.path.append('../algo/libs/classes.py')
 import classes
 from bson import ObjectId
+import json
 
 
 
@@ -36,7 +40,23 @@ activities = db.Activities
 transportations = db.Transport
 placeOfStay = db.PlaceOfStay
 
+# maps of airports and cities for frontend to use
+_airportsMap = []
+_countriesMap = []
+_regionsMap = []
 
+with open('metadata/regions.csv', encoding="utf-8") as f:
+    _regionsMap = [{k: v for k, v in row.items()}
+        for row in csv.DictReader(f, skipinitialspace=True)]
+
+with open('metadata/countries.csv', encoding="utf-8") as f:
+    _countriesMap = [{k: v for k, v in row.items()}
+        for row in csv.DictReader(f, skipinitialspace=True)]
+
+headers = [ 'name', 'latitude_deg', 'longitude_deg', 'iso_region', 'municipality', 'iso_country', 'iata_code' ]
+with open('metadata/airports.csv', encoding="utf-8") as f:
+    _airportsMap = [{k: v for k, v in row.items() if k in headers}
+        for row in csv.DictReader(f, skipinitialspace=True)]
 
 # example
 @app.route('/api', methods=[ 'POST'])
@@ -52,15 +72,21 @@ def token_required(func):
     def decorated(*args, **kwargs):
         token = request.json['token']
         if not token:
-            return jsonify({'Alert!' : 'Token is missing!'})
+            return jsonify({'Alert!' : 'Token is missing!'}), 405
         try:
-            payload = jwt.decode(token.json['secret'], app.config['SECRET_KEY'])
+            payload = jwt.decode(token['secret'], app.config['SECRET_KEY'], algorithms="HS256")
+            if payload['user'] != token['user']:
+                raise Exception("Decoded username doesn't match the encoded one.")
             return func(*args, **kwargs)
-        except:
-            return jsonify({'Alert!' : 'Invalid Token!'})
+        except Exception as inst:
+            return jsonify({'Alert!' : 'Invalid Token!'}), 405
     return decorated
 
 
+@app.route('/getAirportsAndDistrictsLists', methods=['GET'])
+def getAirportsAndDistrictsLists():
+    print(_regionsMap[0])
+    return jsonify({ 'airportsMap' : _airportsMap, 'countriesMap' : _countriesMap, 'regionsMap' : _regionsMap }), 200
 
 
 # acttualy the 'then' statements need to be what Tseela want.
@@ -74,7 +100,6 @@ def home():
 
 
 @app.route('/trips')
-@token_required
 def Trips():
     return render_template('trips.html')
 
@@ -120,11 +145,11 @@ def signIn(username, password):
 
     token = {
         'user' : username,
-        'secret' : jwt.encode({'pass' : password,
-                'expiration' : str(datetime.utcnow() + timedelta(seconds=120))}, app.config['SECRET_KEY'])
+        'secret' : jwt.encode({'pass' : password, 'user' : username,
+                'expiration' : str(datetime.utcnow() + timedelta(seconds=120))}, app.config['SECRET_KEY'], algorithm="HS256")
     }
 
-    return jsonify({'token' : token})
+    return jsonify({'token' : token}), 200
 
 
 @app.route('/createtrip', methods=['POST'])
@@ -140,6 +165,22 @@ def createTrip():
     return insertTrip(trip)
 
 
+
+@app.route("/insertTripToUser", methods=['POST'])
+@token_required
+def insertTripToUser():
+    try:
+        trip = JsonToTrip(request.json["trip"])
+
+        tripID = insertTrip(trip)
+
+        addTripToUser(request.json["token"]["user"], tripID)
+        return 200
+    except:
+        return "Cannot insert trip", 403
+
+
+
 # @return tripID
 def insertTrip(trip):
     trip = classes.Trip.toTrip(trip)
@@ -149,6 +190,11 @@ def insertTrip(trip):
         tripDays.append(insertDay(day))
         
     trip.days = tripDays
+
+
+    # set the user of the trip
+    user = users.find_one({"username" : request.json["token"]["user"]})
+    trip.userId = user["_id"]
 
     return trips.insert_one(trip.__dict__) 
 
@@ -176,8 +222,19 @@ def insertDay(day):
     return days.insert_one(day).inserted_id
 
 
-@app.route('/gettrip', methods=['POST'])
+
+
+@app.route('/getTrip', methods=['POST'])
 @token_required
+def GetTrip():
+    # return getTrip(request.args.get('tripID'))
+    try:
+        return getTrip(request.json['tripID']), 200
+    except:
+        return "Cant get trip", 403
+    
+
+
 # @return trip object
 def getTrip(id):
     trip = trips.find_one({'_id':id})
@@ -219,8 +276,54 @@ def getDay(dayID):
     return day
 
 
-@app.route("/getusertrips", methods=['POST'])
+
+
+@app.route('/updateTrip', methods=['POST'])
 @token_required
+def UpdateTrip():
+    try:
+        return updateTrip(request.json['tripID'], request.json['trip']), 200
+    except:
+        return "Cant update trip", 403
+
+
+def updateTrip(tripId, newTrip):
+    newTrip = classes.Trip.DictToTrip(newTrip)
+    return trips.find_one_and_update({'_id':tripId}, {'$set':newTrip.__dict__})
+
+
+
+
+############### out of use ###############
+@app.route('/getTripsByUser')
+@token_required
+def GetTripsByUser():
+    try:
+        return getTripsByusername(request.json['username']), 200
+    except:
+        return "Cant get trips", 403
+
+
+
+@app.route('/getTripsAndNamesByUser', methods=['POST'])
+@token_required
+def getTripsAndNamesByUser():
+    try:
+        username = request.json['username']
+        user = users.find_one({"username" : username})
+
+        trips = []
+        if (user['trips'] == None):
+            return jsonify([]), 200
+
+        for trip in user['trips']:
+            trips.append({'id':trip, 'name':getTrip(trip).name})
+        return jsonify(trips), 200
+    except:
+        return "Cant get trips", 403
+
+
+
 # @return trips objects
 def getTripsByusername(name):
     user = users.find_one({"username" : name})
@@ -233,6 +336,15 @@ def getTripsByusername(name):
         trips.append(getTrip(trip))
 
     return trips
+
+
+@app.route('/addTripToUser', methods=['POST'])
+@token_required
+def AddTripToUser():
+    try:
+        return addTripToUser(request.json['username'], request.json['tripID']), 200
+    except:
+        return "Cant add trips", 403
 
 
 # add the id of trip to user
@@ -251,6 +363,16 @@ def addTripToUser(name, tripID):
 
 
 
+
+@app.route('/removeTripFromUser', methods=['POST'])
+@token_required
+def RemoveTripFromUser():
+    try:
+        return removeTripfromUser(request.json['username'], request.json['tripID']), 200
+    except:
+        return "Cant romve trip", 403
+
+
 def removeTripfromUser(name, tripID):
     user = users.find_one({"username" : name})
     
@@ -266,10 +388,27 @@ def removeTripfromUser(name, tripID):
     user = users.find_one_and_update({"username" : name}, update={ "$set": {"trips" : user['trips']}})
 
 
+
+@app.route('./createTripAndAdd', methods=['POST'])
+@token_required
+def CreateTripAndAdd():
+    try:
+        return createTripAndAdd(request.json['username']), 200
+    except:
+        return "Cant create and insert", 403
+
 def createTripAndAdd(name):
     id = createTrip()
     addTripToUser(name,id)
 
+
+
+def editTrip(jsonTrip):
+    trip = JsonToTrip(jsonTrip)
+    # send ron request to update the trip
+    # trip = ron.updateTrip(trip)
+    trip = TripToJson(trip)
+    return trip
 
 
 # @app.route('/changePassword', methods=['POST'])
@@ -305,9 +444,90 @@ def createTripAndAdd(name):
 #     return "ok"
 
 
+def mockTrip():
+    activity1 = classes.Activity(2, 2000, str(datetime.now()), str(datetime.now()), "first activity", "location1", "image1", False)
+    activity2 = classes.Activity(2, 2000, str(datetime.now()), str(datetime.now()), "second activity", "location2", "image2", False)
+    myActivities = [activity1, activity2]
+
+    myTransformation = classes.Transport(0.5, 7, str(datetime.now()),str(datetime.now()), "1->2", "location 1.5", "image 1.5", False, "first activity", 1, "second activity")
+    
+    myPlace = classes.PlaceOfStay(1, 500, str(datetime.now()), str(datetime.now()), "hotel", "location sleep", "image sleep", True, "Israel")
+
+    day1 = classes.Day(myActivities, [myTransformation], 4507, str(datetime.now()),str(datetime.now()),4.5, myPlace)
+    day2 = classes.Day(myActivities, [myTransformation], 4507, str(datetime.now()),str(datetime.now()),4.5, myPlace)
+    day3 = classes.Day(myActivities, [myTransformation], 4507, str(datetime.now()),str(datetime.now()),4.5, myPlace)
+    
+    myDays = [day1, day2, day3]
+
+    myTrip = classes.Trip("shaked4-Israel", "Israel", 3, str(datetime.now()), str(datetime.now()), myDays, 3*4507, 1234)
+    return myTrip
+
+def printTripObject(tripID):
+    trip = getTrip(tripID)
+    print(trip.__dict__)
+    print()
+    print()
+    for day in trip.days:
+        print(day.__dict__)
+        print()
+        for act in day.activities:
+            print(act.__dict__)
+        print()
+        for trans in day.transportation:
+            print(trans.__dict__)
+        print()
+        print(day.placeOfStay.__dict__)
+
+
+def TripToJson(trip):
+    newDays = []
+    for day in trip.days:
+
+        newacts = []
+        for act in day.activities:
+            actson = act.__dict__
+            newacts.append(actson)
+        day.activities = newacts
+
+        newtrans = []
+        for trans in day.transportation:
+            transon = trans.__dict__
+            newtrans.append(transon)
+        day.transportation = newtrans
+
+        day.placeOfStay = day.placeOfStay.__dict__
+
+        newDays.append(day.__dict__)
+    trip.days = newDays
+    return json.dumps(trip.__dict__)
+
+
+def JsonToTrip(jsonTrip):
+    trip = json.loads(jsonTrip)
+    newDays = []
+    for day in trip['days']:
+        newacts = []
+        for act in day['activities']:
+            actson = classes.Activity.DictToActivity(act)
+            newacts.append(actson)
+        day['activities'] = newacts
+
+        newtrans = []
+        for trans in day["transportation"]:
+            transon = classes.Transport.DictToTransport(trans)
+            newtrans.append(transon)
+        day["transportation"] = newtrans
+
+        day["placeOfStay"] = classes.PlaceOfStay.DictToPlace(day["placeOfStay"])
+
+        newday = classes.Day.DictToDay(day)
+        newDays.append(newday)
+    trip['days'] = newDays
+    return classes.Trip.DictToTrip(trip)
+
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # app.run(debug=True)
     # print(signUp("shaked", "moked"))
     # print(signIn("shaked", "moked"))
     # input()
@@ -315,6 +535,42 @@ if __name__ == '__main__':
     # print(signUp("shaked4", "moked"))
     # print(signIn("shaked4", "moked"))
     # print(Trips())
+
+    # myTrip = mockTrip()
+    # myTrip2 = mockTrip()
+
+
+    # tripID = insertTrip(myTrip2).inserted_id
+
+
+    # trip = trips.find_one({'_id':tripID})
+    # trip = trips.find_one({'_id':ObjectId('6283b41a23876f4403012a2b')})
+    # print(trip)
+    # trip = trips.find_one({'destination':'Israel'})
+    # print(trip)
+
+    # printTripObject(tripID)
+
+
+    # # trip-user
+    # print(getTripsByusername("shaked4"))
+    # addTripToUser("shaked4", ObjectId('6296391a2a9317f48543073f'))
+    # addTripToUser("shaked4", ObjectId('62963935ed1317e541f491be'))
+    # addTripToUser("shaked4", ObjectId('6283b41a23876f4403012a2b'))
+    # print(getTripsByusername("shaked4"))
+    # removeTripfromUser("shaked4", ObjectId('62963935ed1317e541f491be'))
+    # print(getTripsByusername("shaked4"))
+    # request.json['username'] = "shaked4"s
+    # print(GetTripsAndNamesByUser())
+    # print(getTripsByusername("shaked4"))
+
+    t = mockTrip()
+    t = TripToJson(t)
+    parsed = json.loads(t)
+    print(json.dumps(parsed, indent=4, sort_keys=True))
+
+    trip = JsonToTrip(t)
+    
 
     
 
