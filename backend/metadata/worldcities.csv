@@ -1,0 +1,1530 @@
+city,country
+Tokyo,Japan
+Jakarta,Indonesia
+Delhi,India
+Manila,Philippines
+Sao Paulo,Brazil
+Seoul,South Korea
+Mumbai,India
+Shanghai,China
+Mexico City,Mexico
+Guangzhou,China
+Cairo,Egypt
+Beijing,China
+New York,United States
+Kolkata,India
+Moscow,Russia
+Bangkok,Thailand
+Dhaka,Bangladesh
+Buenos Aires,Argentina
+Osaka,Japan
+Lagos,Nigeria
+Istanbul,Turkey
+Karachi,Pakistan
+Kinshasa,Congo (Kinshasa)
+Shenzhen,China
+Bangalore,India
+Ho Chi Minh City,Vietnam
+Tehran,Iran
+Los Angeles,United States
+Rio de Janeiro,Brazil
+Chengdu,China
+Baoding,China
+Chennai,India
+Lahore,Pakistan
+London,United Kingdom
+Paris,France
+Tianjin,China
+Linyi,China
+Shijiazhuang,China
+Zhengzhou,China
+Nanyang,China
+Hyderabad,India
+Wuhan,China
+Handan,China
+Nagoya,Japan
+Weifang,China
+Lima,Peru
+Zhoukou,China
+Luanda,Angola
+Ganzhou,China
+Tongshan,China
+Kuala Lumpur,Malaysia
+Chicago,United States
+Heze,China
+Chongqing,China
+Hanoi,Vietnam
+Fuyang,China
+Changsha,China
+Dongguan,China
+Jining,China
+Jinan,China
+Pune,India
+Foshan,China
+Bogota,Colombia
+Ahmedabad,India
+Nanjing,China
+Changchun,China
+Tangshan,China
+Cangzhou,China
+Dar es Salaam,Tanzania
+Hefei,China
+Hong Kong,Hong Kong
+Shaoyang,China
+Zhanjiang,China
+Shangqiu,China
+Nantong,China
+Yancheng,China
+Nanning,China
+Hengyang,China
+Zhumadian,China
+Shenyang,China
+Xingtai,China
+Xi'an,China
+Santiago,Chile
+Yantai,China
+Riyadh,Saudi Arabia
+Luoyang,China
+Kunming,China
+Shangrao,China
+Hangzhou,China
+Bijie,China
+Quanzhou,China
+Miami,United States
+Wuxi,China
+Huanggang,China
+Maoming,China
+Nanchong,China
+Zunyi,China
+Qujing,China
+Baghdad,Iraq
+Xinyang,China
+Jieyang,China
+Khartoum,Sudan
+Madrid,Spain
+Allahabad,India
+Yulin,China
+Changde,China
+Liaocheng,China
+Qingdao,China
+Dallas,United States
+Nangandao,China
+Xiangyang,China
+Philadelphia,United States
+Giza,Egypt
+Lu'an,China
+Zhaotong,China
+Yichun,China
+Dezhou,China
+Nairobi,Kenya
+Nanchang,China
+Tai'an,China
+Dazhou,China
+Houston,United States
+Guadalajara,Mexico
+Yongzhou,China
+Atlanta,United States
+Rangoon,Myanmar
+Toronto,Canada
+Suihua,China
+Saint Petersburg,Russia
+Washington,United States
+Qiqihar,China
+Suzhou,China
+Shantou,China
+Weinan,China
+Changzhou,China
+Singapore,Singapore
+Fuzhou,China
+Pudong,China
+Belo Horizonte,Brazil
+Zhangzhou,China
+Yuncheng,China
+Suzhou,China
+Xianyang,China
+Guilin,China
+Taizhou,China
+Abidjan,Côte d'Ivoire
+Huaihua,China
+Ji'an,China
+Xiaoganzhan,China
+Pingdingshan,China
+Jiujiang,China
+Surat,India
+Guiyang,China
+Alexandria,Egypt
+Bozhou,China
+Sydney,Australia
+Huizhou,China
+Huai'an,China
+Chenzhou,China
+Barcelona,Spain
+Anqing,China
+Suqian,China
+Boston,United States
+Jiangmen,China
+Mianyang,China
+Harbin,China
+Huanglongsi,China
+Melbourne,Australia
+Zibo,China
+Dalian,China
+Hengshui,China
+Yibin,China
+Yangzhou,China
+Timbio,Colombia
+Johannesburg,South Africa
+Yiyang,China
+Guigang,China
+Xinpu,China
+Meizhou,China
+Casablanca,Morocco
+Langfang,China
+Zhangjiakou,China
+Chifeng,China
+Linfen,China
+Jiangguanchi,China
+Kabul,Afghanistan
+Phoenix,United States
+Luzhou,China
+Taiyuan,China
+Zhaoqing,China
+Xiaoxita,China
+Xiamen,China
+Fuzhou,China
+Liuzhou,China
+Zhuzhou,China
+Amman,Jordan
+Jeddah,Saudi Arabia
+Chuzhou,China
+Loudi,China
+Deyang,China
+Qingyuan,China
+Kano,Nigeria
+Wuhu,China
+Seattle,United States
+Yokohama,Japan
+Binzhou,China
+Baojishi,China
+Zaozhuang,China
+Neijiang,China
+Baicheng,China
+Berlin,Germany
+Anshan,China
+Lanzhou,China
+Puyang,China
+San Francisco,United States
+Jiaozuo,China
+Hechi,China
+Montreal,Canada
+Detroit,United States
+Chengde,China
+Busan,South Korea
+Algiers,Algeria
+Hanzhong,China
+Shiyan,China
+Lucknow,India
+Siping,China
+Yulinshi,China
+Changzhi,China
+Qinzhou,China
+Bazhou,China
+Qincheng,China
+Zhongshan,China
+Suining,China
+Leshan,China
+San Diego,United States
+Faisalabad,Pakistan
+Guang'an,China
+Tongren,China
+Bengbu,China
+Santa Cruz,Bolivia
+Qinhuangdao,China
+Tongliao,China
+Jinzhou,China
+Zhenjiang,China
+Urumqi,China
+Heyuan,China
+Jaipur,India
+Xinzhou,China
+Wuzhou,China
+Addis Ababa,Ethiopia
+Chaoyang,China
+Brasilia,Brazil
+Mashhad,Iran
+Shaoguan,China
+Kuwait City,Kuwait
+Shanwei,China
+Quezon City,Philippines
+Minneapolis,United States
+Kyiv,Ukraine
+Sanaa,Yemen
+Meishan,China
+Guatemala City,Guatemala
+Incheon,South Korea
+Ningde,China
+Tampa,United States
+Daqing,China
+Putian,China
+Bandung,Indonesia
+Surabaya,Indonesia
+Salvador,Brazil
+Denver,United States
+Rome,Italy
+La Paz,Bolivia
+Hohhot,China
+Xiangtan,China
+Pyongyang,North Korea
+Taichung,Taiwan
+Weihai,China
+Rizhao,China
+Mudanjiang,China
+Kaohsiung,Taiwan
+Guayaquil,Ecuador
+Tieling,China
+Cawnpore,India
+Dingxi,China
+Taipei,Taiwan
+Nanping,China
+Zigong,China
+Chaozhou,China
+Baotou,China
+Gulou,China
+Longyan,China
+Ankang,China
+Baoshan,China
+Huludao,China
+Antananarivo,Madagascar
+Yanjiang,China
+Chattogram,Bangladesh
+Santo Domingo,Dominican Republic
+Sanming,China
+Longba,China
+Brooklyn,United States
+Yangjiang,China
+Jiamusi,China
+Ibadan,Nigeria
+Luohe,China
+Lincang,China
+Medellin,Colombia
+Xuanzhou,China
+Yunfu,China
+Dubai,United Arab Emirates
+Mirzapur,India
+Tashkent,Uzbekistan
+Guangyuan,China
+Cali,Colombia
+Huangshi,China
+Ouagadougou,Burkina Faso
+Daegu,South Korea
+Fortaleza,Brazil
+Yaounde,Cameroon
+Douala,Cameroon
+Jilin,China
+Dandong,China
+Lianshan,China
+Yingkou,China
+Nagpur,India
+Omdurman,Sudan
+Bekasi,Indonesia
+Ghaziabad,India
+Yuxi,China
+Brisbane,Australia
+Anshun,China
+Depok,Indonesia
+Shangzhou,China
+Huainan,China
+Kuaidamao,China
+Accra,Ghana
+Fukuoka,Japan
+Jincheng,China
+Vancouver,Canada
+Tangerang,Indonesia
+Sanmenxia,China
+Laibin,China
+Queens,United States
+Qinbaling,China
+Xining,China
+Ma'anshan,China
+Yan'an,China
+Baku,Azerbaijan
+Gaoping,China
+Harare,Zimbabwe
+Havana,Cuba
+Phnom Penh,Cambodia
+Ningbo,China
+Mogadishu,Somalia
+Puning,China
+Medan,Indonesia
+Huaibei,China
+Qingyang,China
+Riverside,United States
+Baltimore,United States
+Haiphong,Vietnam
+Las Vegas,United States
+Chongzuo,China
+Rawalpindi,Pakistan
+Kumasi,Ghana
+Portland,United States
+Vadodara,India
+Hezhou,China
+Pingliang,China
+San Antonio,United States
+Perth,Australia
+Vishakhapatnam,India
+Shengli,China
+Gujranwala,Pakistan
+Baicheng,China
+Fushun,China
+St. Louis,United States
+Bamako,Mali
+Quito,Ecuador
+Minsk,Belarus
+Indore,India
+Yinchuan,China
+Kananga,Congo (Kinshasa)
+Peshawar,Pakistan
+Sapporo,Japan
+Esfahan,Iran
+Caracas,Venezuela
+Pingxiang,China
+Aleppo,Syria
+Tijuana,Mexico
+Almaty,Kazakhstan
+Vienna,Austria
+Thane,India
+Sacramento,United States
+Blantyre,Malawi
+Tainan,Taiwan
+Zhuhai,China
+Bucharest,Romania
+Curitiba,Brazil
+Multan,Pakistan
+Xiping,China
+Ecatepec,Mexico
+Jixi,China
+Saidu Sharif,Pakistan
+Liaoyang,China
+Hamburg,Germany
+Meru,Kenya
+Brazzaville,Congo (Brazzaville)
+Orlando,United States
+Fuxin,China
+Wuwei,China
+Manaus,Brazil
+Bhopal,India
+San Jose,United States
+Warsaw,Poland
+Lubumbashi,Congo (Kinshasa)
+Davao,Philippines
+Haikou,China
+Damascus,Syria
+Shuyangzha,China
+Brussels,Belgium
+Lusaka,Zambia
+Hyderabad City,Pakistan
+Budapest,Hungary
+Shuozhou,China
+Cleveland,United States
+Benxi,China
+Baiyin,China
+Pittsburgh,United States
+Patna,India
+Mosul,Iraq
+Caloocan City,Philippines
+Austin,United States
+Sanzhou,China
+Beihai,China
+Mecca,Saudi Arabia
+Heihe,China
+Jingdezhen,China
+Conakry,Guinea
+Kampala,Uganda
+Cincinnati,United States
+Recife,Brazil
+Yushan,China
+Zhongli,Taiwan
+Kansas City,United States
+Manhattan,United States
+Bilaspur,India
+Semarang,Indonesia
+Ludhiana,India
+Novosibirsk,Russia
+Chengtangcun,China
+Agra,India
+Karaj,Iran
+Wenzhou,China
+Indianapolis,United States
+Leon de los Aldama,Mexico
+Puebla,Mexico
+Kalyan,India
+Madurai,India
+Mbuji-Mayi,Congo (Kinshasa)
+Hebi,China
+Shiraz,Iran
+Jamshedpur,India
+Columbus,United States
+Tabriz,Iran
+Maracaibo,Venezuela
+Kawasaki,Japan
+Aba,Nigeria
+Palembang,Indonesia
+Zhangjiajie,China
+Kobe,Japan
+Charlotte,United States
+Changshu,China
+Lianjiang,China
+Ximeicun,China
+Jianguang,China
+Yucheng,China
+Belem,Brazil
+Guiping,China
+Leizhou,China
+Gwangju,South Korea
+Munich,Germany
+Nasik,India
+Porto Alegre,Brazil
+Valencia,Venezuela
+Onitsha,Nigeria
+Abu Dhabi,United Arab Emirates
+Virginia Beach,United States
+Daejeon,South Korea
+Zapopan,Mexico
+Yekaterinburg,Russia
+Huazhou,China
+Kyoto,Japan
+Shuangyashan,China
+Pizhou,China
+El Kelaa des Srarhna,Morocco
+Kharkiv,Ukraine
+Yangshe,China
+Guyuan,China
+Khulna,Bangladesh
+Muscat,Oman
+Bronx,United States
+Gaozhou,China
+Chizhou,China
+Faridabad,India
+Ulaanbaatar,Mongolia
+Goiania,Brazil
+Fuqing,China
+Belgrade,Serbia
+Pingdu,China
+Milan,Italy
+Aurangabad,India
+Yutan,China
+Milwaukee,United States
+Huangshan,China
+Auckland,New Zealand
+Makassar,Indonesia
+Santiago,Dominican Republic
+Prague,Czechia
+Rajkot,India
+Liangshi,China
+Cordoba,Argentina
+Guarulhos,Brazil
+Al Basrah,Iraq
+Saitama,Japan
+Juarez,Mexico
+Montevideo,Uruguay
+Xintai,China
+Wusong,China
+Meerut,India
+Yushu,China
+Rongcheng,China
+Huazhou,China
+Yangquan,China
+Adelaide,Australia
+Baishan,China
+Dayan,China
+Haicheng,China
+Jiangyin,China
+Huaiyin,China
+Wuzhong,China
+Cacuaco,Angola
+Barranquilla,Colombia
+Sofia,Bulgaria
+Soweto,South Africa
+Jabalpur,India
+Rucheng,China
+Nizhniy Novgorod,Russia
+Shaoyang,China
+Dhanbad,India
+Comayaguela,Honduras
+Laiwu,China
+Sharjah,United Arab Emirates
+Jingling,China
+Kazan,Russia
+Suwon,South Korea
+Yongcheng,China
+Calgary,Canada
+Can Tho,Vietnam
+Abuja,Nigeria
+Mandalay,Myanmar
+Beidao,China
+Xiangshui,China
+Dadukou,China
+Vila Velha,Brazil
+Chelyabinsk,Russia
+Mombasa,Kenya
+Providence,United States
+Varanasi,India
+Qom,Iran
+Zhangye,China
+Hiroshima,Japan
+Maiduguri,Nigeria
+Maputo,Mozambique
+Doha,Qatar
+Rosario,Argentina
+Pikine,Senegal
+Xinyu,China
+Ahvaz,Iran
+Jacksonville,United States
+Medina,Saudi Arabia
+Srinagar,India
+Omsk,Russia
+Liaoyuan,China
+Cilacap,Indonesia
+Yingtan,China
+Bandar Lampung,Indonesia
+Samara,Russia
+Guankou,China
+Ulsan,South Korea
+Dingzhou,China
+Campinas,Brazil
+Lianyuan,China
+Dakar,Senegal
+Rongcheng,China
+Kaiyuan,China
+Nay Pyi Taw,Myanmar
+Kigali,Rwanda
+Leiyang,China
+Yichun,China
+Benin City,Nigeria
+Birmingham,United Kingdom
+Xiantao,China
+Amritsar,India
+Callao,Peru
+Monterrey,Mexico
+Aligarh,India
+Yingchuan,China
+Ciudad Nezahualcoyotl,Mexico
+Tripoli,Libya
+Nampo,North Korea
+Rostov,Russia
+Tegucigalpa,Honduras
+Tbilisi,Georgia
+Guwahati,India
+Ufa,Russia
+Fes,Morocco
+Bien Hoa,Vietnam
+N'Djamena,Chad
+Ikare,Nigeria
+Salt Lake City,United States
+Bhilai,India
+Haora,India
+Tamale,Ghana
+Xibeijie,China
+Copenhagen,Denmark
+Nezahualcoyotl,Mexico
+Hanchuan,China
+Gongzhuling,China
+Krasnoyarsk,Russia
+Cologne,Germany
+Yicheng,China
+Zhufeng,China
+Sao Goncalo,Brazil
+Nashville,United States
+Yerevan,Armenia
+Nur-Sultan,Kazakhstan
+Nouakchott,Mauritania
+Vereeniging,South Africa
+Richmond,United States
+Sao Luis,Brazil
+Ranchi,India
+San Pedro Sula,Honduras
+Taixing,China
+Gwalior,India
+Memphis,United States
+Goyang,South Korea
+Bezwada,India
+Edmonton,Canada
+Bishkek,Kyrgyzstan
+Mizhou,China
+Tunis,Tunisia
+Xishan,China
+Ezhou,China
+Barquisimeto,Venezuela
+Sendai,Japan
+Hegang,China
+Kathmandu,Nepal
+Mexicali,Mexico
+Voronezh,Russia
+Perm,Russia
+Changwon,South Korea
+Zhongwei,China
+Shouguang,China
+Bogor,Indonesia
+Raleigh,United States
+Cartagena,Colombia
+Chandigarh,India
+Matola,Mozambique
+Jodhpur,India
+Ogbomoso,Nigeria
+Shymkent,Kazakhstan
+Niamey,Niger
+Taizhou,China
+Managua,Nicaragua
+Bagam,Indonesia
+Shubra al Khaymah,Egypt
+Maceio,Brazil
+Monrovia,Liberia
+Wafangdian,China
+Zhongxiang,China
+Odesa,Ukraine
+Port-au-Prince,Haiti
+New Orleans,United States
+Villahermosa,Mexico
+Thu Duc,Vietnam
+Volgograd,Russia
+Mysore,India
+Islamabad,Pakistan
+Xinyi,China
+Raipur,India
+Arequipa,Peru
+Port Harcourt,Nigeria
+Louisville,United States
+Zaoyang,China
+Shuizhai,China
+Xingyi,China
+Kota,India
+Quetta,Pakistan
+Ottawa,Canada
+Stockholm,Sweden
+Asmara,Eritrea
+Freetown,Sierra Leone
+Vientiane,Laos
+Tel Aviv,Israel
+Bangui,Central African Republic
+Panama City,Panama
+Amsterdam,Netherlands
+Gaza,Gaza Strip
+Al Quds,West Bank
+Marigot,Saint Martin
+Philipsburg,Sint Maarten
+Yaren,Nauru
+Pristina,Kosovo
+Gustavia,Saint Barthelemy
+Road Town,British Virgin Islands
+Saint-Pierre,Saint Pierre And Miquelon
+The Valley,Anguilla
+Mata-Utu,Wallis And Futuna
+Kingston,Norfolk Island
+Longyearbyen,Svalbard
+Tifariti,Morocco
+Adamstown,Pitcairn Islands
+Flying Fish Cove,Christmas Island
+King Edward Point,South Georgia And South Sandwich Islands
+Bareilly,India
+Quang Ha,Vietnam
+Xingcheng,China
+Dongtai,China
+Al Mansurah,Egypt
+Yingcheng,China
+Chiba,Japan
+Pekanbaru,Indonesia
+Luocheng,China
+Dnipro,Ukraine
+Danyang,China
+Natal,Brazil
+Nada,China
+Zamboanga City,Philippines
+Kirkuk,Iraq
+Naples,Italy
+Wuchuan,China
+Huilong,China
+Oklahoma City,United States
+Morelia,Mexico
+Cebu City,Philippines
+Shaoxing,China
+Coimbatore,India
+Santo Domingo Este,Dominican Republic
+Setagaya,Japan
+Songnam,South Korea
+Taishan,China
+Fangchenggang,China
+Solapur,India
+Tangier,Morocco
+Anqiu,China
+Feicheng,China
+Kermanshah,Iran
+Kitakyushu,Japan
+Meishan,China
+Khartoum North,Sudan
+Kisangani,Congo (Kinshasa)
+Aguascalientes,Mexico
+Marrakech,Morocco
+Donetsk,Ukraine
+Trujillo,Peru
+Taihe,China
+Bridgeport,United States
+Trichinopoly,India
+Xin'an,China
+Taihecun,China
+Naucalpan de Juarez,Mexico
+Owerri,Nigeria
+Padang,Indonesia
+Qingzhou,China
+Buffalo,United States
+Lichuan,China
+Daye,China
+Fort Worth,United States
+Hengzhou,China
+Campo Grande,Brazil
+Zhuanghe,China
+Hartford,United States
+Bobo-Dioulasso,Burkina Faso
+Ad Dammam,Saudi Arabia
+Lhasa,China
+Jiaozhou,China
+Taguig City,Philippines
+Merida,Mexico
+Yangchun,China
+Bucheon,South Korea
+Dengtalu,China
+Antipolo,Philippines
+Hubli,India
+Abeokuta,Nigeria
+Cancun,Mexico
+Tucson,United States
+Krasnodar,Russia
+Natal,Brazil
+Chihuahua,Mexico
+Klang,Malaysia
+Turin,Italy
+Ar Ramadi,Iraq
+Laiyang,China
+Sale,Morocco
+Jalandhar,India
+Kaifeng Chengguanzhen,China
+Ikeja,Nigeria
+Malang,Indonesia
+Marseille,France
+Saltillo,Mexico
+Gaomi,China
+Ipoh,Malaysia
+Hai'an,China
+Oran,Algeria
+Hermosillo,Mexico
+Weichanglu,China
+Shache,China
+Leping,China
+Hailun,China
+Un'goofaaru,Maldives
+Banqiao,Taiwan
+Naifaru,Maldives
+Da Nang,Vietnam
+Arafat,Mauritania
+Tevragh Zeina,Mauritania
+Mahibadhoo,Maldives
+Eydhafushi,Maldives
+Funadhoo,Maldives
+Koboko,Uganda
+Kanifing,The Gambia
+Kiambu,Kenya
+Hung Yen,Vietnam
+Gambela,Ethiopia
+Joao Teves,Cabo Verde
+Bugiri,Uganda
+Kudahuvadhoo,Maldives
+Xai,Laos
+Tutin,Serbia
+Hoima,Uganda
+Kulhudhuffushi,Maldives
+Thinadhoo,Maldives
+Balaka,Malawi
+Banlung,Cambodia
+Rumphi,Malawi
+Tallaght,Ireland
+Wicklow,Ireland
+Thulusdhoo,Maldives
+Arima,Trinidad And Tobago
+Ta Khmau,Cambodia
+Arandelovac,Serbia
+Rasdhoo,Maldives
+Dhihdhoo,Maldives
+Ar Rayyan,Qatar
+Bariadi,Tanzania
+Wakiso,Uganda
+Kapchorwa,Uganda
+Ivanjica,Serbia
+Kabarnet,Kenya
+Phu Ly,Vietnam
+Bundibugyo,Uganda
+Yumbe,Uganda
+Mukono,Uganda
+Sihanoukville,Cambodia
+Priboj,Serbia
+Clonmel,Ireland
+Migori,Kenya
+Phalombe,Malawi
+Iten,Kenya
+Jagodina,Serbia
+Kerugoya,Kenya
+Veymandoo,Maldives
+Buchanan,Liberia
+Viligili,Maldives
+Nyamira,Kenya
+Trim,Ireland
+Lyantonde,Uganda
+Hithadhoo,Maldives
+Kirakira,Solomon Islands
+Sabac,Serbia
+Auki,Solomon Islands
+Dar Naim,Mauritania
+Carrick on Shannon,Ireland
+Vinh Yen,Vietnam
+Smederevo,Serbia
+Fomboni,Comoros
+Bududa,Uganda
+Arilje,Serbia
+Vladicin Han,Serbia
+Sotik Post,Kenya
+Felidhoo,Maldives
+Nova Varos,Serbia
+Tullamore,Ireland
+Manafwa,Uganda
+Murang'a,Kenya
+Foammulah,Maldives
+Kursumlija,Serbia
+Aleksandrovac,Serbia
+Xekong,Laos
+Castlebar,Ireland
+Nilandhoo,Maldives
+Pakxan,Laos
+Taro,Solomon Islands
+Kurunegala,Sri Lanka
+Vreed-en-Hoop,Guyana
+Gornji Milanovac,Serbia
+Svrljig,Serbia
+Tam Ky,Vietnam
+Luwero,Uganda
+Radovljica,Slovenia
+Mullingar,Ireland
+Mayuge,Uganda
+`Amran,Yemen
+Ain Temouchent,Algeria
+Raska,Serbia
+Longford,Ireland
+Pirot,Serbia
+Serravalle,San Marino
+Prokuplje,Serbia
+Brus,Serbia
+Surdulica,Serbia
+Trbovlje,Slovenia
+Ivancna Gorica,Slovenia
+Nenagh,Ireland
+Ub,Serbia
+Lucani,Serbia
+Muli,Maldives
+Labuan,Malaysia
+Halba,Lebanon
+Pozega,Serbia
+Neno,Malawi
+Isale,Burundi
+Smarje,Slovenia
+Siaya,Kenya
+Dien Bien Phu,Vietnam
+Mahonda,Tanzania
+Store,Slovenia
+Smederevska Palanka,Serbia
+Cerklje na Gorenjskem,Slovenia
+Kasungu,Malawi
+Rogaska Slatina,Slovenia
+Chikwawa,Malawi
+Sostanj,Slovenia
+Namutumba,Uganda
+Fonadhoo,Maldives
+Port Laoise,Ireland
+Rumonge,Burundi
+Babusnica,Serbia
+Vlasotince,Serbia
+Ljubovija,Serbia
+Manadhoo,Maldives
+Lajkovac,Serbia
+Scarborough,Trinidad And Tobago
+An Cabhan,Ireland
+Kosjeric,Serbia
+Mionica,Serbia
+Al Khawr,Qatar
+Kaliro,Uganda
+Bela Palanka,Serbia
+Asaba,Nigeria
+Eenhana,Namibia
+Amudat,Uganda
+Ain Defla,Algeria
+Bukwo,Uganda
+Diego Martin,Trinidad And Tobago
+Prebold,Slovenia
+Point Fortin,Trinidad And Tobago
+Madaba,Jordan
+Tulagi,Solomon Islands
+Kapenguria,Kenya
+Kibiito,Uganda
+Yenagoa,Nigeria
+Varazdin,Croatia
+Umm Salal `Ali,Qatar
+Kibuku,Uganda
+Sremska Mitrovica,Serbia
+Miklavz na Dravskem Polju,Slovenia
+Aranguez,Trinidad And Tobago
+Maracha,Uganda
+Mozirje,Slovenia
+Pozarevac,Serbia
+Krupanj,Serbia
+Lai Chau,Vietnam
+Polzela,Slovenia
+Knjazevac,Serbia
+Dong Xoai,Vietnam
+Picos,Cabo Verde
+Zajecar,Serbia
+Paracin,Serbia
+Lebane,Serbia
+Dowa,Malawi
+Cibitoke,Burundi
+Buikwe,Uganda
+Kagadi,Uganda
+Borgo Maggiore,San Marino
+Da Lat,Vietnam
+Binyin,Uganda
+Raca,Serbia
+Mila,Algeria
+Bulambuli,Uganda
+Suong,Cambodia
+Aileu,Timor-Leste
+Aleksinac,Serbia
+Vwawa,Tanzania
+Al Buraymi,Oman
+Medvode,Slovenia
+Osecina,Serbia
+Weno,Federated States of Micronesia
+Komenda,Slovenia
+Jincheng,Taiwan
+Brezovica,Slovenia
+Smartno,Slovenia
+Moravce,Slovenia
+Despotovac,Serbia
+Cajetina,Serbia
+Namayingo,Uganda
+Apac,Uganda
+Skofljica,Slovenia
+Santa Cruz,Philippines
+Domagnano,San Marino
+Ljig,Serbia
+Indija,Serbia
+Poljcane,Slovenia
+Menges,Slovenia
+Butebo,Uganda
+Koani,Tanzania
+Tolmin,Slovenia
+Varvarin,Serbia
+Buala,Solomon Islands
+Ogujin,North Korea
+Samga-ri,North Korea
+Preddvor,Slovenia
+Ash Shihaniyah,Qatar
+Kiryandongo,Uganda
+Nazarje,Slovenia
+Kon Tum,Vietnam
+Zrece,Slovenia
+Acquaviva,San Marino
+Busesa,Uganda
+Butaleja,Uganda
+Dragomer,Slovenia
+Miren,Slovenia
+Radenci,Slovenia
+Spodnji Duplek,Slovenia
+Mali Zvornik,Serbia
+Kanal,Slovenia
+Afega,Samoa
+Muta,Slovenia
+Bukomansimbi,Uganda
+Dogbo,Benin
+Selnica ob Dravi,Slovenia
+Fiorentino,San Marino
+Luuka Town,Uganda
+Spodnje Hoce,Slovenia
+Sentrupert,Slovenia
+Abakaliki,Nigeria
+Ljutomer,Slovenia
+Namsan,North Korea
+Blace,Serbia
+Stari Trg,Slovenia
+Ruma,Serbia
+Doljevac,Serbia
+Pombas,Cabo Verde
+Az Za`ayin,Qatar
+Batocina,Serbia
+Mwatate,Kenya
+Colonia,Federated States of Micronesia
+Miragoane,Haiti
+Ferizaj,Kosovo
+Race,Slovenia
+Sencur,Slovenia
+Oplotnica,Slovenia
+Debe,Trinidad And Tobago
+Wote,Kenya
+Serere,Uganda
+Zombo,Uganda
+Nsiika,Uganda
+Smartno,Slovenia
+Negotin,Serbia
+Lifford,Ireland
+Rubanda,Uganda
+Ad Dali`,Yemen
+Kajiado,Kenya
+Ntara,Uganda
+Sakete,Benin
+Mirna,Slovenia
+Prizren,Kosovo
+Isangel,Vanuatu
+Montegiardino,San Marino
+Dapaong,Togo
+Toftir,Faroe Islands
+Kalungu,Uganda
+Rukungiri,Uganda
+Nelspruit,South Africa
+Vitanje,Slovenia
+Bushenyi,Uganda
+Samraong,Cambodia
+Koprivnica,Croatia
+Gombe,Uganda
+Kanungu,Uganda
+Bupoto,Uganda
+Veliko Gradiste,Serbia
+Rogatec,Slovenia
+Horjul,Slovenia
+Santa Lucija,Malta
+Dimitrovgrad,Serbia
+Al Jabin,Yemen
+Pivka,Slovenia
+Rubirizi,Uganda
+Velika Plana,Serbia
+Petrovac na Mlavi,Serbia
+Svilajnac,Serbia
+Boljevac,Serbia
+Kyenjojo,Uganda
+Kyegegwa,Uganda
+Kaedi,Mauritania
+Braslovce,Slovenia
+Kole,Uganda
+Ibanda,Uganda
+Narok,Kenya
+Bulisa,Uganda
+Ouled Djellal,Algeria
+Tivat,Montenegro
+Kladovo,Serbia
+Dobrna,Slovenia
+Pesnica,Slovenia
+Gorisnica,Slovenia
+Luce,Slovenia
+Videm pri Ptuju,Slovenia
+Mparo,Uganda
+Stara Pazova,Serbia
+Mitoma,Uganda
+Sid,Serbia
+Lovrenc na Pohorju,Slovenia
+Logatec,Slovenia
+Crna na Koroskem,Slovenia
+Bukedea,Uganda
+Amolatar,Uganda
+Ribnica,Slovenia
+Ol Kalou,Kenya
+Kasanda,Uganda
+Majsperk,Slovenia
+Kasaali,Uganda
+Vransko,Slovenia
+Sentilj,Slovenia
+Bojnik,Serbia
+Dokolo,Uganda
+Zebbug,Malta
+Kakumiro,Uganda
+Trzin,Slovenia
+Sembabule,Uganda
+Dobrovo,Slovenia
+Rakai,Uganda
+Gllogovc,Kosovo
+Gjilan,Kosovo
+Mitrovice,Kosovo
+Heydarabad,Azerbaijan
+Ig,Slovenia
+Kinoni,Uganda
+Sari,Iran
+Obiliq,Kosovo
+Rahovec,Kosovo
+Trzic,Slovenia
+Koronadal,Philippines
+Kibingo,Uganda
+Recica,Slovenia
+Omuthiya,Namibia
+Dol,Slovenia
+Guadalupe,Sao Tome And Principe
+Pailin,Cambodia
+Vushtrri,Kosovo
+Leulumoega,Samoa
+Lwengo,Uganda
+Butalangu,Uganda
+Techiman,Ghana
+Kara,Togo
+Kanoni,Uganda
+Gia Nghia,Vietnam
+Alebtong,Uganda
+Topola,Serbia
+Suai,Timor-Leste
+Gorenja Vas,Slovenia
+Dornava,Slovenia
+Pante Macassar,Timor-Leste
+Kokopo,Papua New Guinea
+Zelezniki,Slovenia
+Ramotswa,Botswana
+Amuria,Uganda
+Abim,Uganda
+Ngora,Uganda
+Lukovica,Slovenia
+Kalaki,Uganda
+Lipjan,Kosovo
+Turnisce,Slovenia
+Al `Aziziyah,Libya
+Suhareke,Kosovo
+Cerkno,Slovenia
+Smarjeske Toplice,Slovenia
+Chiesanuova,San Marino
+Saltangara,Faroe Islands
+Kamwenge,Uganda
+Mulifanua,Samoa
+Ljubno,Slovenia
+Lospalos,Timor-Leste
+Bohinjska Bistrica,Slovenia
+Starse,Slovenia
+Isingiro,Uganda
+Ilinden,Macedonia
+Tabor,Slovenia
+Rabak,Sudan
+Kidricevo,Slovenia
+Tsirang,Bhutan
+Gjakove,Kosovo
+Tutong,Brunei
+Divaca,Slovenia
+Kwale,Kenya
+Sveti Jurij,Slovenia
+Santana,Sao Tome And Principe
+Faetano,San Marino
+Pozega,Croatia
+Straza,Slovenia
+Sejong,South Korea
+Merosina,Serbia
+Princes Town,Trinidad And Tobago
+Peje,Kosovo
+Viti,Kosovo
+Temerin,Serbia
+Benedikt,Slovenia
+Semic,Slovenia
+Cirkulane,Slovenia
+Vodice,Slovenia
+Nkurenkuru,Namibia
+Sefwi Wiawso,Ghana
+Sveta Ana,Slovenia
+Rumuruti,Kenya
+Hongseong,South Korea
+Mersch,Luxembourg
+Muan,South Korea
+Nova Vas,Slovenia
+Zgornja Hajdina,Slovenia
+Kacanik,Kosovo
+Mirna Pec,Slovenia
+Buyende,Uganda
+Tuzi,Montenegro
+Bangolo,Côte d'Ivoire
+Saratamata,Vanuatu
+Skenderaj,Kosovo
+Strendur,Faroe Islands
+Kurumul,Papua New Guinea
+Palenga,Uganda
+Sveta Trojica v Slovenskih Goricah,Slovenia
+Zgornja Kungota,Slovenia
+Lamwo,Uganda
+Oyam,Uganda
+Kula,Serbia
+Destrnik,Slovenia
+Ponta do Sol,Cabo Verde
+Podujeve,Kosovo
+Lelydorp,Suriname
+Apatin,Serbia
+Dobrova,Slovenia
+Makole,Slovenia
+Zitorada,Serbia
+Markovci,Slovenia
+Crensovci,Slovenia
+Zvecan,Kosovo
+Kovin,Serbia
+Koceljeva,Serbia
+Verzej,Slovenia
+Velike Lasce,Slovenia
+Krizevci,Slovenia
+Agago,Uganda
+Razkrizje,Slovenia
+Skocjan,Slovenia
+Morant Bay,Jamaica
+Zuzemberk,Slovenia
+Puconci,Slovenia
+Madinat ash Shamal,Qatar
+Gadzin Han,Serbia
+Videm,Slovenia
+Cicevac,Serbia
+Pecinci,Serbia
+Zavrc,Slovenia
+Mongar,Bhutan
+Ilam,Iran
+Qazax,Azerbaijan
+Bosilegrad,Serbia
+Tari,Papua New Guinea
+Velika Polana,Slovenia
+Cankova,Slovenia
+Vladimirci,Serbia
+Haa,Bhutan
+Singa,Sudan
+Razanj,Serbia
+Tvoroyri,Faroe Islands
+Port Loko,Sierra Leone
+Pul-e `Alam,Afghanistan
+Kllokot,Kosovo
+Kucevo,Serbia
+Boorama,Somalia
+Komen,Slovenia
+Apace,Slovenia
+Kuzma,Slovenia
+San Jose,Philippines
+Napak,Uganda
+Kaffrine,Senegal
+Sharan,Afghanistan
+Istog,Kosovo
+Gornji Grad,Slovenia
+Krapina,Croatia
+Plandiste,Serbia
+Dambai,Ghana
+Cerkvenjak,Slovenia
+Medveda,Serbia
+Goaso,Ghana
+Suhar,Oman
+Sarur,Azerbaijan
+Sredisce ob Dravi,Slovenia
+Redange-sur-Attert,Luxembourg
+Jursinci,Slovenia
+Gaoua,Burkina Faso
+Dolenjske Toplice,Slovenia
+Kozje,Slovenia
+Cocieri,Moldova
+Podcetrtek,Slovenia
+Mokronog,Slovenia
+Fuglafjordhur,Faroe Islands
+Becej,Serbia
+Lufilufi,Samoa
+Nalerigu,Ghana
+Sangre Grande,Trinidad And Tobago
+Kralendijk,Netherlands
+Zgornje Gorje,Slovenia
+Rogasovci,Slovenia
+Opovo,Serbia
+Ribnica,Slovenia
+Kotor,Montenegro
+Rekovac,Serbia
+Knic,Serbia
+Podlehnik,Slovenia
+Sodrazica,Slovenia
+Nhlangano,Swaziland
+Nili,Afghanistan
+Vitomarci,Slovenia
+Fort Wellington,Guyana
+Samdrup Jongkhar,Bhutan
+Osilnica,Slovenia
+Tabuk,Philippines
+Sarpang,Bhutan
+Nabilatuk,Uganda
+Neves,Sao Tome And Principe
+Titel,Serbia
+Nova Sintra,Cabo Verde
+Dragash,Kosovo
+Jurovski Dol,Slovenia
+Ed Daein,Sudan
+Trashigang,Bhutan
+Sedhiou,Senegal
+Trnovska Vas,Slovenia
+Qabala,Azerbaijan
+Soldanesti,Moldova
+Pemagatshel,Bhutan
+Moravske-Toplice,Slovenia
+Mamuju,Indonesia
+Igreja,Cabo Verde
+Podvelka,Slovenia
+Savalou,Benin
+Kiruhura,Uganda
+Kuacjok,South Sudan
+Secanj,Serbia
+Vagur,Faroe Islands
+Tubmanburg,Liberia
+Goygol,Azerbaijan
+Hargeysa,Somalia
+Safotulafai,Samoa
+Qacha's Nek,Lesotho
+Tomaz pri Ormozu,Slovenia
+Stefan Voda,Moldova
+Grad,Slovenia
+Matam,Senegal
+Zabari,Serbia
+Malo Crnice,Serbia
+Srbobran,Serbia
+Kotido,Uganda
+Tsimasham,Bhutan
+Pazin,Croatia
+Pala,Chad
+Shterpce,Kosovo
+Dobje,Slovenia
+Nwoya,Uganda
+Dobrovnik,Slovenia
+Mali Idos,Serbia
+Dalandzadgad,Mongolia
+Bazarak,Afghanistan
+Zitiste,Serbia
+Pader,Uganda
+Novi Knezevac,Serbia
+Otuke,Uganda
+Rio Claro,Trinidad And Tobago
+Davaci,Azerbaijan
+El Meghaier,Algeria
+Qivraq,Azerbaijan
+Nordhragota,Faroe Islands
+Zubin Potok,Kosovo
+Petnjica,Montenegro
+Leava,Wallis And Futuna
+Buka,Papua New Guinea
+Anouvong,Laos
+Mislinja,Slovenia
+Novi Becej,Serbia
+Danilovgrad,Montenegro
+Ar Rustaq,Oman
+Amuru,Uganda
+Samamea,Samoa
+Nakapiripirit,Uganda
+Satupa`itea,Samoa
+Haciqabul,Azerbaijan
+Makedonska Kamenica,Macedonia
+Golubac,Serbia
+Buabidi,Panama
+Kalbacar,Azerbaijan
+Niksic,Montenegro
+Hrib-Loski Potok,Slovenia
+Nova Crnja,Serbia
+Majdanpek,Serbia
+Asau,Samoa
+Leposaviq,Kosovo
+Djibloho,Equatorial Guinea
+Gracanice,Kosovo
+Sur,Oman
+Safotu,Samoa
+Vailoa,Samoa
+Ribeira Brava,Cabo Verde
+Novoberde,Kosovo
+Kobilje,Slovenia
+Qobustan,Azerbaijan
+Ibra',Oman
+Kranjska Gora,Slovenia
+Massakory,Chad
+Zetale,Slovenia
+Rustavi,Georgia
+Sorvagur,Faroe Islands
+Buba,Guinea-Bissau
+Gusinje,Montenegro
+Al Hazm,Yemen
+Xocavand,Azerbaijan
+Resen,Macedonia
+Burco,Somalia
+Cova Figueira,Cabo Verde
+Barentu,Eritrea
+Kaisiadorys,Lithuania
+Arta,Djibouti
+Oyrarbakki,Faroe Islands
+Eidhi,Faroe Islands
+Salovci,Slovenia
+Pili,Philippines
+Sao Joao dos Angolares,Sao Tome And Principe
+Vestmanna,Faroe Islands
+Kyankwanzi,Uganda
+Raseiniai,Lithuania
+Trashi Yangtse,Bhutan
+Kone,New Caledonia
+Kvivik,Faroe Islands
+Phon-Hong,Laos
+Sumba,Faroe Islands
+Sandavagur,Faroe Islands
+Trgoviste,Serbia
+Solcava,Slovenia
+Zalingei,Sudan
+Sola,Vanuatu
+Hodos,Slovenia
+Hov,Faroe Islands
+Semera,Ethiopia
+Anew,Turkmenistan
+Masunga,Botswana
+Kostel,Slovenia
+Tanjung Selor,Indonesia
+Vidhareidhi,Faroe Islands
+Saleaula,Samoa
+Xizi,Azerbaijan
+Trongsa,Bhutan
+Damongo,Ghana
+Zhemgang,Bhutan
+Tigoa,Solomon Islands
+Zagubica,Serbia
+Sandur,Faroe Islands
+El Fula,Sudan
+Ignalina,Lithuania
+Parun,Afghanistan
+Lupane,Zimbabwe
+Fish Town,Liberia
+Loango,Congo (Brazzaville)
+Bopolu,Liberia
+Amdjarass,Chad
+Laascaanood,Somalia
+Ntoroko,Uganda
+Kolasin,Montenegro
+Husavik,Faroe Islands
+Jakar,Bhutan
+Georgetown,"Saint Helena, Ascension, And Tristan Da Cunha"
+Lhuentse,Bhutan
+Ceerigaabo,Somalia
+Kunoy,Faroe Islands
+Skalavik,Faroe Islands
+Daga,Bhutan
+We,New Caledonia
+Kirkja,Faroe Islands
+Sowa Town,Botswana
+Sieyik,Panama
+Zgornje Jezersko,Slovenia
+Awbari,Libya
+Choyr,Mongolia
+Savnik,Montenegro
+Pluzine,Montenegro
+Edinburgh of the Seven Seas,"Saint Helena, Ascension, And Tristan Da Cunha"
+Skuvoy,Faroe Islands
+Ntchisi,Malawi
+Gasa,Bhutan
+Jwaneng,Botswana
+Hayma',Oman
+Idri,Libya
+Mahdia,Guyana
+Union Choco,Panama
+Bardai,Chad
+Presevo,Serbia
+Bujanovac,Serbia
+Kitamilo,Uganda
+Charlotte Amalie,U.S. Virgin Islands

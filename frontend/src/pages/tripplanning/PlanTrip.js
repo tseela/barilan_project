@@ -38,9 +38,10 @@ export default function PlanTrip() {
     const [ airportsMap, setAirportsMap ] = useState(undefined);
     const [ countriesMap, setCountriesMap ] = useState(undefined);
     const [ regionsMap, setRegionsMap ] = useState(undefined);
+    const [ citiesMap, setCitiesMap ] = useState(undefined);
     // airports and regions options
     const [ airportOptions, setAirportOptions ] = useState(undefined);
-    const [ regionOptions, setRegionOptions ] = useState(undefined);
+    const [ citiesOptions, setCitiesOptions ] = useState(undefined);
 
     // update options states
     function updateOptions() {
@@ -61,15 +62,14 @@ export default function PlanTrip() {
         setAirportOptions(airports);
 
         // element = { value: Region, label: Country, Region }
-        let regions = [];
-        for (let i = 0; i < regionsMap.length; ++i) {
-            regions.push(
-                { value : regionsMap[i]?.name,
-                    label : countriesMap.find(item => item?.code === regionsMap[i]?.iso_country).name + ', '
-                     + regionsMap[i]?.name
+        let cities = [];
+        for (let i = 0; i < citiesMap.length; ++i) {
+            cities.push(
+                { value : citiesMap[i]?.city,
+                    label : citiesMap[i]?.country + ', ' + citiesMap[i]?.city
                 });
         }
-        setRegionOptions(regions);
+        setCitiesOptions(cities);
     }
 
     // get airport, countries and regions lists from backend server
@@ -84,6 +84,7 @@ export default function PlanTrip() {
                     setAirportsMap(json?.airportsMap);
                     setCountriesMap(json?.countriesMap);
                     setRegionsMap(json?.regionsMap);
+                    setCitiesMap(json?.citiesMap)
 
                     updateOptions();
 
@@ -219,7 +220,7 @@ export default function PlanTrip() {
                                     <div className='font-smaller'><Select options={airportOptions} onChange={(e) => setAirport(e.value)} /></div>
                                     <br></br>
                                     <label>Desired Destination:</label>
-                                    <div className='font-smaller'><Select options={regionOptions} onChange={(e) => setDestination(e.value)} /></div>
+                                    <div className='font-smaller'><Select options={citiesOptions} onChange={(e) => setDestination(e.value)} /></div>
                                     <br></br>
                                 </div>
                                 <div className='right'>

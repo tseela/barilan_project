@@ -43,6 +43,11 @@ placeOfStay = db.PlaceOfStay
 _airportsMap = []
 _countriesMap = []
 _regionsMap = []
+_citiesMap = []
+
+with open('metadata/worldcities.csv', encoding="utf-8") as f:
+    _citiesMap = [{k: v for k, v in row.items()}
+        for row in csv.DictReader(f, skipinitialspace=True)]
 
 with open('metadata/regions.csv', encoding="utf-8") as f:
     _regionsMap = [{k: v for k, v in row.items()}
@@ -84,8 +89,7 @@ def token_required(func):
 
 @app.route('/getAirportsAndDistrictsLists', methods=['GET'])
 def getAirportsAndDistrictsLists():
-    print(_regionsMap[0])
-    return jsonify({ 'airportsMap' : _airportsMap, 'countriesMap' : _countriesMap, 'regionsMap' : _regionsMap }), 200
+    return jsonify({ 'airportsMap' : _airportsMap, 'countriesMap' : _countriesMap, 'regionsMap' : _regionsMap, 'citiesMap' : _citiesMap }), 200
 
 
 # acttualy the 'then' statements need to be what Tseela want.
