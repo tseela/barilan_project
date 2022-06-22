@@ -4,6 +4,7 @@ import { Forbidden } from '../index';
 import { useState, useEffect } from 'react';
 import { Loading, Navbar, DisplayTrip } from '../../components';
 import { Navigate } from 'react-router-dom';
+import cloneDeep from 'lodash';
 
 export default function EditTrip() {
     const { token, setToken } = useToken();
@@ -29,7 +30,7 @@ export default function EditTrip() {
                 body: JSON.stringify({'username': token.user, 'token':token})
             }).then((res) => res.json()).then((res) => {
                 for (let i = 0; i < res.length; ++i) {
-                    if (res[i]?.id == id) {
+                    if (res[i]?.id === id) {
                         return;
                     }
                 }
@@ -49,8 +50,7 @@ export default function EditTrip() {
                 if (!res || !status) { // if response status is not ok update
                     setStatus(false);
                 } else { // status ok, update trip in 1 sec
-                let delay_res = res;
-                    setTimeout((delay_res) => {
+                    setTimeout(() => {
                         setTrip(res);
                     }, 1000); //wait 1 sec
                 }
@@ -61,7 +61,8 @@ export default function EditTrip() {
     const saveEditedTrip = async (e) => {
         e.preventDefault();
 
-        let et = editedTrip;
+        let et = cloneDeep(editedTrip);
+
         if (editedTripName !== '' && editedTripName !== trip?.name) {
             et.name = editedTripName;
         }
