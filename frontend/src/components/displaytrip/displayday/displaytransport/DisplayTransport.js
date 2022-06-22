@@ -28,7 +28,7 @@ export default function DisplayTransport({ transport, notifyPressed }) {
                         {getHour(transport?.timeStart)}{' => '}{getHour(transport?.timeEnd)}
                     </div>
                     <div className='trns-total trns-time'>
-                        total: {transport?.duration.toFixed(2)}<span>hr</span>
+                        total: {parseFloat(transport?.duration).toFixed(2)}<span>hr</span>
                     </div>
                 </div>
                 <div className='trns-cost'>

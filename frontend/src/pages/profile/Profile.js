@@ -44,7 +44,7 @@ export default function Profile() {
                 </div>
                 <div className='profile-trips'>
                     <ul className='trips-ul'>
-                        {trips.map((trip) => { console.log(trip.name); return <li key={trip.id}><a href={"/viewtrip/" + trip.id}>{trip.name}</a></li> })}
+                        {trips.map((trip) => { return <li key={trip.id}><a href={"/viewtrip/" + trip.id}>{trip.name}</a></li> })}
                     </ul>
                 </div>
             </div>

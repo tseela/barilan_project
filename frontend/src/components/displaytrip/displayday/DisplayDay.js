@@ -3,16 +3,18 @@ import PropTypes from 'prop-types';
 import DisplayActivity from './displayactivity/DisplayActivity';
 import DisplayTransport from './displaytransport/DisplayTransport';
 import { FaAvianex } from 'react-icons/fa';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Sortable from 'sortablejs';
 
 
 export default function DisplayDay({ day, index, iconPressed, notifyPressed, canSort, reportSorting }) {
     const sortActivities = useRef();
+    const [ act_html, setActHtml ] = useState([]);
+    const [ act_trans_joined, setActTransJoined ] = useState([]);
 
     // make activities sortable in needed
     let sortedActivities;
-    useEffect( () => {
+    useEffect(() => {
         if (typeof canSort !== 'undefined' && canSort) {
             sortedActivities = Sortable.create(sortActivities.current, {
                 animation: 150,
@@ -20,6 +22,31 @@ export default function DisplayDay({ day, index, iconPressed, notifyPressed, can
                 onUpdate: report
             });
     }}, [sortActivities]);
+
+    useEffect(() => {
+        setTimeout(() => {
+            let activities = day?.activities;
+            let transport = day?.transportation;
+            
+            let trans_html = []; // each cell is a display transportation element
+            transport.map((trans, i) => {
+                trans_html[i] = trans.map((tran, j) => { return <div className='fill-width' key={i.toString() + ',' + j.toString()}><DisplayTransport transport={tran} notifyPressed={notifyPressed} /></div>});
+            });
+
+            let html = [];
+            activities.map((act, i) => { html[i] = <div className='fill-width' key={i} data-id={i}><DisplayActivity activity={act} iconPressed={iconPressed} notifyPressed={notifyPressed} /></div> });
+            setActHtml([...html]);
+
+            let i = 0;
+            html = [];
+            for (; i < activities.length; ++i) {
+                html[2 * i] = trans_html[i];
+                html[2 * i + 1] = act_html[i];
+            }
+            html[2 * i] = trans_html[i];
+            setActTransJoined(html);
+        })
+    })
 
     if (typeof day === 'undefined') {
         return;
@@ -29,23 +56,6 @@ export default function DisplayDay({ day, index, iconPressed, notifyPressed, can
         let sortedInts = [];
         sortedActivities.toArray().map((stringNum, i) => { sortedInts[i] = parseInt(stringNum); })
         reportSorting(sortedInts);
-    }
-
-    let activities = day?.activities;
-    let transport = day?.transportation;
-    transport.push([]); // to make length equal to avtivities
-    let trans_html = []; // each cell is a display transportation element
-    transport.map((trans, i) => {
-        trans_html[i] = trans.map((tran, j) => { return <div className='fill-width' key={i.toString() + ',' + j.toString()}><DisplayTransport transport={tran} notifyPressed={notifyPressed} /></div>});
-    });
-
-    let act_html = []; // each cell is a display activity element
-    activities.map((act, i) => { act_html[i] = <div className='fill-width' key={i} data-id={i}><DisplayActivity activity={act} iconPressed={iconPressed} notifyPressed={notifyPressed} /></div> });
-
-    let act_trans_joined = [];  // each cell is a display element (ordered)
-    for (let i = 0; i < activities.length; ++i) {
-        act_trans_joined[2 * i] = act_html[i];
-        act_trans_joined[2 * i + 1] = trans_html[i];
     }
 
     let pos = day?.placeOfStay;
