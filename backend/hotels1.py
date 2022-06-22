@@ -103,7 +103,7 @@ class hotelFunctions:
                     url = hotel["hotel"]["media"][0]['uri']
                 except:
                     if (len(offers) == 0):
-                        url = "www.google.com"
+                        url = "/404/"
                     else:
                         return offers
                 # print(hotel["offers"][0]["price"])
