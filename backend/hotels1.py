@@ -121,6 +121,9 @@ class hotelFunctions:
                 # print (hotel.__dict__)
                 offers.append(hotel)
 
+                if (len(offers) > 0):
+                    break
+
             return offers
         except ResponseError as error:
             # raise error
@@ -142,7 +145,7 @@ class hotelFunctions:
             # hotel = self.amadeus.shopping.hotel_offers.get(hotelIds=hotelID)
             # hotel = amadeus.reference_data.locations.hotels.by_hotels.get(hotelIds=hotelID)
 
-            hotel = amadeus.shopping.hotel_offers_search.get(hotelIds=hotelID)
+            hotel = self.amadeus.shopping.hotel_offers_search.get(hotelIds=hotelID)
 
             # print(hotel.data)
             if (type(hotel.data) is list and len(hotel.data) > 0):
