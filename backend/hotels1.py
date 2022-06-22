@@ -101,7 +101,7 @@ class hotelFunctions:
                 try:
                     url = hotel["hotel"]["media"][0]['uri']
                 except:
-                    if (len(offers) is 0):
+                    if (len(offers) == 0):
                         continue
                     else:
                         return offers
