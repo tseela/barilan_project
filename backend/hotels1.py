@@ -101,7 +101,10 @@ class hotelFunctions:
                 try:
                     url = hotel["hotel"]["media"][0]['uri']
                 except:
-                    url = "https://www.google.com/"
+                    if (len(offers) is 0):
+                        continue
+                    else:
+                        return offers
                 # print(hotel["offers"][0]["price"])
                 price = hotel["offers"][0]["price"]["total"]
                 price = float(price)
@@ -171,10 +174,10 @@ if __name__ == '__main__':
         log_level='debug'
     )
 
-    # amadeus = Client(
-    #     client_id='3Hjzstks6Ahiptx9IFmkJhnbMuXMErgM',
-    #     client_secret='Ol5zYr6FEIAGGDsG' 
-    # )
+    amadeus = Client(
+        client_id='3Hjzstks6Ahiptx9IFmkJhnbMuXMErgM',
+        client_secret='Ol5zYr6FEIAGGDsG' 
+    )
     # this is ron
 
 
@@ -193,11 +196,19 @@ if __name__ == '__main__':
     # date = datetime.strptime("2022-11-01", '%Y-%m-%d')
     # print(str(date)[:9])
     x = hotelFunctions(amadeus)
-    hotels = x.getHotelsByGeocode(30.044770, 31.242940)
-    print(hotels)
-    hotels = x.getHotelsByGeocode(32.079664, 34.767410)
+
+    # hotels = x.getHotelsByGeocode(30.044770, 31.242940)
+    # print(hotels)
+    # hotels = x.getHotelsByGeocode(32.079664, 34.767410)
+
     
+    # print(hotels)
+    hotels = x.getHotelsByGeocode(51.506412, -0.139257)
     print(hotels)
+
+    hotels = x.getHotelsByGeocode(40.761794, -73.972670)
+    print(hotels)
+
 
     # hotels = x.getHotels("TLV", 2)
 
