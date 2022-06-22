@@ -102,7 +102,7 @@ class hotelFunctions:
                     url = hotel["hotel"]["media"][0]['uri']
                 except:
                     if (len(offers) == 0):
-                        continue
+                        url = "www.google.com"
                     else:
                         return offers
                 # print(hotel["offers"][0]["price"])
@@ -202,15 +202,15 @@ if __name__ == '__main__':
 
     # hotels = x.getHotelsByGeocode(30.044770, 31.242940)
     # print(hotels)
-    # hotels = x.getHotelsByGeocode(32.079664, 34.767410)
+    hotels = x.getHotelsByGeocode(32.079664, 34.767410)
 
     
+    print(hotels)
+    # hotels = x.getHotelsByGeocode(51.506412, -0.139257)
     # print(hotels)
-    hotels = x.getHotelsByGeocode(51.506412, -0.139257)
-    print(hotels)
 
-    hotels = x.getHotelsByGeocode(40.761794, -73.972670)
-    print(hotels)
+    # hotels = x.getHotelsByGeocode(40.761794, -73.972670)
+    # print(hotels)
 
 
     # hotels = x.getHotels("TLV", 2)
