@@ -353,7 +353,7 @@ def getAirportsAndDistrictsLists():
     print(_regionsMap[0])
     return jsonify({ 'airportsMap' : _airportsMap, 'countriesMap' : _countriesMap, 'regionsMap' : _regionsMap }), 200
 
-@app.route('/createtrip', methods=['POST'])
+@app.route('/createTrip', methods=['POST'])
 def createTrip():
     return trip(''), 200
 

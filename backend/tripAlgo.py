@@ -250,6 +250,7 @@ def getTrip(srcAirport, date, duration, passengerCount, isFastPaced, isMuseumOri
     client_secret='ZzSCP9nj8AA35LqV'
     )
     
+    duration = int(duration)
     duration -= 1
     
     flightObject = Flights(amadeusBaseObject)

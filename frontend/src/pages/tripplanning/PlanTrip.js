@@ -1,6 +1,6 @@
 import './PlanTrip.css';
 import { useToken } from '../../hooks';
-import OfflineEditTrip from '../edittrip/OfflineEditTrip';
+import { OfflineEditTrip } from '../index';
 import { useState, useEffect } from 'react';
 import { Loading, Navbar, LoginDialog, SignUpDialog } from '../../components';
 import Select from 'react-select';
@@ -31,9 +31,9 @@ export default function PlanTrip() {
     // more to fill
     const [ numOfPeople, setNumOfPeople ] = useState(1);
     const [ date, setDate ] = useState(getToday());
-    const [ duration, setDuration ] = useState(1);
+    const [ duration, setDuration ] = useState(3);
     const [ airport, setAirport ] = useState(null);
-    const [ destination, setDestination ] = useState(null);
+    const [ destination, setDestination ] = useState('');
     // flight and states-distrct array-maps
     const [ airportsMap, setAirportsMap ] = useState(undefined);
     const [ countriesMap, setCountriesMap ] = useState(undefined);
@@ -65,7 +65,8 @@ export default function PlanTrip() {
         for (let i = 0; i < regionsMap.length; ++i) {
             regions.push(
                 { value : regionsMap[i]?.name,
-                    label : countriesMap.find(item => item?.code === regionsMap[i]?.iso_country).name + ', ' + regionsMap[i]?.name
+                    label : countriesMap.find(item => item?.code === regionsMap[i]?.iso_country).name + ', '
+                     + regionsMap[i]?.name
                 });
         }
         setRegionOptions(regions);
@@ -112,7 +113,7 @@ export default function PlanTrip() {
         if (airport === null) {
             alert("You must fill your closest airport!");
             return;
-        } else if (isLuxuriance === true && isLowCost === true) {
+        } else if (isLuxuriance === true && isLowCost == true) {
             alert("Yout trip can't be both luxuriance and low-cost!");
             return;
         }
@@ -206,13 +207,13 @@ export default function PlanTrip() {
                             <div className='row'>
                                 <div className='left'>
                                     <label>Number of Passengers:</label>
-                                    <input type="number" min={1} placeholder={1} onChange={(e) => setNumOfPeople(e.target.value)} />
+                                    <input type="number" min={1} placeholder={1} onChange={(e) => setNumOfPeople(parseInt(e.target.value))} />
                                     <br></br>
                                     <label>Start Date:</label>
                                     <input type="date" onChange={(e) => setDate(e.target.value)} />
                                     <br></br>
                                     <label>Trip Duration (in days):</label>
-                                    <input type="number" min={1} placeholder={1} onChange={(e) => setDuration(e.target.value)} />
+                                    <input type="number" min={3} placeholder={2} onChange={(e) => setDuration(parseInt(e.target.value) + 1)} />
                                     <p></p>
                                     <label>Your Closest Airport:</label>
                                     <div className='font-smaller'><Select options={airportOptions} onChange={(e) => setAirport(e.value)} /></div>
@@ -244,6 +245,7 @@ export default function PlanTrip() {
         );
     }
 
-    // trip is set -> display it
-    return(<OfflineEditTrip trip={trip} saveEditedTrip={saveTrip} />);
+    if (trip) { // trip is set -> display it
+        return(<OfflineEditTrip trip={trip} saveEditedTrip={saveTrip} />);
+    }
 }

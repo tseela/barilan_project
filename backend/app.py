@@ -44,18 +44,18 @@ _airportsMap = []
 _countriesMap = []
 _regionsMap = []
 
-# with open('metadata/regions.csv', encoding="utf-8") as f:
-#     _regionsMap = [{k: v for k, v in row.items()}
-#         for row in csv.DictReader(f, skipinitialspace=True)]
+with open('metadata/regions.csv', encoding="utf-8") as f:
+    _regionsMap = [{k: v for k, v in row.items()}
+        for row in csv.DictReader(f, skipinitialspace=True)]
 
-# with open('metadata/countries.csv', encoding="utf-8") as f:
-#     _countriesMap = [{k: v for k, v in row.items()}
-#         for row in csv.DictReader(f, skipinitialspace=True)]
+with open('metadata/countries.csv', encoding="utf-8") as f:
+    _countriesMap = [{k: v for k, v in row.items()}
+        for row in csv.DictReader(f, skipinitialspace=True)]
 
-# headers = [ 'name', 'latitude_deg', 'longitude_deg', 'iso_region', 'municipality', 'iso_country', 'iata_code' ]
-# with open('metadata/airports.csv', encoding="utf-8") as f:
-#     _airportsMap = [{k: v for k, v in row.items() if k in headers}
-#         for row in csv.DictReader(f, skipinitialspace=True)]
+headers = [ 'name', 'latitude_deg', 'longitude_deg', 'iso_region', 'municipality', 'iso_country', 'iata_code' ]
+with open('metadata/airports.csv', encoding="utf-8") as f:
+    _airportsMap = [{k: v for k, v in row.items() if k in headers}
+        for row in csv.DictReader(f, skipinitialspace=True)]
 
 # example
 @app.route('/api', methods=[ 'POST'])
@@ -160,6 +160,7 @@ def createTrip():
     flags = request.json['flags']
     trip = tripAlgo.getTrip(request.json['srcAirport'], request.json['startDate'], request.json['duration'], request.json['numOfPeople'], flags['isFastPaced'], flags['isMuseumOriented'], flags['isLuxuriance'], flags['isLowCost'], request.json['destination'])
     tripJSON = TripToJson(trip)
+    print(tripJSON)
     return tripJSON, 200
 
     # trip = classes.Trip()
