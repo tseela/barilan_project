@@ -77,6 +77,7 @@ class hotelFunctions:
             return activities
         except ResponseError as error:
             # raise error
+            print(error)
             return []
         except:
             return activities
@@ -177,10 +178,10 @@ if __name__ == '__main__':
         log_level='debug'
     )
 
-    amadeus = Client(
-        client_id='3Hjzstks6Ahiptx9IFmkJhnbMuXMErgM',
-        client_secret='Ol5zYr6FEIAGGDsG' 
-    )
+    # amadeus = Client(
+    #     client_id='3Hjzstks6Ahiptx9IFmkJhnbMuXMErgM',
+    #     client_secret='Ol5zYr6FEIAGGDsG' 
+    # )
     # this is ron
 
 
@@ -202,10 +203,10 @@ if __name__ == '__main__':
 
     # hotels = x.getHotelsByGeocode(30.044770, 31.242940)
     # print(hotels)
-    hotels = x.getHotelsByGeocode(32.079664, 34.767410)
+    # hotels = x.getHotelsByGeocode(32.079664, 34.767410)
 
     
-    print(hotels)
+    # print(hotels)
     # hotels = x.getHotelsByGeocode(51.506412, -0.139257)
     # print(hotels)
 
@@ -214,4 +215,7 @@ if __name__ == '__main__':
 
 
     # hotels = x.getHotels("TLV", 2)
+
+    act = x.getActivities(40.761794, -73.972670,0)
+    print(act)
 
