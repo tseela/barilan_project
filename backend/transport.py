@@ -99,7 +99,7 @@ class transportFunctions:
         endPlace = str(section["arrival"]["place"]["location"]["lat"])+ "," + str(section["arrival"]["place"]["location"]["lng"])
 
 
-        duration = endTime - startTime
+        duration = int(endTime - startTime)
 
         googleMaps = "https://www.google.com/maps/@" + startPlace + ",17z"
         googleMaps2 = "https://www.google.com/maps/@" + endPlace + ",17z"
