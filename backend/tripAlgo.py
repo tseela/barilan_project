@@ -246,11 +246,10 @@ def createDepartureDay(airportCoords, hotel, amadeusObject, departureTime, usedA
 def getTrip(srcAirport, date, duration, passengerCount, isFastPaced, isMuseumOriented, isLuxury, isLowCost, city):
 
     amadeusBaseObject = Client(
-    client_id='3Hjzstks6Ahiptx9IFmkJhnbMuXMErgM',
-    client_secret='Ol5zYr6FEIAGGDsG'
+    client_id='wv6i3ROKO0i2d0sitNtjN4pTKTynYZZa',
+    client_secret='ZzSCP9nj8AA35LqV'
     )
     
-    duration = int(duration)
     duration -= 1
     
     flightObject = Flights(amadeusBaseObject)
@@ -302,3 +301,45 @@ def getTrip(srcAirport, date, duration, passengerCount, isFastPaced, isMuseumOri
     tripObject = Trip("Tripping like a trip", city, duration, initFlight[0].timeStart, finFlight[-1].timeEnd, dayArr, 0, '5', initFlight, finFlight)
     print(tripObject)
     return tripObject
+
+
+def switchingTripActivities(tripObject):
+    transportObject = transportFunctions()
+    newTrip = deepcopy(tripObject)
+    #print("Flight is", newTrip.initFlight[-1].timeEnd)
+    #print("Return flight is", newTrip.finFlight[0].timeStart)
+    days = newTrip.days
+    for day in days:
+        if (day != None):
+            print("Day starting date is:", day.timeStart)
+            if (len(day.activities) > 0):
+                hotelCoords = day.placeOfStay.destination.split(',')
+                day.transport = []
+                firstActivityCoords = day.activities[0].destination.split(',')
+                startTime = day.timeStart
+                print("This is starTime", startTime)
+                hotelToFirst = transportObject.getTransportByTime(hotelCoords[0], hotelCoords[1], firstActivityCoords[0], firstActivityCoords[1], str(startTime.isoformat()))
+                startTime = hotelToFirst[-1].timeEnd
+                startTime = startTime + datetime.timedelta(minutes=5)
+                day.activities[0].timeStart = startTime
+                endTime = startTime + datetime.timedelta(hours=3)
+                day.activities[0].timeEnd = endTime
+                currTime = endTime + datetime.timedelta(minutes=60)
+                currCoords = day.activities[0].destination.split(',')
+                day.transport.append(hotelToFirst)
+                print("First activity is ", day.activities[0])
+                for activity in day.activities[1:]:
+                    print("current activity is", activity)
+                    nextActivityCoords = activity.destination.split(',')
+                    transportToActivity = transportObject.getTransportByTime(currCoords[0], currCoords[1], nextActivityCoords[0], nextActivityCoords[1], str(currTime.isoformat()))
+                    currTime = transportToActivity[-1].timeEnd
+                    currTime = currTime + datetime.timedelta(minutes=5)
+                    activity.timeStart = currTime
+                    currTime = currTime + datetime.timedelta(hours=3)
+                    activity.timeEnd = currTime
+                    currTime = currTime + datetime.timedelta(minutes=60)
+                    currCoords = nextActivityCoords
+                    day.transport.append(transportToActivity)
+                lastToHotel = transportObject.getTransportByTime(currCoords[0], currCoords[1], hotelCoords[0], hotelCoords[1], str(currTime.isoformat()))
+                day.transport.append(lastToHotel)
+    return newTrip
