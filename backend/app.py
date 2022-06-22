@@ -267,9 +267,9 @@ def getTripById(id):
         # return getTrip(request.json['tripID']), 200
         trip['_id'] = str(trip['_id'])
         trip['userId'] = str(trip['userId'])
-        return trip, 200
+        return trip
     except:
-        return "Cant get trip", 403
+        return {}
 
 # @return trip object
 def getTrip(id):
@@ -357,14 +357,15 @@ def getTripsAndNamesByUser():
     try:
         username = request.json['username']
         user = users.find_one({"username" : username})
-
         trips = []
         if (user['trips'] == None):
             return jsonify([]), 200
 
         for trip in user['trips']:
-            trips.append({'id':trip, 'name':getTripById(trip)['name']})
-        return trips, 200
+            name = getTripById(trip)['name']
+            trips.append({'id':str(trip), 'name':name})
+        print(trips)
+        return jsonify(trips), 200
     except:
         return "Cant get trips", 403
 
