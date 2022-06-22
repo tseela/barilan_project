@@ -69,7 +69,7 @@ class hotelFunctions:
                 photos = activity['pictures']
                 dest = activity["geoCode"]["latitude"] + "," + activity["geoCode"]["longitude"]
 
-                act = classes.Activity(None, cost, None, None, title, url, photos, True, dest)
+                act = classes.Activity(3, cost, None, None, title, url, photos, True, dest)
                 #print(act.__dict__)
                 activities.append(act)
 
