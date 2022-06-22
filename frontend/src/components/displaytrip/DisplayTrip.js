@@ -48,7 +48,7 @@ export default function DisplayTrip({ trip, canSort, setEditedTrip }) {
         <div className='reg-page-container' style={{opacity: picIndex === -1 ? 1 : 0.5}}>
             <div className='activities-display'>
                 <Flights transports={trip?.initFlight} notifyPressed={() => {}} />
-                {trip?.days.map((d, i) => { return <DisplayDay reportSorting={(sortedInts) => report(sortedInts, i)} day={d} index={i} key={i} canSort={canSort} iconPressed={(img_array) => {setPicArray(img_array); setPicIndex(0);}} setEditedTrip={setEditedTrip} notifyPressed={(_title, _coordinates) => setDisplayed({ 'title':_title, 'latitude':_coordinates.split(",").pop(), 'longitude':_coordinates.split(",")[0] })} /> })}
+                {trip?.days.map((d, i) => { return <DisplayDay reportSorting={(sortedInts) => report(sortedInts, i)} day={d} index={i} key={i} canSort={canSort} iconPressed={(img_array) => {if (img_array.length !== 0) { setPicArray(img_array); setPicIndex(0);}}} setEditedTrip={setEditedTrip} notifyPressed={(_title, _coordinates) => setDisplayed({ 'title':_title, 'latitude':_coordinates.split(",").pop(), 'longitude':_coordinates.split(",")[0] })} /> })}
                 <Flights transports={trip?.finFlight} notifyPressed={() => {}} />
             </div>
             <div className='display-map'>

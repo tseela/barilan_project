@@ -171,12 +171,17 @@ def createTrip():
 @app.route("/insertTripToUser", methods=['POST'])
 @token_required
 def insertTripToUser():
+    print(request.json)
+    print("1")
     try:
         trip = JsonToTrip(request.json["trip"])
+        print("2")
 
         tripID = insertTrip(trip)
+        print("3")
 
         addTripToUser(request.json["token"]["user"], tripID)
+        print("4")
         return 200
     except:
         return "Cannot insert trip", 403

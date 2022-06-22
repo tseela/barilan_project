@@ -6,7 +6,7 @@ export default function GoogleMapsMap({ latitude, longitude }) {
         return;
     }
 
-    let mapLink = 'https://maps.google.com/maps?q=' + latitude + ',' + longitude + '&t=&z=13&ie=UTF8&iwloc=&output=embed';
+    let mapLink = 'https://maps.google.com/maps?q=' + longitude + ',' + latitude + '&t=&z=13&ie=UTF8&iwloc=&output=embed';
 
     return(
     <div className="googlemaps-container">
