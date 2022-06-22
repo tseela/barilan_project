@@ -119,7 +119,7 @@ export default function PlanTrip() {
 
         // ask for a new trip
         setIsLoading(true);
-        fetch('createtrip', {
+        fetch('createTrip', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
