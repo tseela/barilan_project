@@ -306,8 +306,8 @@ def getTrip(srcAirport, date, duration, passengerCount, isFastPaced, isMuseumOri
 def switchingTripActivities(tripObject):
     transportObject = transportFunctions()
     newTrip = deepcopy(tripObject)
-    print("Flight is", newTrip.initFlight[-1].timeEnd)
-    print("Return flight is", newTrip.finFlight[0].timeStart)
+    #print("Flight is", newTrip.initFlight[-1].timeEnd)
+    #print("Return flight is", newTrip.finFlight[0].timeStart)
     days = newTrip.days
     for day in days:
         if (day != None):
