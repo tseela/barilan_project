@@ -332,7 +332,7 @@ def getDay(dayID):
 @token_required
 def UpdateTrip():
     try:
-        return updateTrip(request.json['tripID'], request.json['trip']), 200
+        return updateTrip(request.json['trip']['tripID'], request.json['trip']), 200
     except:
         return "Cant update trip", 403
 
