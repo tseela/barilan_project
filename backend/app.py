@@ -334,7 +334,7 @@ def UpdateTrip():
 
 
 def updateTrip(tripId, newTrip):
-    newTrip = classes.Trip.DictToTrip(newTrip)
+    # newTrip = classes.Trip.DictToTrip(newTrip)
     return trips.find_one_and_update({'_id':tripId}, {'$set':newTrip})
 
 
