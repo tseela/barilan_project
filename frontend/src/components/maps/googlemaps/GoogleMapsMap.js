@@ -1,12 +1,16 @@
 import './GoogleMapsMap.css';
 import PropTypes from 'prop-types';
 
+/**
+ * display map from google maps iframe given coordinates
+ * 
+ * @param latitude
+ * @param longitude
+ * @returns 
+ */
 export default function GoogleMapsMap({ latitude, longitude }) {
-    if (typeof latitude === 'undefined' || typeof longitude === 'undefined') {
-        return;
-    }
-
-    let mapLink = 'https://maps.google.com/maps?q=' + longitude + ',' + latitude + '&t=&z=13&ie=UTF8&iwloc=&output=embed';
+    // inject lat and long to link
+    let mapLink = 'https://maps.google.com/maps?q=' + latitude + ',' + longitude + '&t=&z=13&ie=UTF8&iwloc=&output=embed';
 
     return(
     <div className="googlemaps-container">
@@ -16,6 +20,6 @@ export default function GoogleMapsMap({ latitude, longitude }) {
 }
 
 GoogleMapsMap.propTypes = {
-    latitude: PropTypes.number,
-    longitude: PropTypes.number
+    latitude: PropTypes.number.isRequired,
+    longitude: PropTypes.number.isRequired
 }

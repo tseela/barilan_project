@@ -4,6 +4,7 @@
     min-height: 100vh;
 }
 
+/* login staff */
 .delayed-login-div {
     display: flex;
     flex-direction: row;
@@ -25,6 +26,7 @@
     width: min(60vh, 50vw);
 }
 
+/* create trip staff */
 .createtrip {
     display: flex;
     flex-direction: column;

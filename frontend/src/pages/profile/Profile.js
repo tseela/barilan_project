@@ -4,9 +4,14 @@ import { useToken } from '../../hooks';
 import { Navigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
+/**
+ * user profile page
+ * 
+ * @returns 
+ */
 export default function Profile() {
-    const { token, setToken } = useToken();
-    const [ trips, setTrips ] = useState([]);
+    const { token, setToken } = useToken(); // user token
+    const [ trips, setTrips ] = useState([]); // trips array
 
     useEffect(() => {
         // if user connected
@@ -42,6 +47,7 @@ export default function Profile() {
                 <div className='profile-username'>
                     {token.user}
                 </div>
+                {/* array of trips names (onclick->link to viewtrip) */}
                 <div className='profile-trips'>
                     <ul className='trips-ul'>
                         {trips.map((trip) => { return <li key={trip.id}><a href={"/viewtrip/" + trip.id}>{trip.name}</a></li> })}

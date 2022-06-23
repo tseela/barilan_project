@@ -1,6 +1,12 @@
 import "./PageNotFound.css"
 import pic from "./404.png"
 
+/**
+ * custom page not found http 404 error
+ * this page will be displayed when triyng to reach undefined url on out host
+ * 
+ * @returns 
+ */
 export default function PageNotFound() {
     return(
         <div className="page-404">

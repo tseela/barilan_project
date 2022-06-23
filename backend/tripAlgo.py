@@ -246,8 +246,8 @@ def createDepartureDay(airportCoords, hotel, amadeusObject, departureTime, usedA
 def getTrip(srcAirport, date, duration, passengerCount, isFastPaced, isMuseumOriented, isLuxury, isLowCost, city):
 
     amadeusBaseObject = Client(
-    client_id='gSxeOiGeAk1SSLqTFMcxjSie8VAo9Tsi',
-    client_secret='pszzvksDqFBTLLIV'
+    client_id='du7owUgxwXSQyv7Z28GYnfPVmNrMvOVD',
+    client_secret='ofXE49GnUGXdWfmJ'
     )
     
     duration = int(duration)

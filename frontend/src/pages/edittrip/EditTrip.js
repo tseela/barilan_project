@@ -4,16 +4,23 @@ import { Forbidden } from '../index';
 import { useState, useEffect } from 'react';
 import { Loading, Navbar, DisplayTrip } from '../../components';
 import { Navigate } from 'react-router-dom';
-import cloneDeep from 'lodash';
+import cloneDeep from 'lodash/cloneDeep';
 
+/**
+ * page where you edit trip with given id
+ * url looks like that: https//:host/edittrip/id
+ * 
+ * @returns 
+ */
 export default function EditTrip() {
-    const { token, setToken } = useToken();
-    const [ trip, setTrip ] = useState(null);
-    const [ editedTrip, setEditedTrip ] = useState(null);
+    const { token, setToken } = useToken(); // user token
+    const [ trip, setTrip ] = useState(null); // trip to edit
+    const [ editedTrip, setEditedTrip ] = useState(null); // the trip after editings
+    const [ editedTripName, setEditedTripName ] = useState(''); // edited trip name
     const [ status, setStatus ] = useState(true); // true->all good, false->forbidden access
-    const [ editedTripName, setEditedTripName ] = useState('');
-    const [ isDone, setIsDone ] = useState(false);
+    const [ isDone, setIsDone ] = useState(false); // after finishing
 
+    // extruct id from url
     const id = window.location.pathname.split("/").pop();
 
     // get the trip from backend server
@@ -52,17 +59,19 @@ export default function EditTrip() {
                 } else { // status ok, update trip in 1 sec
                     setTimeout(() => {
                         setTrip(res);
+                        setTimeout(() => setEditedTrip(trip), 500);
                     }, 1000); //wait 1 sec
                 }
             }));
         }
     }, [token]);
 
+    // save trip after editing
     const saveEditedTrip = async (e) => {
         e.preventDefault();
 
         let et = cloneDeep(editedTrip);
-
+        // update edited name
         if (editedTripName !== '' && editedTripName !== trip?.name) {
             et.name = editedTripName;
         }
@@ -113,6 +122,7 @@ export default function EditTrip() {
             <div className='display'>
                 <div className='edit-row'>
                     <form onSubmit={saveEditedTrip} className="form-horizontal">
+                        {/* edited name, cancel button and save button */}
                         <label className='edit-name'>Trip name:</label>
                         <input className='edited-name' type="text" placeholder={trip?.name} maxLength="16" onChange={(e) => setEditedTripName(e.target.value)} />
                         <button className='cancel-button' onClick={() => setIsDone(true)}>Cancel Changes</button>
@@ -121,6 +131,7 @@ export default function EditTrip() {
                         </label>
                     </form>
                 </div>
+                {/* trip display (with ability to sort) */}
                 <div className='display-edittrip'>
                     <DisplayTrip trip={trip} canSort={true} setEditedTrip={setEditedTrip} />
                 </div>

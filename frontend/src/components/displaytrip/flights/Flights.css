@@ -9,6 +9,7 @@
     border-color: gray;
 }
 
+/* directions */
 .flight-row {
     display: flex;
     flex-direction: row;

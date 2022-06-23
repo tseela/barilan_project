@@ -6,6 +6,7 @@
     top: 0;
 }
 
+/* page without images display */
 .reg-page-container {
     display: flex;
     flex-direction: row;
@@ -39,11 +40,13 @@
     height: 60vh;
 }
 
+/* used in sub classes (display day, activity, transport and flights) */
 .row-dash {
     margin-left: 0.5vw;
     margin-right: 0.5vw;
 }
 
+/* images display is on top of trip display, therefore position is absulute */
 .displayImages {
     position: absolute;
 }
@@ -71,6 +74,7 @@
     transform: translate(-50%, -50%);
 }
 
+/* buttons to move in array */
 .right-button {
     position: absolute;
     top: 45%;

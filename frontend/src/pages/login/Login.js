@@ -4,8 +4,13 @@ import { LoginDialog } from '../../components';
 import { useToken } from '../../hooks';
 import { Navigate } from "react-router-dom";
 
+/**
+ * login page
+ * 
+ * @returns 
+ */
 export default function Login() {
-    const { token, setToken } = useToken();
+    const { token, setToken } = useToken(); // user token
 
     // don't allow if user is already connected
     if (token) {
