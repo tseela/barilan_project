@@ -342,7 +342,7 @@ def UpdateTrip():
 
 
 def updateTrip(tripId, newTrip):
-
+    newTrip = editTrip()
     newTrip['_id'] = ObjectId(newTrip['_id'])
     newTrip['userId'] = ObjectId(newTrip['userId'])
 
