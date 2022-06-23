@@ -182,7 +182,9 @@ def insertTripToUser():
         print(request.json["token"]["user"])
 
         user = users.find_one({"username" : request.json["token"]["user"]})
-        trip["userId"] = user["_id"]
+        trip["userId"] = ObjectId(user["_id"])
+
+        user["_id"] = ObjectId(user["_id"])
         print(trip["userId"])
         tripID = trips.insert_one(trip).inserted_id
 
@@ -332,15 +334,22 @@ def getDay(dayID):
 @token_required
 def UpdateTrip():
     try:
-        print(request.json)
+        # print(request.json)
         return updateTrip(request.json['trip']['_id'], request.json['trip']), 200
     except:
         return "Cant update trip", 403
 
 
 def updateTrip(tripId, newTrip):
-    # newTrip = classes.Trip.DictToTrip(newTrip)
-    return trips.find_one_and_update({'_id':ObjectId(tripId)}, {'$set':newTrip})
+
+    newTrip['_id'] = ObjectId(newTrip['_id'])
+    newTrip['userId'] = ObjectId(newTrip['userId'])
+
+    tripId = ObjectId(tripId)
+
+    ret = trips.find_one_and_update({'_id':(tripId)}, {'$set':newTrip})
+
+    return "updated"
 
 
 
@@ -420,24 +429,25 @@ def addTripToUser(name, tripID):
 @token_required
 def RemoveTripFromUser():
     try:
-        return removeTripfromUser(request.json['username'], request.json['tripID']), 200
+        return removeTripfromUser(request.json['user'], request.json['trip']['_id']), 200
     except:
         return "Cant romve trip", 403
 
 
 def removeTripfromUser(name, tripID):
+    tripID = ObjectId(tripID)
     user = users.find_one({"username" : name})
-    
     if (not type(user['trips']) == list):
-        return
+        return "trip not in user"
 
     else:
         if (tripID not in user['trips']):
-            return
-
+            return "trip not in user"
+        print(user['trips'])
         user['trips'].remove(tripID)
 
     user = users.find_one_and_update({"username" : name}, update={ "$set": {"trips" : user['trips']}})
+    return "deleted trip from user"
 
 
 
