@@ -37,7 +37,7 @@ export default function DisplayTransport({ transport, notifyPressed }) {
             </div>
             <div className='trns-row row-dash'>
                 <div className='trns-method trns-places'>
-                    Take the {transport?.methodOfTransportation} from <a className='trns-link' href={transport?.originLink} target="_blank" rel="noopener noreferrer">{transport?.baseStation}</a> to <a className='trns-link' href={transport?.destinationLink} target="_blank" rel="noopener noreferrer">{transport?.arrivalStation}</a>
+                    {transport.methodOfTransportation === 'NONE' ? 'Walk ' : 'Take the ' + transport?.methodOfTransportation} from <a className='trns-link' href={transport?.originLink} target="_blank" rel="noopener noreferrer">{transport?.baseStation}</a> to <a className='trns-link' href={transport?.destinationLink} target="_blank" rel="noopener noreferrer">{transport?.arrivalStation}</a>
                 </div>
             </div>
             <div className='trns-row row-dash'>

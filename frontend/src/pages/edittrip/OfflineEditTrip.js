@@ -10,9 +10,10 @@ export default function OfflineEditTrip({ trip, saveEditedTrip }) {
 
     function saveTrip() {
         if (editedTripName === '') {
+            alert('You must name your trip!');
             return;
         }
-        let et = editedTrip;
+        let et = cloneDeep(editedTrip);
         et.name = editedTripName;
 
         saveEditedTrip(et);
