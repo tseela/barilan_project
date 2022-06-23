@@ -20,11 +20,18 @@ async function loginUser(credentials) {
   return ret;
 }
 
-// setToken- func to set parent token(which should be updated in session storage too)
+/**
+ * login dialog box
+ * 
+ * @param setToken - sets the token (should update session storage too)
+ * @param directToRegister - should add a link to register
+ * @returns 
+ */
 export default function LoginDialog({ setToken, directToRegister=true }) {
-  const [username, setUserName] = useState();
-  const [password, setPassword] = useState();
+  const [username, setUserName] = useState(); // name
+  const [password, setPassword] = useState(); // pass
 
+  // on form submit -> try to log in and display error message if needed
   const handleSubmit = async e => {
     e.preventDefault();
 
@@ -49,17 +56,21 @@ export default function LoginDialog({ setToken, directToRegister=true }) {
     <div className="login-wrapper">
       <header className="headline" >Log In</header>
       <form onSubmit={handleSubmit}>
+        {/* username */}
         <label>
           <input className='form' type="text" placeholder="Username" maxLength="10" onChange={e => setUserName(e.target.value)} />
         </label>
         <p></p>
+        {/* pass */}
         <label>
           <input className='form' type="password" placeholder="Password" maxLength="18" onChange={e => setPassword(e.target.value)} />
         </label>
+        {/* submit credentials */}
         <div className='login-btn-div'>
           <button className='login-btn' type="submit">Login</button>
         </div>
       </form>
+      {/* if should direct -> add line with link to signup */}
       {directToRegister ? <div className='go-register'>
         You don't have an account? <a href='/signup'>Register</a>
       </div> : ''}

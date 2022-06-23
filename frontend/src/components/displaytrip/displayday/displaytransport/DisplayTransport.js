@@ -10,11 +10,19 @@ function getHour(date) {
     return date.substring(i, i + 5);
 }
 
+/**
+ * displays a single transport
+ * 
+ * @param transport
+ * @param notifyPressed - notify that coordinate should be displayed
+ * @returns 
+ */
 export default function DisplayTransport({ transport, notifyPressed }) {
     return(
     <div className="displaytransport-container">
         <div className='trns-col'>
             <div className='trns-row row-dash'>
+                {/* title */}
                 <div className='align-left'>
                     <div className='trns-title'>{transport?.title + ' | '}</div>
                     <div className='trns-title' onClick={() => notifyPressed(transport?.baseStation, transport?.placeOfOrigin)}>{transport?.baseStation}</div>
@@ -23,6 +31,7 @@ export default function DisplayTransport({ transport, notifyPressed }) {
                 </div>
             </div>
             <div className='trns-row row-dash'>
+                {/* times and cost */}
                 <div className='trns-row'>
                     <div className='trns-time line'>
                         {getHour(transport?.timeStart)}{' => '}{getHour(transport?.timeEnd)}
@@ -36,11 +45,13 @@ export default function DisplayTransport({ transport, notifyPressed }) {
                 </div>
             </div>
             <div className='trns-row row-dash'>
+                {/* literal explaining */}
                 <div className='trns-method trns-places'>
                     {transport.methodOfTransportation === 'NONE' ? 'Walk ' : 'Take the ' + transport?.methodOfTransportation} from <a className='trns-link' href={transport?.originLink} target="_blank" rel="noopener noreferrer">{transport?.baseStation}</a> to <a className='trns-link' href={transport?.destinationLink} target="_blank" rel="noopener noreferrer">{transport?.arrivalStation}</a>
                 </div>
             </div>
             <div className='trns-row row-dash'>
+                {/* order in advance if needed */}
                 <div className='trns-order'>
                     {transport?.orderInAdvance ? '*need to order reservation':''}
                 </div>
