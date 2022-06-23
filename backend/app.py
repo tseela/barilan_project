@@ -334,7 +334,7 @@ def getDay(dayID):
 @token_required
 def UpdateTrip():
     try:
-        # print(request.json)
+        print(request.json)
         return updateTrip(request.json['trip']['_id'], request.json['trip']), 200
     except:
         return "Cant update trip", 403
@@ -429,7 +429,7 @@ def addTripToUser(name, tripID):
 @token_required
 def RemoveTripFromUser():
     try:
-        return removeTripfromUser(request.json['user'], request.json['trip']['_id']), 200
+        return removeTripfromUser(request.json['user'], request.json['id']), 200
     except:
         return "Cant romve trip", 403
 

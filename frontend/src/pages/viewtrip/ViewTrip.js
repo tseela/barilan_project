@@ -70,7 +70,7 @@ export default function ViewTrip() {
             headers: {
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify({'trip-ID': id, 'token':token})
+            body: JSON.stringify({'id': id, 'token':token, 'user':token?.user})
         }).then((res) => {
             if (res.status === 200) {
                 alert("Trip deleted successfully");

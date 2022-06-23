@@ -59,29 +59,21 @@ export default function EditTrip() {
                 } else { // status ok, update trip in 1 sec
                     setTimeout(() => {
                         setTrip(res);
-                        setTimeout(() => setEditedTrip(trip), 500);
-                    }, 1000); //wait 1 sec
+                        setTimeout(() => setEditedTrip(cloneDeep(trip)), 500);
+                    }, 500); //wait 1 sec
                 }
             }));
         }
     }, [token]);
 
-    // save trip after editing
-    const saveEditedTrip = async (e) => {
-        e.preventDefault();
-
-        let et = cloneDeep(editedTrip);
-        // update edited name
-        if (editedTripName !== '' && editedTripName !== trip?.name) {
-            et.name = editedTripName;
-        }
-
+    // updates trip in db
+    function updateTrip(edited) {
         fetch('/updateTrip', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify({'token':token, 'trip':et})
+            body: JSON.stringify({'token':token, 'trip':edited})
         }).then((res) => {
             if (res.status === 200) {
                 alert("Success! Trip saved.");
@@ -90,6 +82,26 @@ export default function EditTrip() {
                 alert("Something went wrong... Your trip couldn't be saved.");
             }
         });
+    }
+
+    // save trip after editing
+    const saveEditedTrip = async (e) => {
+        e.preventDefault();
+
+        if (!editedTrip) {
+            alert("Error in saving changes. Please try again in a few seconds.");
+            setEditedTrip(cloneDeep(trip));
+            return;
+        }
+
+        let et = cloneDeep(editedTrip);
+        setTimeout(() => {
+            // update edited name
+            if (editedTripName !== '' && editedTripName !== trip?.name) {
+                et.name = editedTripName;
+            }
+            updateTrip(et);
+        }, 1000);
     }
 
     // trip is already saved-> return to viewtrip of it
