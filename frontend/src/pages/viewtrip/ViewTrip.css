@@ -1,11 +1,5 @@
+/* loading staff */
 .loading-container {
-    color: white;
-    background-color: #252525;
-    min-height: 100vh;
-    max-height: fit-content;
-}
-
-.viewtrip {
     color: white;
     background-color: #252525;
     min-height: 100vh;
@@ -19,6 +13,14 @@
     justify-content: left;
     margin-top: 12vh;
     font-size: calc(10px + 2vmin);
+}
+
+/* viewtrip staff */
+.viewtrip {
+    color: white;
+    background-color: #252525;
+    min-height: 100vh;
+    max-height: fit-content;
 }
 
 .displaytrip {
@@ -54,6 +56,7 @@
     margin-top: 2vh;
 }
 
+/* buttons */
 .edittrip-button {
     margin-right: 3vw;
     font-size: 4vh;

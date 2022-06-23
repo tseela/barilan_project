@@ -4,10 +4,18 @@ import { useState } from 'react';
 import { Navbar, DisplayTrip } from '../../components';
 import cloneDeep from 'lodash/cloneDeep';
 
-export default function OfflineEditTrip({ trip, saveEditedTrip }) {
-    const [ editedTrip, setEditedTrip ] = useState(cloneDeep(trip));
-    const [ editedTripName, setEditedTripName ] = useState('');
+/**
+ * offline page where you edit a given trip
+ * 
+ * @param trip
+ * @param saveEditedTrip - func to save the trip after editing
+ * @returns 
+ */
+export default function OfflineEditTrip({ trip, saveEditedTrip, canCancel=true, alertCancel }) {
+    const [ editedTrip, setEditedTrip ] = useState(cloneDeep(trip)); // edited trip
+    const [ editedTripName, setEditedTripName ] = useState(''); // edited trip name
 
+    // changes trip name if needed and saving it
     function saveTrip() {
         if (editedTripName === '') {
             alert('You must name your trip!');
@@ -26,13 +34,16 @@ export default function OfflineEditTrip({ trip, saveEditedTrip }) {
             <div className='display'>
                 <div className='edit-row'>
                     <form onSubmit={saveTrip} className="form-horizontal">
+                        {/* edited name and savetrip button */}
                         <label className='edit-name'>Trip name:</label>
                         <input className='edited-name' type="text" maxLength="16" onChange={(e) => setEditedTripName(e.target.value)} />
+                        {canCancel ? <button className='cancel-button' onClick={() => alertCancel()}>Cancel Changes</button> : ''}
                         <label className='savetrip'>
                             <button className='savetrip-button' type={"submit"}>Save</button>
                         </label>
                     </form>
                 </div>
+                {/* trip display with option to sort activities */}
                 <div className='display-edittrip'>
                     <DisplayTrip trip={trip} canSort={true} setEditedTrip={setEditedTrip} />
                 </div>
@@ -43,5 +54,7 @@ export default function OfflineEditTrip({ trip, saveEditedTrip }) {
 
 OfflineEditTrip.propTypes = {
     trip: PropTypes.object.isRequired,
-    saveEditedTrip: PropTypes.func.isRequired
+    saveEditedTrip: PropTypes.func.isRequired,
+    canCancel: PropTypes.bool,
+    alertCancel: PropTypes.func
 }

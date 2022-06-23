@@ -1,6 +1,12 @@
 import "./Forbidden.css"
 import pic from "./naughty.jpg"
 
+/**
+ * forbidden access page error 403
+ * appears when trying to view/edit a trip the user doesn't own (or when the user is not connected)
+ * 
+ * @returns 
+ */
 export default function Forbidden() {
     return(
         <div className="page-forbidden">
