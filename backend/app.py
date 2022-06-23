@@ -430,7 +430,7 @@ def addTripToUser(name, tripID):
 # @token_required
 def RemoveTripFromUser():
     try:
-        return removeTripfromUser(request.json['user'], request.json['trip']['_id']), 200
+        return removeTripfromUser(request.json['user'], request.json['id']), 200
     except:
         return "Cant romve trip", 403
 

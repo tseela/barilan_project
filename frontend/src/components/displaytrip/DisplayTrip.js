@@ -36,9 +36,7 @@ export default function DisplayTrip({ trip, canSort, setEditedTrip }) {
     function report(sortedInts, dayIndex) { // using cloneDeep to copy nested arrays and jsons
         let reorderedActivities = sortedInts.map((i) => { return cloneDeep(trip?.days[dayIndex]?.activities[i]); })
         let newTrip = cloneDeep(trip);
-        newTrip.days[dayIndex] = {
-            'activities': cloneDeep(reorderedActivities)
-        }
+        newTrip.days[dayIndex].activities = cloneDeep(reorderedActivities);
         setEditedTrip(newTrip);
     }
 

@@ -41,9 +41,11 @@ export default function DisplayDay({ day, index, iconPressed, notifyPressed, can
             let transport = day?.transportation;
             
             let trans_html = []; // each cell is a display transportation element
-            transport.map((trans, i) => {
-                trans_html[i] = trans.map((tran, j) => { return <div className='fill-width' key={i.toString() + ',' + j.toString()}><DisplayTransport transport={tran} notifyPressed={notifyPressed} /></div>});
-            });
+            if (transport) {
+                transport.map((trans, i) => {
+                    trans_html[i] = trans.map((tran, j) => { return <div className='fill-width' key={i.toString() + ',' + j.toString()}><DisplayTransport transport={tran} notifyPressed={notifyPressed} /></div>});
+                });
+            }
 
             let html = [];
             activities.map((act, i) => { html[i] = <div className='fill-width' key={i} data-id={i}><DisplayActivity activity={act} iconPressed={iconPressed} notifyPressed={notifyPressed} /></div> });
