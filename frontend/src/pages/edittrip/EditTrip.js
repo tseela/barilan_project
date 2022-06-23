@@ -4,7 +4,7 @@ import { Forbidden } from '../index';
 import { useState, useEffect } from 'react';
 import { Loading, Navbar, DisplayTrip } from '../../components';
 import { Navigate } from 'react-router-dom';
-import cloneDeep from 'lodash';
+import cloneDeep from 'lodash/cloneDeep';
 
 export default function EditTrip() {
     const { token, setToken } = useToken();
@@ -52,6 +52,7 @@ export default function EditTrip() {
                 } else { // status ok, update trip in 1 sec
                     setTimeout(() => {
                         setTrip(res);
+                        setTimeout(() => setEditedTrip(trip), 500);
                     }, 1000); //wait 1 sec
                 }
             }));
