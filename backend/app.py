@@ -19,6 +19,7 @@ import json
 import tripAlgo
 import csv
 
+import traceback
 
 
 # server
@@ -45,22 +46,22 @@ _countriesMap = []
 _regionsMap = []
 _citiesMap = []
 
-# with open('metadata/worldcities.csv', encoding="utf-8") as f:
-#     _citiesMap = [{k: v for k, v in row.items()}
-#         for row in csv.DictReader(f, skipinitialspace=True)]
+with open('metadata/worldcities.csv', encoding="utf-8") as f:
+    _citiesMap = [{k: v for k, v in row.items()}
+        for row in csv.DictReader(f, skipinitialspace=True)]
 
-# with open('metadata/regions.csv', encoding="utf-8") as f:
-#     _regionsMap = [{k: v for k, v in row.items()}
-#         for row in csv.DictReader(f, skipinitialspace=True)]
+with open('metadata/regions.csv', encoding="utf-8") as f:
+    _regionsMap = [{k: v for k, v in row.items()}
+        for row in csv.DictReader(f, skipinitialspace=True)]
 
-# with open('metadata/countries.csv', encoding="utf-8") as f:
-#     _countriesMap = [{k: v for k, v in row.items()}
-#         for row in csv.DictReader(f, skipinitialspace=True)]
+with open('metadata/countries.csv', encoding="utf-8") as f:
+    _countriesMap = [{k: v for k, v in row.items()}
+        for row in csv.DictReader(f, skipinitialspace=True)]
 
-# headers = [ 'name', 'latitude_deg', 'longitude_deg', 'iso_region', 'municipality', 'iso_country', 'iata_code' ]
-# with open('metadata/airports.csv', encoding="utf-8") as f:
-#     _airportsMap = [{k: v for k, v in row.items() if k in headers}
-#         for row in csv.DictReader(f, skipinitialspace=True)]
+headers = [ 'name', 'latitude_deg', 'longitude_deg', 'iso_region', 'municipality', 'iso_country', 'iata_code' ]
+with open('metadata/airports.csv', encoding="utf-8") as f:
+    _airportsMap = [{k: v for k, v in row.items() if k in headers}
+        for row in csv.DictReader(f, skipinitialspace=True)]
 
 # example
 @app.route('/api', methods=[ 'POST'])
@@ -338,12 +339,14 @@ def UpdateTrip():
         # print(request.json)
         return updateTrip(request.json['trip']['_id'], request.json['trip']), 200
     except:
+        print(print(traceback.format_exc()))
         return "Cant update trip", 403
 
 
 def updateTrip(tripId, newTrip):
-    newTrip = editTrip()
-    newTrip['_id'] = ObjectId(newTrip['_id'])
+    print("working")
+    newTrip = json.loads(editTrip(newTrip))
+    newTrip['_id'] = ObjectId(tripId)
     newTrip['userId'] = ObjectId(newTrip['userId'])
 
     tripId = ObjectId(tripId)
@@ -465,10 +468,9 @@ def createTripAndAdd(name):
     addTripToUser(name,id)
 
 
-@app.route('/switchTrip', methods=['POST'])
-def editTrip():
-    jsonTrip = request.json['trip']
+def editTrip(jsonTrip):
     trip = JsonToTrip(jsonTrip)
+    print("json worked")
     trip = tripAlgo.switchingTripActivities(trip)
     trip = TripToJson(trip)
     return trip
@@ -642,9 +644,9 @@ def JsonToTrip(jsonTrip):
     trip['startDate'] = datetime.strptime(trip['startDate'].replace(" ", "T"), '%Y-%m-%dT%H:%M:%S')
     trip['endDate'] = datetime.strptime(trip['endDate'].replace(" ", "T"), '%Y-%m-%dT%H:%M:%S')
     print(type(trip))
-    print(trip['days'])
+    # print(trip['days'])
     for day in trip['days']:
-        print("day", day)
+        # print("day", day)
         day['timeStart'] = datetime.strptime(day['timeStart'].replace(" ", "T"), '%Y-%m-%dT%H:%M:%S')
         day['timeEnd'] = datetime.strptime(day['timeEnd'].replace(" ", "T"), '%Y-%m-%dT%H:%M:%S')
 
@@ -656,6 +658,7 @@ def JsonToTrip(jsonTrip):
             actson = classes.Activity.DictToActivity(act)
             newacts.append(actson)
         day['activities'] = newacts
+        print("done with activity")
 
         newtrans = []
         for trans in day["transportation"]:
@@ -675,11 +678,14 @@ def JsonToTrip(jsonTrip):
 
         day["transportation"] = newtrans
 
-        day["placeOfStay"]["timeStart"] = datetime.strptime(day["placeOfStay"]["timeStart"].replace(" ", "T"), '%Y-%m-%d')
-        day["placeOfStay"]["timeEnd"] = datetime.strptime(day["placeOfStay"]["timeEnd"].replace(" ", "T"), '%Y-%m-%d')
+        print(day["placeOfStay"]["timeStart"])
+        print(day["placeOfStay"]["timeEnd"])
+        day["placeOfStay"]["timeStart"] = datetime.strptime(day["placeOfStay"]["timeStart"].split(" ")[0], '%Y-%m-%d')
+        day["placeOfStay"]["timeEnd"] = datetime.strptime(day["placeOfStay"]["timeEnd"].split(" ")[0], '%Y-%m-%d')
         day["placeOfStay"] = classes.PlaceOfStay.DictToPlace(day["placeOfStay"])
         newday = classes.Day.DictToDay(day)
         newDays.append(newday)
+    print("done with days")
 
     trip['days'] = newDays
     trip['userId'] = ObjectId(trip['userId'])

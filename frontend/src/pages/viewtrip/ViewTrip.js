@@ -53,11 +53,11 @@ export default function ViewTrip() {
             }).then((res) => {
                 if (!res || !status) { // if response status is not ok update
                     setStatus(false);
-                } else { // status ok, update trip in 1 sec
-                    let delay_res = res;
-                    setTimeout((delay_res) => {
+                } else { // status ok, update trip
+                    setTimeout(() => {
                         setTrip(res);
-                    }, 1000); //wait 1 sec
+                        console.log(res);
+                    }, 500);
                 }
             }));
         }

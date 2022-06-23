@@ -42,7 +42,7 @@
 }
 
 .display-name {
-    font-size: 5vh;
+    font-size: min(5vh, 3vw);
     font-weight: bold;
 }
 
@@ -59,7 +59,7 @@
 /* buttons */
 .edittrip-button {
     margin-right: 3vw;
-    font-size: 4vh;
+    font-size: min(4vh, 2.5vw);
     font-weight: bold;
     text-decoration: none;
     background-color: lightcyan;
@@ -75,11 +75,12 @@
 }
 
 .edittrip-button:hover {
+    font-size: min(4.5vh, 2.8vw);
     color: darkblue;
 }
 
 .deletetrip-button {
-    font-size: 4vh;
+    font-size: min(4vh, 2.5vw);
     font-weight: bold;
     text-decoration: none;
     background-color: rgb(255, 203, 182);
@@ -96,5 +97,6 @@
 }
 
 .deletetrip-button:hover {
-    color: darkblue;
+    font-size: min(4.5vh, 2.8vw);
+    color: darkslateblue;
 }

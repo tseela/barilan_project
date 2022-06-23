@@ -18,6 +18,7 @@ export default function EditTrip() {
     const [ editedTrip, setEditedTrip ] = useState(null); // the trip after editings
     const [ editedTripName, setEditedTripName ] = useState(''); // edited trip name
     const [ status, setStatus ] = useState(true); // true->all good, false->forbidden access
+    const [ isLoading, setIsLoading ] = useState(false); // should show loader
     const [ isDone, setIsDone ] = useState(false); // after finishing
 
     // extruct id from url
@@ -81,6 +82,7 @@ export default function EditTrip() {
             } else {
                 alert("Something went wrong... Your trip couldn't be saved.");
             }
+            setIsLoading(false);
         });
     }
 
@@ -94,6 +96,7 @@ export default function EditTrip() {
             return;
         }
 
+        setIsLoading(true);
         let et = cloneDeep(editedTrip);
         setTimeout(() => {
             // update edited name
@@ -106,7 +109,7 @@ export default function EditTrip() {
 
     // trip is already saved-> return to viewtrip of it
     if (isDone) {
-        return(<Navigate to={"/viewtrip/" + id} />)
+        return(<Navigate to={"/viewtrip/" + id} />);
     }
 
     // can't edittrip if you are not connected
@@ -116,7 +119,7 @@ export default function EditTrip() {
     }
 
     // if status if ok and trip in still null, show that we are loading the trip
-    if (!trip) {
+    if (!trip || isLoading) {
         return(
             <div className='loading-container'>
                 <Navbar />

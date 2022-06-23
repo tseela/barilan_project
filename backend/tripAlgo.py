@@ -378,7 +378,6 @@ def getTrip(srcAirport, date, duration, passengerCount, isFastPaced, isMuseumOri
 def switchingTripActivities(tripObject):
     transportObject = transportFunctions()
     newTrip = deepcopy(tripObject)
-
     #print("Flight is", newTrip.initFlight[-1].timeEnd)
     #print("Return flight is", newTrip.finFlight[0].timeStart)
     days = newTrip.days
@@ -397,7 +396,10 @@ def switchingTripActivities(tripObject):
                 startTime = day.timeStart
                 print("This is starTime", startTime)
                 hotelToFirst = transportObject.getTransportByTime(hotelCoords[0], hotelCoords[1], firstActivityCoords[0], firstActivityCoords[1], str(startTime.isoformat()))
+                hotelToFirst[0].baseStation = day.placeOfStay.title
+                currentLoc = day.placeOfStay.title
                 startTime = hotelToFirst[-1].timeEnd
+                hotelToFirst[-1].arrivalStation = day.activities[0].title
                 startTime = startTime + datetime.timedelta(minutes=5)
                 day.activities[0].timeStart = startTime
                 endTime = startTime + datetime.timedelta(hours=3)
@@ -405,13 +407,17 @@ def switchingTripActivities(tripObject):
                 currTime = endTime + datetime.timedelta(minutes=60)
                 currCoords = day.activities[0].destination.split(',')
                 day.transportation.append(hotelToFirst)
-                print("First activity is ", day.activities[0])
+               # print("First activity is ", day.activities[0])
+                currActivity = day.activities[0].title
                 
                 for activity in day.activities[1:]:
                     
+                    nextLoc = activity.title
                     print("current activity is", activity)
                     nextActivityCoords = activity.destination.split(',')
                     transportToActivity = transportObject.getTransportByTime(currCoords[0], currCoords[1], nextActivityCoords[0], nextActivityCoords[1], str(currTime.isoformat()))
+                    transportToActivity[0].baseStation = currActivity
+                    transportToActivity[-1].arrivalStation = nextLoc
                     currTime = transportToActivity[-1].timeEnd
                     currTime = currTime + datetime.timedelta(minutes=5)
                     activity.timeStart = currTime
@@ -420,9 +426,13 @@ def switchingTripActivities(tripObject):
                     currTime = currTime + datetime.timedelta(minutes=60)
                     currCoords = nextActivityCoords
                     day.transportation.append(transportToActivity)
+                    currActivity = nextLoc
                     
+                
                 lastToHotel = transportObject.getTransportByTime(currCoords[0], currCoords[1], hotelCoords[0], hotelCoords[1], str(currTime.isoformat()))
+                lastToHotel[0].baseStation = currActivity
+                lastToHotel[-1].arrivalStation = day.placeOfStay.title
                 
                 day.transportation.append(lastToHotel)
-
+                
     return newTrip
