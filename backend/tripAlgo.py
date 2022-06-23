@@ -16,6 +16,7 @@ from amadeus import Location
 import random
 from classes import Day
 import time
+from copy import deepcopy
 
 def cleanUsedAttractions(attractions, usedAttractions):
 
@@ -377,6 +378,7 @@ def getTrip(srcAirport, date, duration, passengerCount, isFastPaced, isMuseumOri
 def switchingTripActivities(tripObject):
     transportObject = transportFunctions()
     newTrip = deepcopy(tripObject)
+
     #print("Flight is", newTrip.initFlight[-1].timeEnd)
     #print("Return flight is", newTrip.finFlight[0].timeStart)
     days = newTrip.days
@@ -390,7 +392,7 @@ def switchingTripActivities(tripObject):
             if (len(day.activities) > 0):
                 
                 hotelCoords = day.placeOfStay.destination.split(',')
-                day.transport = []
+                day.transportation = []
                 firstActivityCoords = day.activities[0].destination.split(',')
                 startTime = day.timeStart
                 print("This is starTime", startTime)
@@ -402,7 +404,7 @@ def switchingTripActivities(tripObject):
                 day.activities[0].timeEnd = endTime
                 currTime = endTime + datetime.timedelta(minutes=60)
                 currCoords = day.activities[0].destination.split(',')
-                day.transport.append(hotelToFirst)
+                day.transportation.append(hotelToFirst)
                 print("First activity is ", day.activities[0])
                 
                 for activity in day.activities[1:]:
@@ -417,10 +419,10 @@ def switchingTripActivities(tripObject):
                     activity.timeEnd = currTime
                     currTime = currTime + datetime.timedelta(minutes=60)
                     currCoords = nextActivityCoords
-                    day.transport.append(transportToActivity)
+                    day.transportation.append(transportToActivity)
                     
                 lastToHotel = transportObject.getTransportByTime(currCoords[0], currCoords[1], hotelCoords[0], hotelCoords[1], str(currTime.isoformat()))
                 
-                day.transport.append(lastToHotel)
-                
+                day.transportation.append(lastToHotel)
+
     return newTrip

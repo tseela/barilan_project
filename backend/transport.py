@@ -49,7 +49,7 @@ class transportFunctions:
 
         response = requests.get(url)
         trans = ast.literal_eval(response.text)
-        print(trans)
+        # print(trans)
         if len(trans["routes"]) == 0:
             return []
 
@@ -63,6 +63,10 @@ class transportFunctions:
             transResults = self.createTransportation(section)
             transportations.append(transResults)
 
+
+        for p in transportations:
+            print(p.__dict__)
+        print()
         length = len(transportations)
         for index in range(length):
             trans = transportations[index]
@@ -72,6 +76,10 @@ class transportFunctions:
 
                 if (index != 0):
                     trans.baseStation = transportations[index - 1].arrivalStation
+        print()
+        for p in transportations:
+            print(p.__dict__)
+        
                     
 
         return transportations
@@ -94,10 +102,13 @@ class transportFunctions:
             mode = section["transport"]["mode"]
             if mode == "bus":
                 transType = 1
+                cost = 6
             elif mode == "regionalTrain":
                 transType = 2
+                cost = 40
             elif mode == "subway":
                 transType = 3
+                cost = 10
 
             baseStation = section["departure"]["place"]["name"]
             arrivalStation = section["arrival"]["place"]["name"]
