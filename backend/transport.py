@@ -28,6 +28,16 @@ class transportFunctions:
         for section in sections:
             transResults = self.createTransportation(section)
             transportations.append(transResults)
+        
+        length = len(transportations)
+        for index in range(length):
+            trans = transportations[index]
+            if (trans.title == "pedestrian"):
+                if (index + 1 < length):
+                    trans.arrivalStation = transportations[index + 1].baseStation
+
+                if (index != 0):
+                    trans.baseStation = transportations[index - 1].arrivalStation
 
 
         return transportations
@@ -53,6 +63,16 @@ class transportFunctions:
             transResults = self.createTransportation(section)
             transportations.append(transResults)
 
+        length = len(transportations)
+        for index in range(length):
+            trans = transportations[index]
+            if (trans.title == "pedestrian"):
+                if (index + 1 < length):
+                    trans.arrivalStation = transportations[index + 1].baseStation
+
+                if (index != 0):
+                    trans.baseStation = transportations[index - 1].arrivalStation
+                    
 
         return transportations
 
@@ -139,8 +159,25 @@ def getNZfromCity(city):
 # print(json.dumps(d, sort_keys=False, indent=4))
 # print(response.__dict__)
 
-# tr = getTransport(32.0845191,34.8037962,32.0791345,34.7924341)
+
+
+# x = transportFunctions()
+# tr = x.getTransport(32.0845191,34.8037962,32.0791345,34.7924341)
 # print(tr)
+# for t in tr:
+#     print(t.__dict__)
+# print()
+# print()
+# print()
+# tr = x.getTransportByTime(32.0845191,34.8037962,32.0791345,34.7924341, "2022-07-23T15:00:00")
+# print(tr)
+# for t in tr:
+#     print(t.__dict__)
+#     print()
+
+
+
+
 # for t in tr:
 #     for a in t.__dict__:
 #         print(t.__dict__[a])
