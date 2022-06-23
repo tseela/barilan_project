@@ -418,7 +418,7 @@ def addTripToUser(name, tripID):
     else:
         if (tripID in user['trips']):
             return
-        user['trips'] = user['trips'] + [tripID]
+        user['trips'] = user['trips'] + [ObjectId(tripID)]
 
     user = users.find_one_and_update({"username" : name}, update={ "$set": {"trips" : user['trips']}})
 
