@@ -1,4 +1,5 @@
 # Install the Python library from https://pypi.org/project/amadeus
+from datetime import datetime
 from amadeus import Client, ResponseError
 import sys
 import importlib
@@ -68,7 +69,7 @@ class hotelFunctions:
                 photos = activity['pictures']
                 dest = activity["geoCode"]["latitude"] + "," + activity["geoCode"]["longitude"]
 
-                act = classes.Activity(None, cost, None, None, title, url, photos, True, dest)
+                act = classes.Activity(3, cost, None, None, title, url, photos, True, dest)
                 #print(act.__dict__)
                 activities.append(act)
 
@@ -76,6 +77,7 @@ class hotelFunctions:
             return activities
         except ResponseError as error:
             # raise error
+            print(error)
             return []
         except:
             return activities
@@ -83,6 +85,7 @@ class hotelFunctions:
 
     def getHotelsByGeocode(self, latitude, longitude):
         try:
+            date = datetime.strptime("2022-11-01", '%Y-%m-%d')
             # Get list of Hotels by city code
             hotels_by_city = self.amadeus.reference_data.locations.hotels.by_geocode.get(longitude=longitude,latitude=latitude)
             # print(hotels_by_city.data)
@@ -90,13 +93,19 @@ class hotelFunctions:
             for hotelID in hotels_by_city.data:
                 # print(hotelID)
                 id = hotelID["hotelId"]
-
+                # print(id)
                 hotel = self.getHotelByID(id)
 
                 if (type(hotel) is list):
                     continue
-
-                url = hotel["hotel"]["media"][0]['uri']
+                
+                try:
+                    url = hotel["hotel"]["media"][0]['uri']
+                except:
+                    if (len(offers) == 0):
+                        url = "/404/"
+                    else:
+                        return offers
                 # print(hotel["offers"][0]["price"])
                 price = hotel["offers"][0]["price"]["total"]
                 price = float(price)
@@ -113,6 +122,9 @@ class hotelFunctions:
                 # print (hotel.__dict__)
                 offers.append(hotel)
 
+                if (len(offers) > 0):
+                    break
+
             return offers
         except ResponseError as error:
             # raise error
@@ -127,13 +139,22 @@ class hotelFunctions:
     def getHotelByID(self, hotelID):
         try:
             # Get list of Hotels by city code
-            hotel = self.amadeus.shopping.hotel_offers.get(hotelIds=hotelID)
+            date = datetime.strptime("2022-11-01", '%Y-%m-%d')
+            date2 = datetime.strptime("2022-11-08", '%Y-%m-%d')
+            # hotel = self.amadeus.shopping.hotel_offers.get(hotelIds=hotelID, checkInDate =date, checkOutDate = date2)
 
+            # hotel = self.amadeus.shopping.hotel_offers.get(hotelIds=hotelID)
+            # hotel = amadeus.reference_data.locations.hotels.by_hotels.get(hotelIds=hotelID)
+
+            hotel = self.amadeus.shopping.hotel_offers_search.get(hotelIds=hotelID)
+
+            # print(hotel.data)
             if (type(hotel.data) is list and len(hotel.data) > 0):
                 return hotel.data[0]
 
             return hotel.data
         except ResponseError as error:
+            print("cant find hotel by id", error)
             # raise error
             return []
 
@@ -153,8 +174,17 @@ class hotelFunctions:
 if __name__ == '__main__':
     amadeus = Client(
         client_id='CGwOmHn7cmfAIuUcbqUiaPC5LAyAvwAG',
-        client_secret='rKvILHDsjxcCh6yq'
+        client_secret='rKvILHDsjxcCh6yq',
+        log_level='debug'
     )
+
+    # amadeus = Client(
+    #     client_id='3Hjzstks6Ahiptx9IFmkJhnbMuXMErgM',
+    #     client_secret='Ol5zYr6FEIAGGDsG' 
+    # )
+    # this is ron
+
+
     # hotels = getHotels('TLV',2)
     # print(hotels)
 
@@ -167,7 +197,25 @@ if __name__ == '__main__':
 
     # x = getHotelByID('BWTLV023')
     # print(x)
+    # date = datetime.strptime("2022-11-01", '%Y-%m-%d')
+    # print(str(date)[:9])
+    x = hotelFunctions(amadeus)
 
-    hotels = getHotelsByGeocode(32.079664, 34.767410)
-    print(hotels)
+    # hotels = x.getHotelsByGeocode(30.044770, 31.242940)
+    # print(hotels)
+    # hotels = x.getHotelsByGeocode(32.079664, 34.767410)
+
+    
+    # print(hotels)
+    # hotels = x.getHotelsByGeocode(51.506412, -0.139257)
+    # print(hotels)
+
+    # hotels = x.getHotelsByGeocode(40.761794, -73.972670)
+    # print(hotels)
+
+
+    # hotels = x.getHotels("TLV", 2)
+
+    act = x.getActivities(40.761794, -73.972670,0)
+    print(act)
 

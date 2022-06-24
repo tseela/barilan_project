@@ -4,15 +4,24 @@ import { Forbidden } from '../index';
 import { useState, useEffect } from 'react';
 import { Loading, Navbar, DisplayTrip } from '../../components';
 import { Navigate } from 'react-router-dom';
+import cloneDeep from 'lodash/cloneDeep';
 
+/**
+ * page where you edit trip with given id
+ * url looks like that: https//:host/edittrip/id
+ * 
+ * @returns 
+ */
 export default function EditTrip() {
-    const { token, setToken } = useToken();
-    const [ trip, setTrip ] = useState(null);
-    const [ editedTrip, setEditedTrip ] = useState(null);
+    const { token, setToken } = useToken(); // user token
+    const [ trip, setTrip ] = useState(null); // trip to edit
+    const [ editedTrip, setEditedTrip ] = useState(null); // the trip after editings
+    const [ editedTripName, setEditedTripName ] = useState(''); // edited trip name
     const [ status, setStatus ] = useState(true); // true->all good, false->forbidden access
-    const [ editedTripName, setEditedTripName ] = useState('');
-    const [ isDone, setIsDone ] = useState(false);
+    const [ isLoading, setIsLoading ] = useState(false); // should show loader
+    const [ isDone, setIsDone ] = useState(false); // after finishing
 
+    // extruct id from url
     const id = window.location.pathname.split("/").pop();
 
     // get the trip from backend server
@@ -29,7 +38,7 @@ export default function EditTrip() {
                 body: JSON.stringify({'username': token.user, 'token':token})
             }).then((res) => res.json()).then((res) => {
                 for (let i = 0; i < res.length; ++i) {
-                    if (res[i]?.id == id) {
+                    if (res[i]?.id === id) {
                         return;
                     }
                 }
@@ -49,29 +58,23 @@ export default function EditTrip() {
                 if (!res || !status) { // if response status is not ok update
                     setStatus(false);
                 } else { // status ok, update trip in 1 sec
-                let delay_res = res;
-                    setTimeout((delay_res) => {
+                    setTimeout(() => {
                         setTrip(res);
-                    }, 1000); //wait 1 sec
+                        setTimeout(() => setEditedTrip(cloneDeep(trip)), 500);
+                    }, 500); //wait 1 sec
                 }
             }));
         }
     }, [token]);
 
-    const saveEditedTrip = async (e) => {
-        e.preventDefault();
-
-        let et = editedTrip;
-        if (editedTripName !== '' && editedTripName !== trip?.name) {
-            et.name = editedTripName;
-        }
-
-        fetch('/insertTripToUser', { // should by updateTrip
+    // updates trip in db
+    function updateTrip(edited) {
+        fetch('/updateTrip', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify({'token':token, 'trip':et})
+            body: JSON.stringify({'token':token, 'trip':edited})
         }).then((res) => {
             if (res.status === 200) {
                 alert("Success! Trip saved.");
@@ -79,12 +82,34 @@ export default function EditTrip() {
             } else {
                 alert("Something went wrong... Your trip couldn't be saved.");
             }
+            setIsLoading(false);
         });
+    }
+
+    // save trip after editing
+    const saveEditedTrip = async (e) => {
+        e.preventDefault();
+
+        if (!editedTrip) {
+            alert("Error in saving changes. Please try again in a few seconds.");
+            setEditedTrip(cloneDeep(trip));
+            return;
+        }
+
+        setIsLoading(true);
+        let et = cloneDeep(editedTrip);
+        setTimeout(() => {
+            // update edited name
+            if (editedTripName !== '' && editedTripName !== trip?.name) {
+                et.name = editedTripName;
+            }
+            updateTrip(et);
+        }, 1000);
     }
 
     // trip is already saved-> return to viewtrip of it
     if (isDone) {
-        return(<Navigate to={"/viewtrip/" + id} />)
+        return(<Navigate to={"/viewtrip/" + id} />);
     }
 
     // can't edittrip if you are not connected
@@ -94,7 +119,7 @@ export default function EditTrip() {
     }
 
     // if status if ok and trip in still null, show that we are loading the trip
-    if (!trip) {
+    if (!trip || isLoading) {
         return(
             <div className='loading-container'>
                 <Navbar />
@@ -112,6 +137,7 @@ export default function EditTrip() {
             <div className='display'>
                 <div className='edit-row'>
                     <form onSubmit={saveEditedTrip} className="form-horizontal">
+                        {/* edited name, cancel button and save button */}
                         <label className='edit-name'>Trip name:</label>
                         <input className='edited-name' type="text" placeholder={trip?.name} maxLength="16" onChange={(e) => setEditedTripName(e.target.value)} />
                         <button className='cancel-button' onClick={() => setIsDone(true)}>Cancel Changes</button>
@@ -120,6 +146,7 @@ export default function EditTrip() {
                         </label>
                     </form>
                 </div>
+                {/* trip display (with ability to sort) */}
                 <div className='display-edittrip'>
                     <DisplayTrip trip={trip} canSort={true} setEditedTrip={setEditedTrip} />
                 </div>

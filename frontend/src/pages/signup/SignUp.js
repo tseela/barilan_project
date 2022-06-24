@@ -5,9 +5,14 @@ import { useToken } from '../../hooks';
 import { Navigate } from 'react-router-dom';
 import { useState } from 'react';
 
-export default function Login() {
-    const { token, setToken } = useToken();
-    const [ isSigned, setIsSigned ] = useState(false);
+/**
+ * signup page
+ * 
+ * @returns 
+ */
+export default function SignUp() {
+    const { token, setToken } = useToken(); // user token
+    const [ isSigned, setIsSigned ] = useState(false); // is done
 
     // don't allow if user is allready connected
     if (token) {

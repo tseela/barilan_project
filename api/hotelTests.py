@@ -23,4 +23,5 @@ if __name__ == '__main__':
     print(x.data)
     y = amadeus.shopping.hotel_offers.get(hotelIds='RTPAR001')
     print(y.data[0])
+    print(y.data[0])
 

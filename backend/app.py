@@ -19,6 +19,7 @@ import json
 import tripAlgo
 import csv
 
+import traceback
 
 
 # server
@@ -43,6 +44,11 @@ placeOfStay = db.PlaceOfStay
 _airportsMap = []
 _countriesMap = []
 _regionsMap = []
+_citiesMap = []
+
+with open('metadata/worldcities.csv', encoding="utf-8") as f:
+    _citiesMap = [{k: v for k, v in row.items()}
+        for row in csv.DictReader(f, skipinitialspace=True)]
 
 with open('metadata/regions.csv', encoding="utf-8") as f:
     _regionsMap = [{k: v for k, v in row.items()}
@@ -84,8 +90,7 @@ def token_required(func):
 
 @app.route('/getAirportsAndDistrictsLists', methods=['GET'])
 def getAirportsAndDistrictsLists():
-    print(_regionsMap[0])
-    return jsonify({ 'airportsMap' : _airportsMap, 'countriesMap' : _countriesMap, 'regionsMap' : _regionsMap }), 200
+    return jsonify({ 'airportsMap' : _airportsMap, 'countriesMap' : _countriesMap, 'regionsMap' : _regionsMap, 'citiesMap' : _citiesMap }), 200
 
 
 # acttualy the 'then' statements need to be what Tseela want.
@@ -160,6 +165,7 @@ def createTrip():
     flags = request.json['flags']
     trip = tripAlgo.getTrip(request.json['srcAirport'], request.json['startDate'], request.json['duration'], request.json['numOfPeople'], flags['isFastPaced'], flags['isMuseumOriented'], flags['isLuxuriance'], flags['isLowCost'], request.json['destination'])
     tripJSON = TripToJson(trip)
+    print(tripJSON)
     return tripJSON, 200
 
     # trip = classes.Trip()
@@ -169,15 +175,29 @@ def createTrip():
 
 
 @app.route("/insertTripToUser", methods=['POST'])
-@token_required
+# @token_required
 def insertTripToUser():
     try:
-        trip = JsonToTrip(request.json["trip"])
+        trip = request.json["trip"]
 
-        tripID = insertTrip(trip)
+        print(request.json["token"]["user"])
 
+        user = users.find_one({"username" : request.json["token"]["user"]})
+        
+
+        trip["userId"] = ObjectId(user["_id"])
+
+        user["_id"] = ObjectId(user["_id"])
+        tripID = trips.insert_one(trip).inserted_id
+
+        print(tripID)
+        # trip = JsonToTrip(request.json["trip"])
+        # print(33)
+
+        # tripID = insertTrip(trip)
+        # print(44)
         addTripToUser(request.json["token"]["user"], tripID)
-        return 200
+        return str(tripID) , 200
     except:
         return "Cannot insert trip", 403
 
@@ -237,15 +257,27 @@ def insertDay(day):
 
 
 @app.route('/getTrip', methods=['POST'])
-@token_required
+# @token_required
 def GetTrip():
     # return getTrip(request.args.get('tripID'))
     try:
-        return getTrip(request.json['tripID']), 200
+        trip = trips.find_one({'_id': ObjectId(request.json['tripID'])})
+        # return getTrip(request.json['tripID']), 200
+        trip['_id'] = str(trip['_id'])
+        trip['userId'] = str(trip['userId'])
+        return trip, 200
     except:
         return "Cant get trip", 403
     
-
+def getTripById(id):
+    try:
+        trip = trips.find_one({'_id': ObjectId(id)})
+        # return getTrip(request.json['tripID']), 200
+        trip['_id'] = str(trip['_id'])
+        trip['userId'] = str(trip['userId'])
+        return trip
+    except:
+        return {}
 
 # @return trip object
 def getTrip(id):
@@ -301,24 +333,34 @@ def getDay(dayID):
 
 
 @app.route('/updateTrip', methods=['POST'])
-@token_required
+# @token_required
 def UpdateTrip():
     try:
-        return updateTrip(request.json['tripID'], request.json['trip']), 200
+        # print(request.json)
+        return updateTrip(request.json['trip']['_id'], request.json['trip']), 200
     except:
+        print(print(traceback.format_exc()))
         return "Cant update trip", 403
 
 
 def updateTrip(tripId, newTrip):
-    newTrip = classes.Trip.DictToTrip(newTrip)
-    return trips.find_one_and_update({'_id':tripId}, {'$set':newTrip.__dict__})
+    print("working")
+    newTrip = json.loads(editTrip(newTrip))
+    newTrip['_id'] = ObjectId(tripId)
+    newTrip['userId'] = ObjectId(newTrip['userId'])
+
+    tripId = ObjectId(tripId)
+
+    ret = trips.find_one_and_update({'_id':(tripId)}, {'$set':newTrip})
+
+    return "updated"
 
 
 
 
 ############### out of use ###############
 @app.route('/getTripsByUser')
-@token_required
+# @token_required
 def GetTripsByUser():
     try:
         return getTripsByusername(request.json['username']), 200
@@ -328,18 +370,19 @@ def GetTripsByUser():
 
 
 @app.route('/getTripsAndNamesByUser', methods=['POST'])
-@token_required
+# @token_required
 def getTripsAndNamesByUser():
     try:
         username = request.json['username']
         user = users.find_one({"username" : username})
-
         trips = []
         if (user['trips'] == None):
             return jsonify([]), 200
 
         for trip in user['trips']:
-            trips.append({'id':trip, 'name':getTrip(trip).name})
+            name = getTripById(trip)['name']
+            trips.append({'id':str(trip), 'name':name})
+        print(trips)
         return jsonify(trips), 200
     except:
         return "Cant get trips", 403
@@ -355,13 +398,13 @@ def getTripsByusername(name):
         return trips
 
     for trip in user['trips']:
-        trips.append(getTrip(trip))
+        trips.append(getTripById(trip))
 
     return trips
 
 
 @app.route('/addTripToUser', methods=['POST'])
-@token_required
+# @token_required
 def AddTripToUser():
     try:
         return addTripToUser(request.json['username'], request.json['tripID']), 200
@@ -379,7 +422,7 @@ def addTripToUser(name, tripID):
     else:
         if (tripID in user['trips']):
             return
-        user['trips'] = user['trips'] + [tripID]
+        user['trips'] = user['trips'] + [ObjectId(tripID)]
 
     user = users.find_one_and_update({"username" : name}, update={ "$set": {"trips" : user['trips']}})
 
@@ -387,32 +430,33 @@ def addTripToUser(name, tripID):
 
 
 @app.route('/removeTripFromUser', methods=['POST'])
-@token_required
+# @token_required
 def RemoveTripFromUser():
     try:
-        return removeTripfromUser(request.json['username'], request.json['tripID']), 200
+        return removeTripfromUser(request.json['user'], request.json['id']), 200
     except:
         return "Cant romve trip", 403
 
 
 def removeTripfromUser(name, tripID):
+    tripID = ObjectId(tripID)
     user = users.find_one({"username" : name})
-    
     if (not type(user['trips']) == list):
-        return
+        return "trip not in user"
 
     else:
         if (tripID not in user['trips']):
-            return
-
+            return "trip not in user"
+        print(user['trips'])
         user['trips'].remove(tripID)
 
     user = users.find_one_and_update({"username" : name}, update={ "$set": {"trips" : user['trips']}})
+    return "deleted trip from user"
 
 
 
 @app.route('/createTripAndAdd', methods=['POST'])
-@token_required
+# @token_required
 def CreateTripAndAdd():
     try:
         return createTripAndAdd(request.json['username']), 200
@@ -424,11 +468,10 @@ def createTripAndAdd(name):
     addTripToUser(name,id)
 
 
-
 def editTrip(jsonTrip):
     trip = JsonToTrip(jsonTrip)
-    # send ron request to update the trip
-    # trip = ron.updateTrip(trip)
+    print("json worked")
+    trip = tripAlgo.switchingTripActivities(trip)
     trip = TripToJson(trip)
     return trip
 
@@ -584,77 +627,104 @@ def TripToJson(trip):
     trip.finFlight = newflights2
     
     print(trip.__dict__)
+    print(json.dumps(trip.__dict__,sort_keys=True, indent=4))
     return json.dumps(trip.__dict__)
 
 
 def JsonToTrip(jsonTrip):
+    print("lest debug")
+    print()
+    # print(jsonTrip)
     transOptions = { "NONE" : 0, "BUS" : 1, "TRAIN" : 2, "RAM" : 3, "PUBLICTAXI" : 4, "FLIGHT" : 5}
 
-    trip = json.loads(jsonTrip)
+    # trip = json.loads(jsonTrip)
+    trip = jsonTrip
+
     newDays = []
-
-    trip['endDate'] = datetime.strptime(trip['endTime'], '%Y-%m-%dT%H:%M:%S')
-    trip['startDate'] = datetime.strptime(trip['startDate'], '%Y-%m-%dT%H:%M:%S')
-
+    trip['startDate'] = datetime.strptime(trip['startDate'].replace(" ", "T"), '%Y-%m-%dT%H:%M:%S')
+    trip['endDate'] = datetime.strptime(trip['endDate'].replace(" ", "T"), '%Y-%m-%dT%H:%M:%S')
+    print(type(trip))
+    # print(trip['days'])
     for day in trip['days']:
-
-        day['timeStart'] = datetime.strptime(day['timeStart'], '%Y-%m-%dT%H:%M:%S')
-        day['timeEnd'] = datetime.strptime(day['timeEnd'], '%Y-%m-%dT%H:%M:%S')
+        # print("day", day)
+        day['timeStart'] = datetime.strptime(day['timeStart'].replace(" ", "T"), '%Y-%m-%dT%H:%M:%S')
+        day['timeEnd'] = datetime.strptime(day['timeEnd'].replace(" ", "T"), '%Y-%m-%dT%H:%M:%S')
 
         newacts = []
         for act in day['activities']:
-            act['timeStart'] = datetime.strptime(act['timeStart'], '%Y-%m-%dT%H:%M:%S')
-            act['timeEnd'] = datetime.strptime(act['timeEnd'], '%Y-%m-%dT%H:%M:%S')
+            act['timeStart'] = datetime.strptime(act['timeStart'].replace(" ", "T"), '%Y-%m-%dT%H:%M:%S')
+            act['timeEnd'] = datetime.strptime(act['timeEnd'].replace(" ", "T"), '%Y-%m-%dT%H:%M:%S')
 
             actson = classes.Activity.DictToActivity(act)
             newacts.append(actson)
         day['activities'] = newacts
+        print("done with activity")
 
         newtrans = []
         for trans in day["transportation"]:
             subtrans = []
+            # print(trans)
             for trn in trans:
-                trn['timeStart'] = datetime.strptime(trn['timeStart'], '%Y-%m-%dT%H:%M:%S')
-                trn['timeEnd'] = datetime.strptime(trn['timeEnd'], '%Y-%m-%dT%H:%M:%S')
-
+                # print(trn)
+                trn['timeStart'] = datetime.strptime(trn['timeStart'].replace(" ", "T"), '%Y-%m-%dT%H:%M:%S')
+                trn['timeEnd'] = datetime.strptime(trn['timeEnd'].replace(" ", "T"), '%Y-%m-%dT%H:%M:%S')
+                # print("i think")
                 transon = classes.Transport.DictToTransport(trn)
-
+                # print(transon.methodOfTransportation)
                 transon.methodOfTransportation = transOptions[transon.methodOfTransportation]
 
                 subtrans.append(transon)
             newtrans.append(subtrans)
+
         day["transportation"] = newtrans
 
-
-        day["placeOfStay"]["timeStart"] = datetime.strptime(day["placeOfStay"]["timeStart"], '%Y-%m-%dT%H:%M:%S')
-        day["placeOfStay"]["timeEnd"] = datetime.strptime(day["placeOfStay"]["timeEnd"], '%Y-%m-%dT%H:%M:%S')
-
+        print(day["placeOfStay"]["timeStart"])
+        print(day["placeOfStay"]["timeEnd"])
+        day["placeOfStay"]["timeStart"] = datetime.strptime(day["placeOfStay"]["timeStart"].split(" ")[0], '%Y-%m-%d')
+        day["placeOfStay"]["timeEnd"] = datetime.strptime(day["placeOfStay"]["timeEnd"].split(" ")[0], '%Y-%m-%d')
         day["placeOfStay"] = classes.PlaceOfStay.DictToPlace(day["placeOfStay"])
-
         newday = classes.Day.DictToDay(day)
         newDays.append(newday)
+    print("done with days")
 
     trip['days'] = newDays
-
     trip['userId'] = ObjectId(trip['userId'])
 
     newFlights = []
     for flight in trip["initFlight"]:
+                
+        flight['timeStart'] = datetime.strptime(flight['timeStart'].replace(" ", "T"), '%Y-%m-%dT%H:%M:%S')
+        flight['timeEnd'] = datetime.strptime(flight['timeEnd'].replace(" ", "T"), '%Y-%m-%dT%H:%M:%S')
+        
+
         flight["methodOfTransportation"] = transOptions[flight["methodOfTransportation"]]
         newFlights.append(classes.Transport.DictToTransport(flight))
+        
     trip["initFlight"] = newFlights
 
     newFlights2 = []
     for flight in trip["finFlight"]:
+        
+        flight['timeStart'] = datetime.strptime(flight['timeStart'].replace(" ", "T"), '%Y-%m-%dT%H:%M:%S')
+        flight['timeEnd'] = datetime.strptime(flight['timeEnd'].replace(" ", "T"), '%Y-%m-%dT%H:%M:%S')
+
         flight["methodOfTransportation"] = transOptions[flight["methodOfTransportation"]]
         newFlights2.append(classes.Transport.DictToTransport(flight))
     trip["finFlight"] = newFlights2
 
+    x = classes.Trip.DictToTrip(trip)
     return classes.Trip.DictToTrip(trip)
 
 
 if __name__ == '__main__':
     app.run(debug=True)
+    # trip = trips.find_one({'_id': ObjectId("62b4a2f74032e5629a4de90d")})
+    # print(1)
+    # trip = JsonToTrip(trip)
+    # trip = tripAlgo.switchingTripActivities(trip)
+    # print(2)
+    # trip = TripToJson(trip)
+    # print(trip, sort_keys=True, indent=4)
     # print(signUp("shaked", "moked"))
     # print(signIn("shaked", "moked"))
     # input()

@@ -11,6 +11,7 @@
     margin-right: 1vw;
 }
 
+/* day line wrapper */
 .day-row {
     display: flex;
     flex-direction: row;
@@ -27,6 +28,7 @@
     justify-content: space-between;
 }
 
+/* place of stay wrapper */
 .pos {
     background-color: lemonchiffon;
     color: black;
@@ -42,6 +44,7 @@
     flex-direction: column;
 }
 
+/* pos directions */
 .pos-row {
     display: flex;
     flex-direction: row;
@@ -83,6 +86,7 @@
     align-items: center;
 }
 
+/* to tell activities and transport elements to be at the same width as day and pos */
 .fill-width {
     min-width: 100%;
 }

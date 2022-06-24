@@ -5,12 +5,19 @@ import { useState, useEffect } from 'react';
 import { Loading, Navbar, DisplayTrip } from '../../components';
 import { Navigate } from 'react-router-dom';
 
+/**
+ * page where you view trip with given id
+ * url looks like that: https//:host/viewtrip/id
+ * 
+ * @returns 
+ */
 export default function ViewTrip() {
-    const { token, setToken } = useToken();
-    const [ trip, setTrip ] = useState(null);
+    const { token, setToken } = useToken(); // user token
+    const [ trip, setTrip ] = useState(null); // trip to view
     const [ status, setStatus ] = useState(true); // true->all good, false->forbidden access
-    const [ wasDeleted, setWasDeleted ] = useState(false);
+    const [ wasDeleted, setWasDeleted ] = useState(false); // did user delete trip
 
+    // get id from url
     const id = window.location.pathname.split("/").pop();
 
     // get the trip from backend server
@@ -46,23 +53,24 @@ export default function ViewTrip() {
             }).then((res) => {
                 if (!res || !status) { // if response status is not ok update
                     setStatus(false);
-                } else { // status ok, update trip in 1 sec
-                    let delay_res = res;
-                    setTimeout((delay_res) => {
+                } else { // status ok, update trip
+                    setTimeout(() => {
                         setTrip(res);
-                    }, 1000); //wait 1 sec
+                        console.log(res);
+                    }, 500);
                 }
             }));
         }
     }, [token]);
 
+    // deletes a trip
     function deleteTrip() {
         fetch('/removeTripFromUser', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify({'trip-ID': id, 'token':token})
+            body: JSON.stringify({'id': id, 'token':token, 'user':token?.user})
         }).then((res) => {
             if (res.status === 200) {
                 alert("Trip deleted successfully");
@@ -102,6 +110,7 @@ export default function ViewTrip() {
             <Navbar />
             <div className='display'>
                 <div className='display-row'>
+                    {/* name, edittrip button and deletetrip button */}
                     <div className='display-name'>Trip name: <span>{trip?.name}</span></div>
                     <div className='edittrip-div'>
                         <a className='edittrip-button' href={'/edittrip/' + id}>Edit Trip</a>

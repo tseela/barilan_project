@@ -42,8 +42,8 @@
 .profile-trips a {
     background-image: url(./planes.jpg);
 
-    padding-left: min(10vw, 17vh);
-    padding-right: min(10vw, 17vh);
+    padding-left: min(6vw, 13vh);
+    padding-right: min(6vw, 13vh);
     padding-top: 2vh;
     padding-bottom: 2vh;
 
@@ -53,6 +53,10 @@
     color: rgb(185, 252, 255);
     font-weight: bold;
     -webkit-text-stroke: 2.3px black;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip;
 }
 
 .profile-trips a:hover {
@@ -60,8 +64,8 @@
     color: rgb(131, 249, 255);
     -webkit-text-stroke: 3px black;
 
-    padding-left: min(9.45vw, 15.85vh);
-    padding-right: min(9.45vw, 15.85vh);
+    padding-left: min(5.85vw, 12.25vh);
+    padding-right: min(6vw, 13vh);
     padding-top: 1.6vh;
     padding-bottom: 1.6vh;
 }
