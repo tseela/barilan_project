@@ -9,6 +9,7 @@
     border-color: gray;
 }
 
+/* flex directions */
 .trns-row {
     display: flex;
     flex-direction: row;

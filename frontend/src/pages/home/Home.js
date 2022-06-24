@@ -3,8 +3,13 @@ import './Home.css';
 import { Navbar } from "../../components"
 import { useToken } from "../../hooks";
 
+/**
+ * home page
+ * 
+ * @returns 
+ */
 export default function Home() {
-    const { token, setToken } = useToken();
+    const { token, setToken } = useToken(); // user token
 
     return (
         <main className='home'>
@@ -29,6 +34,7 @@ export default function Home() {
                         </div>
                     </div>
                 </div>
+                {/* signup offer -> appears only if user is not connected */}
                 { token ? '' :  <div className="signup-section">
                     <a href="/signup" className="btn-signup">sign up</a>
                     <div className="signup-text">

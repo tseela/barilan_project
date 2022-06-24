@@ -2,10 +2,17 @@ import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import './SignUpDialog.css';
 
+/**
+ * signup dialog box
+ * 
+ * @param setToken - sets the token (should update session storage too)
+ * @param directToRegister - should add a link to register
+ * @returns 
+ */
 export default function SignUpDialog({ alertSignUp, directToLogin=true }) {
-  const [username, setUserName] = useState();
-  const [password, setPassword] = useState();
-  const [confirm_password, setConfirmPassword] = useState();
+  const [username, setUserName] = useState(); // name
+  const [password, setPassword] = useState(); // pass
+  const [confirm_password, setConfirmPassword] = useState(); // conf pass
   const formRef = useRef();
 
   // request server to sign up user
@@ -21,13 +28,14 @@ export default function SignUpDialog({ alertSignUp, directToLogin=true }) {
     if (res.status === 200) { // if ok, alert sign up is good
       setTimeout(() => {
         alertSignUp();
-      }, 1000); //wait 1 sec
+      }, 500);
     }
   
     let ret = res.json();
     return ret;
   }
 
+  // on submit form sent
   const handleSubmit = async e => {
     e.preventDefault();
 
@@ -55,21 +63,26 @@ export default function SignUpDialog({ alertSignUp, directToLogin=true }) {
     <div className="signup-wrapper">
       <header className="headline" >Sign Up</header>
       <form onSubmit={handleSubmit} ref={formRef}>
+        {/* username */}
         <label>
           <input className='form' type="text" placeholder="Username" maxLength="10" onChange={e => setUserName(e.target.value)} />
         </label>
         <p></p>
+        {/* pass */}
         <label>
           <input className='form' type="password" placeholder="Password" maxLength="18" onChange={e => setPassword(e.target.value)} />
         </label>
         <br></br>
+        {/* conf pass */}
         <label>
           <input className='form conf-pass' type="password" placeholder="Confirm Password" onChange={e => setConfirmPassword(e.target.value)} />
         </label>
+        {/* submit credentials button */}
         <div className='signup-btn-div'>
           <button className='signup-btn' type="submit">Sign Up</button>
         </div>
       </form>
+      {/* directs to login if needed */}
       {directToLogin ? <div className='go-login'>
         You already have an account? <a href='/login'>Login</a>
       </div> : ''}

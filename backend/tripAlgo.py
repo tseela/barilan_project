@@ -15,6 +15,8 @@ from transport import getNZfromCity
 from amadeus import Location
 import random
 from classes import Day
+import time
+from copy import deepcopy
 
 def cleanUsedAttractions(attractions, usedAttractions):
 
@@ -67,12 +69,13 @@ def chooseHotel(lowCost, luxury, hotelObject, city, passengerCount):
     xCoord = getNZfromCity(city)[0]
     yCoord = getNZfromCity(city)[1]
     hotels = []
-    
+    nxCoord = xCoord
+    nyCoord = yCoord
     while (hotels == []):
-        hotels = hotelObject.getHotelsByGeocode(xCoord, yCoord)
-        print("Hotel results are", hotels, xCoord, yCoord)
-        xCoord += (random.random() - 0.5) * 0.4
-        yCoord += (random.random() - 0.5) * 0.4
+        hotels = hotelObject.getHotelsByGeocode(nxCoord, nyCoord)
+        print("Hotel results are", hotels, nxCoord, nyCoord)
+        nxCoord = xCoord + (random.random() - 0.5) * 0.1
+        nyCoord = yCoord + (random.random() - 0.5) * 0.1
         
     print(hotels)
     
@@ -89,6 +92,7 @@ def chooseHotel(lowCost, luxury, hotelObject, city, passengerCount):
         choosenHotel = random.choice(hotels)
         
     choosenHotel.cost = choosenHotel.cost * passengerCount
+    
     return choosenHotel
 
 def planDay(fastPaced, attractionOptions, transportObject, xCoord, yCoord, date, usedAttractions, passengerCount, hotel, currDate = [], attractionCount = 2):
@@ -104,16 +108,37 @@ def planDay(fastPaced, attractionOptions, transportObject, xCoord, yCoord, date,
     currY = yCoord
     
     if (fastPaced and attractionCount == 2):
+        
         attractionCount = 3
         
+    totalCost = 0
+    hotelTitle = hotel.title
+    currTitle = hotelTitle
+    
     for i in range(0, min((attractionCount), len(attractionOptions))):
+        
         attractionLocation = attractionOptions[i].destination.split(',')
         destX = float(attractionLocation[0])
         destY = float(attractionLocation[1])
         currTransport = transportObject.getTransportByTime(currX, currY, destX, destY, str(currDate.isoformat()))
+        
+        if (currTransport != []):
+            
+            currTransport[0].baseStation = currTitle
+            currTransport[-1].arrivalStation = attractionOptions[i].title
+            
         currX = destX
         currY = destY
+        currTitle = attractionOptions[i].title
+        
+        for trans in currTransport:
+            
+            if (trans.cost != None):
+                trans.cost = trans.cost * passengerCount
+                totalCost += trans.cost
+                
         print(currTransport)
+        print("ATTRACTIONS ARE", attractionArr)
         currDate = currTransport[-1].timeEnd
         currDate = currDate + datetime.timedelta(minutes=5)
         transportArr.append(currTransport)
@@ -122,15 +147,20 @@ def planDay(fastPaced, attractionOptions, transportObject, xCoord, yCoord, date,
         attractionOptions[i].timeEnd = currDate
         currDate = currDate + datetime.timedelta(minutes=60)
         attractionOptions[i].cost = attractionOptions[i].cost * passengerCount
+        totalCost += attractionOptions[i].cost
         attractionArr.append(attractionOptions[i])
         usedAttractions.append(attractionOptions[i].title.lower())
         
     print("The date at the end is", currDate)
     currTransport = transportObject.getTransportByTime(currX, currY, xCoord, yCoord, str(currDate.isoformat()))
+    currTransport[0].baseStation = currTitle
+    currTransport[-1].arrivalStation = hotelTitle
     
     for trans in currTransport:
+        
         if (trans.cost != None):
             trans.cost = trans.cost * passengerCount
+            totalCost += trans.cost
             
     transportArr.append(currTransport)
     print("Found Attractions:\n\n\n")
@@ -143,12 +173,13 @@ def planDay(fastPaced, attractionOptions, transportObject, xCoord, yCoord, date,
     for i in transportArr:
         for j in i:
             print(j)
-            
-    return Day(attractionArr, transportArr, 0, startingDate, currTransport[-1].timeEnd, 0, hotel), usedAttractions
+    totalCost += hotel.cost
+    
+    return Day(attractionArr, transportArr, totalCost, startingDate, currTransport[-1].timeEnd, 0, hotel), usedAttractions
 
 def planFullDay(tripPeople, luxury, lowCost, museumOriented, 
                 fastPaced, priceCapLeft, attractionObject, transportObject, hotel, usedAttractions, date):
-                
+    
     xCoord = hotel.destination.split(',')
     originalYCoord = float(xCoord[1])
     originalXCoord = float(xCoord[0])
@@ -156,13 +187,22 @@ def planFullDay(tripPeople, luxury, lowCost, museumOriented,
     yCoord = originalYCoord
     print(xCoord, yCoord)
     attractions = [] # maybe add most_central_location implementation later
+    print("STARTING FULL DAY") 
+    retries = 0
     
-    while (attractions == [] or len(attractions) < 3):
+    while ((attractions == [] or len(attractions) < 3) and not retries == 20):
+        
+        print("BEFORE ATTRACTIONS")
         attractions = attractionObject.getActivities(xCoord, yCoord, 10)
+        print("AFTER ATTRACTIONS", attractions)
         attractions = cleanUsedAttractions(attractions, usedAttractions)
+        print("AFTER CLEAN", attractions)
+        print("Coords are", xCoord, yCoord)
         noise = (random.random() - 0.5) * 0.4
         xCoord += noise
         yCoord += noise
+        retries += 1
+        
     attractionOptions = []
     
     for i in attractions:
@@ -171,55 +211,80 @@ def planFullDay(tripPeople, luxury, lowCost, museumOriented,
     if (museumOriented):
     
         for i in attractions:
+            
             if ('museum' in i.title.lower()):
+                
                 attractionOptions.append(i)
                 
         if (attractionOptions == []):
+            
             attractionOptions = attractions
             noise = (random.random() - 0.5) * 0.2
             xCoord += noise
             yCoord += noise
             
     else:
+        
         attractionOptions = attractions
+        
     if (lowCost):
+        
         attractionOptions.sort(key=lambda x: x.cost)
+        
     elif (luxury):
+        
         attractionOptions.sort(key=lambda x: x.cost, reverse=True)
+        
     day, usedAttractions = planDay(fastPaced, attractionOptions, transportObject, originalXCoord, originalYCoord, date, usedAttractions, tripPeople, hotel)
     
     return day, usedAttractions
 
 def createArrivalDay(airportCoords, hotel, amadeusObject, arrivalTime, usedAttractions, hotelObject, luxury, lowCost, museumOriented, fastPace, passengerCount):
-
+    
+    print("cccccccccccccccccc")
     coords = hotel.destination.split(',')
     hotelXCoord = coords[0]
     hotelYCoord = coords[1]
     arrivalTime = arrivalTime + datetime.timedelta(hours=2) 
     exitTime = arrivalTime.isoformat()
     transportObject = transportFunctions()
+    print("zzzzzzzzzzzzzzz")
     airportToHotel = transportObject.getTransportByTime(airportCoords[0], airportCoords[1], hotelXCoord, hotelYCoord, exitTime)
+    airportToHotel[0].departureStation = "Airport"
+    airportToHotel[-1].arrivalStation = hotel.title
+    print(",,,,,,,,,,,,,,,,,,,,")
     
     for trans in airportToHotel:
+        
         print(trans)
+        
         if (trans.cost != None):
+            
             trans.cost = trans.cost * passengerCount
+            
     hotelArrivalTime = airportToHotel[-1].timeEnd
     print(hotelArrivalTime)
-    
     hotelArrivalTime += datetime.timedelta(hours=2)
+    
     if (hotelArrivalTime.time().hour < 18):
+        
         hotelArrivalTime = hotelArrivalTime.replace(hour = max(hotelArrivalTime.time().hour, 9))
         attractions = hotelObject.getActivities(hotel.destination.split(',')[0], hotel.destination.split(',')[1], 2)
         plannedDay, usedAttractions = planDay(False, attractions, transportObject, hotelXCoord, hotelYCoord, hotelArrivalTime, [], passengerCount, hotel, currDate=hotelArrivalTime, attractionCount = 1)
         plannedDay.transportation.append(airportToHotel)
+        
     else:
+        
         usedAttractions = []
-        plannedDay = Day([], [airportToHotel], 0, arrivalTime, airportToHotel[-1].timeEnd, 0, hotel)
+        plannedDay = Day([], [airportToHotel], hotel.cost, arrivalTime, airportToHotel[-1].timeEnd, 0, hotel)
+        
     print("In create arrival day:")
     print(airportToHotel)
+    
     for i in airportToHotel:
+        
         print(i)
+        
     return plannedDay, usedAttractions
     
 def createDepartureDay(airportCoords, hotel, amadeusObject, departureTime, usedAttractions, hotelObject, luxury, lowCost, museumOriented, fastPace, passengerCount):
@@ -231,14 +296,17 @@ def createDepartureDay(airportCoords, hotel, amadeusObject, departureTime, usedA
     exitTime = departureTime.isoformat()
     transportObject = transportFunctions()
     hotelToAirport = transportObject.getTransportByTime(hotelXCoord, hotelYCoord, airportCoords[0], airportCoords[1], exitTime)
-    
+    hotelToAirport[0].departureStation = hotel.title
+    hotelToAirport[-1].arrivalStation = 'Airport'
+    totalCost = 0
     for trans in hotelToAirport:
         if (trans.cost != None):
             trans.cost = trans.cost * passengerCount
+            totalCost += trans.cost
             
     airportArrivalTime = hotelToAirport[-1].timeEnd
-    plannedDay = Day([], [hotelToAirport], 0, exitTime, departureTime, 0, hotel)
-
+    plannedDay = Day([], [hotelToAirport], totalCost + hotel.cost, exitTime, departureTime, 0, hotel)
+    return plannedDay # this could be a future problem
 
 # In[2]:
 
@@ -246,8 +314,8 @@ def createDepartureDay(airportCoords, hotel, amadeusObject, departureTime, usedA
 def getTrip(srcAirport, date, duration, passengerCount, isFastPaced, isMuseumOriented, isLuxury, isLowCost, city):
 
     amadeusBaseObject = Client(
-    client_id='wv6i3ROKO0i2d0sitNtjN4pTKTynYZZa',
-    client_secret='ZzSCP9nj8AA35LqV'
+    client_id='1HFEm5VJHmwxKFasVo2oSmYwnzyryeM2',
+    client_secret='RNnBNiBHo6olo9tC'
     )
     
     duration -= 1
@@ -287,8 +355,11 @@ def getTrip(srcAirport, date, duration, passengerCount, isFastPaced, isMuseumOri
             usedAttractions = results[1]
             
         else:
+            print("HHHHHHHHHHHHHHHH")
             transport = transportFunctions()
+            print("XXXXXXXXXXXXXX")
             results = planFullDay(passengerCount, isLuxury, isLowCost, isMuseumOriented, isFastPaced, 10000, hotelObject, transport, hotel, usedAttractions, currDate)
+            print("GGGGGGGGGGGGGGGGGGGGGGGG")
             print("Creating regular day")
             dayArr.append(results[0])
             usedAttractions = results[1]
@@ -300,4 +371,68 @@ def getTrip(srcAirport, date, duration, passengerCount, isFastPaced, isMuseumOri
     dayArr.append(lastDay)
     tripObject = Trip("Tripping like a trip", city, duration, initFlight[0].timeStart, finFlight[-1].timeEnd, dayArr, 0, '5', initFlight, finFlight)
     print(tripObject)
+    
     return tripObject
+
+
+def switchingTripActivities(tripObject):
+    transportObject = transportFunctions()
+    newTrip = deepcopy(tripObject)
+    #print("Flight is", newTrip.initFlight[-1].timeEnd)
+    #print("Return flight is", newTrip.finFlight[0].timeStart)
+    days = newTrip.days
+    
+    for day in days:
+        
+        if (day != None):
+            
+            print("Day starting date is:", day.timeStart)
+            
+            if (len(day.activities) > 0):
+                
+                hotelCoords = day.placeOfStay.destination.split(',')
+                day.transportation = []
+                firstActivityCoords = day.activities[0].destination.split(',')
+                startTime = day.timeStart
+                print("This is starTime", startTime)
+                hotelToFirst = transportObject.getTransportByTime(hotelCoords[0], hotelCoords[1], firstActivityCoords[0], firstActivityCoords[1], str(startTime.isoformat()))
+                hotelToFirst[0].baseStation = day.placeOfStay.title
+                currentLoc = day.placeOfStay.title
+                startTime = hotelToFirst[-1].timeEnd
+                hotelToFirst[-1].arrivalStation = day.activities[0].title
+                startTime = startTime + datetime.timedelta(minutes=5)
+                day.activities[0].timeStart = startTime
+                endTime = startTime + datetime.timedelta(hours=3)
+                day.activities[0].timeEnd = endTime
+                currTime = endTime + datetime.timedelta(minutes=60)
+                currCoords = day.activities[0].destination.split(',')
+                day.transportation.append(hotelToFirst)
+               # print("First activity is ", day.activities[0])
+                currActivity = day.activities[0].title
+                
+                for activity in day.activities[1:]:
+                    
+                    nextLoc = activity.title
+                    print("current activity is", activity)
+                    nextActivityCoords = activity.destination.split(',')
+                    transportToActivity = transportObject.getTransportByTime(currCoords[0], currCoords[1], nextActivityCoords[0], nextActivityCoords[1], str(currTime.isoformat()))
+                    transportToActivity[0].baseStation = currActivity
+                    transportToActivity[-1].arrivalStation = nextLoc
+                    currTime = transportToActivity[-1].timeEnd
+                    currTime = currTime + datetime.timedelta(minutes=5)
+                    activity.timeStart = currTime
+                    currTime = currTime + datetime.timedelta(hours=3)
+                    activity.timeEnd = currTime
+                    currTime = currTime + datetime.timedelta(minutes=60)
+                    currCoords = nextActivityCoords
+                    day.transportation.append(transportToActivity)
+                    currActivity = nextLoc
+                    
+                
+                lastToHotel = transportObject.getTransportByTime(currCoords[0], currCoords[1], hotelCoords[0], hotelCoords[1], str(currTime.isoformat()))
+                lastToHotel[0].baseStation = currActivity
+                lastToHotel[-1].arrivalStation = day.placeOfStay.title
+                
+                day.transportation.append(lastToHotel)
+                
+    return newTrip

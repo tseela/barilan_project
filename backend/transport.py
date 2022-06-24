@@ -28,6 +28,16 @@ class transportFunctions:
         for section in sections:
             transResults = self.createTransportation(section)
             transportations.append(transResults)
+        
+        length = len(transportations)
+        for index in range(length):
+            trans = transportations[index]
+            if (trans.title == "pedestrian"):
+                if (index + 1 < length):
+                    trans.arrivalStation = transportations[index + 1].baseStation
+
+                if (index != 0):
+                    trans.baseStation = transportations[index - 1].arrivalStation
 
 
         return transportations
@@ -39,7 +49,7 @@ class transportFunctions:
 
         response = requests.get(url)
         trans = ast.literal_eval(response.text)
-        print(trans)
+        # print(trans)
         if len(trans["routes"]) == 0:
             return []
 
@@ -53,6 +63,24 @@ class transportFunctions:
             transResults = self.createTransportation(section)
             transportations.append(transResults)
 
+
+        for p in transportations:
+            print(p.__dict__)
+        print()
+        length = len(transportations)
+        for index in range(length):
+            trans = transportations[index]
+            if (trans.title == "pedestrian"):
+                if (index + 1 < length):
+                    trans.arrivalStation = transportations[index + 1].baseStation
+
+                if (index != 0):
+                    trans.baseStation = transportations[index - 1].arrivalStation
+        print()
+        for p in transportations:
+            print(p.__dict__)
+        
+                    
 
         return transportations
 
@@ -74,10 +102,13 @@ class transportFunctions:
             mode = section["transport"]["mode"]
             if mode == "bus":
                 transType = 1
+                cost = 6
             elif mode == "regionalTrain":
                 transType = 2
+                cost = 40
             elif mode == "subway":
                 transType = 3
+                cost = 10
 
             baseStation = section["departure"]["place"]["name"]
             arrivalStation = section["arrival"]["place"]["name"]
@@ -99,7 +130,7 @@ class transportFunctions:
         endPlace = str(section["arrival"]["place"]["location"]["lat"])+ "," + str(section["arrival"]["place"]["location"]["lng"])
 
 
-        duration = endTime - startTime
+        duration = int((endTime - startTime).total_seconds())/3600
 
         googleMaps = "https://www.google.com/maps/@" + startPlace + ",17z"
         googleMaps2 = "https://www.google.com/maps/@" + endPlace + ",17z"
@@ -139,8 +170,25 @@ def getNZfromCity(city):
 # print(json.dumps(d, sort_keys=False, indent=4))
 # print(response.__dict__)
 
-# tr = getTransport(32.0845191,34.8037962,32.0791345,34.7924341)
+
+
+# x = transportFunctions()
+# tr = x.getTransport(32.0845191,34.8037962,32.0791345,34.7924341)
 # print(tr)
+# for t in tr:
+#     print(t.__dict__)
+# print()
+# print()
+# print()
+# tr = x.getTransportByTime(32.0845191,34.8037962,32.0791345,34.7924341, "2022-07-23T15:00:00")
+# print(tr)
+# for t in tr:
+#     print(t.__dict__)
+#     print()
+
+
+
+
 # for t in tr:
 #     for a in t.__dict__:
 #         print(t.__dict__[a])

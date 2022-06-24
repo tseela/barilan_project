@@ -3,11 +3,16 @@ import './Navbar.css';
 import { ImAirplane } from 'react-icons/im';
 import { useToken } from '../../hooks';
 
-// app navbar
+/**
+ * navbar for app
+ * 
+ * @returns 
+ */
 export default function Navbar() {
-    const { token, setToken } = useToken();
+    const { token, setToken } = useToken(); // user token
 
-    const logout = async e => {
+    // logout
+    function logout() {
         setToken(null);
     }
 
@@ -24,12 +29,14 @@ export default function Navbar() {
 
     return (
         <nav className="navbar-container">
+            {/* website logo */}
             <div className="logo">
                 <ImAirplane className='logo-icon' />
                 <p className="logo-text">
                 <span>T</span>rip<span>P</span>lanner
                 </p>
             </div>
+            {/* nav menu */}
             <menu className="nav-menu">
                 <ul className="nav-links">
                 <li>
