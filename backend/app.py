@@ -159,28 +159,21 @@ def signIn(username, password):
 @app.route('/createTrip', methods=['POST'])
 # @return tripID
 def createTrip():
-    #this is from ron
-    # trip = createTrip()
-    print(request.json)
+
     flags = request.json['flags']
     trip = tripAlgo.getTrip(request.json['srcAirport'], request.json['startDate'], request.json['duration'], request.json['numOfPeople'], flags['isFastPaced'], flags['isMuseumOriented'], flags['isLuxuriance'], flags['isLowCost'], request.json['destination'])
     tripJSON = TripToJson(trip)
-    print(tripJSON)
-    return tripJSON, 200
 
-    # trip = classes.Trip()
-    trip = classes.Trip(1,2,3,4,5,6)
-    return insertTrip(trip)
+    return tripJSON, 200
 
 
 
 @app.route("/insertTripToUser", methods=['POST'])
-# @token_required
+@token_required
 def insertTripToUser():
     try:
         trip = request.json["trip"]
 
-        print(request.json["token"]["user"])
 
         user = users.find_one({"username" : request.json["token"]["user"]})
         
@@ -190,12 +183,7 @@ def insertTripToUser():
         user["_id"] = ObjectId(user["_id"])
         tripID = trips.insert_one(trip).inserted_id
 
-        print(tripID)
-        # trip = JsonToTrip(request.json["trip"])
-        # print(33)
 
-        # tripID = insertTrip(trip)
-        # print(44)
         addTripToUser(request.json["token"]["user"], tripID)
         return str(tripID) , 200
     except:
@@ -203,66 +191,12 @@ def insertTripToUser():
 
 
 
-# @return tripID
-def insertTrip(trip):
-    trip = classes.Trip.toTrip(trip)
-    
-    tripDays = []
-    for day in trip.days:
-        tripDays.append(insertDay(day))
-        
-    trip.days = tripDays
-
-
-    # set the user of the trip
-    user = users.find_one({"username" : request.json["token"]["user"]})
-    trip.userId = user["_id"]
-
-    newFlights = []
-    for flight in trip.initFlight:
-        newFlights.append(flight.__dict__)
-    trip.initFlight = newFlights
-
-    newflights2 = []
-    for flight in trip.finFlight:
-     newflights2.append(flight.__dict__)
-    trip.finFlight = newflights2
-    
-    return trips.insert_one(trip.__dict__).inserted_id
-
-
-# @return dayID
-def insertDay(day):
-    day = classes.Day.toDay(day)
-    activityIDS = []
-    transIDS = []
-    placeID = []
-
-    for activitiy in day.activities:
-        activityIDS.append(activities.insert_one({'activity':activitiy.__dict__}).inserted_id)
-
-    for trans in day.transportation:
-        transIDS.append(transportations.insert_one({'transformation':trans.__dict__}).inserted_id)
-
-    placeID = placeOfStay.insert_one({'placeOfStay':day.placeOfStay.__dict__}).inserted_id
-
-    day.activities = activityIDS
-    day.transportation = transIDS
-    day.placeOfStay = placeID
-    day = day.__dict__
-
-    return days.insert_one(day).inserted_id
-
-
-
-
 @app.route('/getTrip', methods=['POST'])
-# @token_required
+@token_required
 def GetTrip():
-    # return getTrip(request.args.get('tripID'))
     try:
         trip = trips.find_one({'_id': ObjectId(request.json['tripID'])})
-        # return getTrip(request.json['tripID']), 200
+
         trip['_id'] = str(trip['_id'])
         trip['userId'] = str(trip['userId'])
         return trip, 200
@@ -272,71 +206,18 @@ def GetTrip():
 def getTripById(id):
     try:
         trip = trips.find_one({'_id': ObjectId(id)})
-        # return getTrip(request.json['tripID']), 200
+
         trip['_id'] = str(trip['_id'])
         trip['userId'] = str(trip['userId'])
         return trip
     except:
         return {}
 
-# @return trip object
-def getTrip(id):
-    trip = trips.find_one({'_id':id})
-    trip = classes.Trip.DictToTrip(trip)
-
-    tripDays = []
-    for day in trip.days:
-        tripDays.append(getDay(day))
-
-    trip.days = tripDays
-
-    newFlights = []
-    for flight in trip.initFlight:
-        newFlights.append(classes.Transport.DictToTransport(flight))
-    trip.initFlight = newFlights
-
-    newFlights2 = []
-    for flight in trip.finFlight:
-        newFlights2.append(classes.Transport.DictToTransport(flight))
-    trip.finFlight = newFlights2
-
-    return trip
-
-
-# @return day object
-def getDay(dayID):
-    day = days.find_one({'_id':dayID})
-    day = classes.Day.DictToDay(day)
-
-    activityObjects = []
-    for activity in day.activities:
-        act = activities.find_one({'_id':activity})
-        act = classes.Activity.DictToActivity(act['activity'])
-        activityObjects.append(act)
-
-    transObjects = []
-    for trans in day.transportation:
-        transformation = transportations.find_one({'_id':trans})
-        transformation = classes.Transport.DictToTransport(transformation['transformation'])
-        transObjects.append(transformation)
-    
-    placeOf = placeOfStay.find_one({'_id':day.placeOfStay})
-    placeOf = classes.PlaceOfStay.DictToPlace(placeOf['placeOfStay'])
-
-    day.activities = activityObjects
-    day.transportation = transObjects
-    day.placeOfStay = placeOf
-
-    return day
-
-
-
 
 @app.route('/updateTrip', methods=['POST'])
-# @token_required
+@token_required
 def UpdateTrip():
     try:
-        # print(request.json)
         return updateTrip(request.json['trip']['_id'], request.json['trip']), 200
     except:
         print(print(traceback.format_exc()))
@@ -344,7 +225,6 @@ def UpdateTrip():
 
 
 def updateTrip(tripId, newTrip):
-    print("working")
     newTrip = json.loads(editTrip(newTrip))
     newTrip['_id'] = ObjectId(tripId)
     newTrip['userId'] = ObjectId(newTrip['userId'])
@@ -358,9 +238,8 @@ def updateTrip(tripId, newTrip):
 
 
 
-############### out of use ###############
 @app.route('/getTripsByUser')
-# @token_required
+@token_required
 def GetTripsByUser():
     try:
         return getTripsByusername(request.json['username']), 200
@@ -370,7 +249,7 @@ def GetTripsByUser():
 
 
 @app.route('/getTripsAndNamesByUser', methods=['POST'])
-# @token_required
+@token_required
 def getTripsAndNamesByUser():
     try:
         username = request.json['username']
@@ -382,7 +261,6 @@ def getTripsAndNamesByUser():
         for trip in user['trips']:
             name = getTripById(trip)['name']
             trips.append({'id':str(trip), 'name':name})
-        print(trips)
         return jsonify(trips), 200
     except:
         return "Cant get trips", 403
@@ -404,7 +282,7 @@ def getTripsByusername(name):
 
 
 @app.route('/addTripToUser', methods=['POST'])
-# @token_required
+@token_required
 def AddTripToUser():
     try:
         return addTripToUser(request.json['username'], request.json['tripID']), 200
@@ -430,7 +308,7 @@ def addTripToUser(name, tripID):
 
 
 @app.route('/removeTripFromUser', methods=['POST'])
-# @token_required
+@token_required
 def RemoveTripFromUser():
     try:
         return removeTripfromUser(request.json['user'], request.json['id']), 200
@@ -456,7 +334,7 @@ def removeTripfromUser(name, tripID):
 
 
 @app.route('/createTripAndAdd', methods=['POST'])
-# @token_required
+@token_required
 def CreateTripAndAdd():
     try:
         return createTripAndAdd(request.json['username']), 200
@@ -509,47 +387,6 @@ def editTrip(jsonTrip):
 #     return "ok"
 
 
-def mockTrip():
-    activity1 = classes.Activity(2, 2000, str(datetime.now()), str(datetime.now()), "first activity", "location1", "image1", False)
-    activity2 = classes.Activity(2, 2000, str(datetime.now()), str(datetime.now()), "second activity", "location2", "image2", False)
-    myActivities = [activity1, activity2]
-
-    myTransformation1 = classes.Transport(0.5, 7, str(datetime.now()),str(datetime.now()), "1->2", "location 1.5", "image 1.5", False, "first activity", 1, "second activity","first stat", "second stat")
-    myTransformation2 = classes.Transport(0.5, 7, str(datetime.now()),str(datetime.now()), "1->2", "location 1.5", "image 1.5", False, "first activity", 1, "second activity","first stat", "second stat")
-    myTransformation3 = classes.Transport(0.5, 7, str(datetime.now()),str(datetime.now()), "1->2", "location 1.5", "image 1.5", False, "first activity", 1, "second activity","first stat", "second stat")
-    
-    myPlace = classes.PlaceOfStay(1, 500, str(datetime.now()), str(datetime.now()), "hotel", "location sleep", "image sleep", True, "Israel")
-
-    day1 = classes.Day(myActivities, [[myTransformation1]], 4507, str(datetime.now()),str(datetime.now()),4.5, myPlace)
-    day2 = classes.Day(myActivities, [[myTransformation2]], 4507, str(datetime.now()),str(datetime.now()),4.5, myPlace)
-    day3 = classes.Day(myActivities, [[myTransformation3]], 4507, str(datetime.now()),str(datetime.now()),4.5, myPlace)
-    
-    myDays = [day1, day2, day3]
-
-    flight1 =classes.Transport(0.5, 7, str(datetime.now()),str(datetime.now()), "1->2", "location 1.5", "image 1.5", False, "first activity", 1, "second activity","first stat", "second stat")
-    flight2 =classes.Transport(0.5, 7, str(datetime.now()),str(datetime.now()), "1->2", "location 1.5", "image 1.5", False, "first activity", 1, "second activity","first stat", "second stat")
-    flight3 =classes.Transport(0.5, 7, str(datetime.now()),str(datetime.now()), "1->2", "location 1.5", "image 1.5", False, "first activity", 1, "second activity","first stat", "second stat")
-    flight4 =classes.Transport(0.5, 7, str(datetime.now()),str(datetime.now()), "1->2", "location 1.5", "image 1.5", False, "first activity", 1, "second activity","first stat", "second stat")
-
-    myTrip = classes.Trip("shaked4-Israel", "Israel", 3, str(datetime.now()), str(datetime.now()), myDays, 3*4507, ObjectId("ababcdcdefefababcdcdefef"),[flight1,flight2],[flight3,flight4])
-
-    return myTrip
-
-def printTripObject(tripID):
-    trip = getTrip(tripID)
-    print(trip.__dict__)
-    print()
-    print()
-    for day in trip.days:
-        print(day.__dict__)
-        print()
-        for act in day.activities:
-            print(act.__dict__)
-        print()
-        for trans in day.transportation:
-            print(trans.__dict__)
-        print()
-        print(day.placeOfStay.__dict__)
 
 
 def TripToJson(trip):
@@ -634,19 +471,14 @@ def TripToJson(trip):
 def JsonToTrip(jsonTrip):
     print("lest debug")
     print()
-    # print(jsonTrip)
     transOptions = { "NONE" : 0, "BUS" : 1, "TRAIN" : 2, "RAM" : 3, "PUBLICTAXI" : 4, "FLIGHT" : 5}
 
-    # trip = json.loads(jsonTrip)
     trip = jsonTrip
 
     newDays = []
     trip['startDate'] = datetime.strptime(trip['startDate'].replace(" ", "T"), '%Y-%m-%dT%H:%M:%S')
     trip['endDate'] = datetime.strptime(trip['endDate'].replace(" ", "T"), '%Y-%m-%dT%H:%M:%S')
-    print(type(trip))
-    # print(trip['days'])
     for day in trip['days']:
-        # print("day", day)
         day['timeStart'] = datetime.strptime(day['timeStart'].replace(" ", "T"), '%Y-%m-%dT%H:%M:%S')
         day['timeEnd'] = datetime.strptime(day['timeEnd'].replace(" ", "T"), '%Y-%m-%dT%H:%M:%S')
 
@@ -658,19 +490,14 @@ def JsonToTrip(jsonTrip):
             actson = classes.Activity.DictToActivity(act)
             newacts.append(actson)
         day['activities'] = newacts
-        print("done with activity")
 
         newtrans = []
         for trans in day["transportation"]:
             subtrans = []
-            # print(trans)
             for trn in trans:
-                # print(trn)
                 trn['timeStart'] = datetime.strptime(trn['timeStart'].replace(" ", "T"), '%Y-%m-%dT%H:%M:%S')
                 trn['timeEnd'] = datetime.strptime(trn['timeEnd'].replace(" ", "T"), '%Y-%m-%dT%H:%M:%S')
-                # print("i think")
                 transon = classes.Transport.DictToTransport(trn)
-                # print(transon.methodOfTransportation)
                 transon.methodOfTransportation = transOptions[transon.methodOfTransportation]
 
                 subtrans.append(transon)
@@ -678,14 +505,12 @@ def JsonToTrip(jsonTrip):
 
         day["transportation"] = newtrans
 
-        print(day["placeOfStay"]["timeStart"])
-        print(day["placeOfStay"]["timeEnd"])
+
         day["placeOfStay"]["timeStart"] = datetime.strptime(day["placeOfStay"]["timeStart"].split(" ")[0], '%Y-%m-%d')
         day["placeOfStay"]["timeEnd"] = datetime.strptime(day["placeOfStay"]["timeEnd"].split(" ")[0], '%Y-%m-%d')
         day["placeOfStay"] = classes.PlaceOfStay.DictToPlace(day["placeOfStay"])
         newday = classes.Day.DictToDay(day)
         newDays.append(newday)
-    print("done with days")
 
     trip['days'] = newDays
     trip['userId'] = ObjectId(trip['userId'])
@@ -718,56 +543,4 @@ def JsonToTrip(jsonTrip):
 
 if __name__ == '__main__':
     app.run(debug=True)
-    # trip = trips.find_one({'_id': ObjectId("62b4a2f74032e5629a4de90d")})
-    # print(1)
-    # trip = JsonToTrip(trip)
-    # trip = tripAlgo.switchingTripActivities(trip)
-    # print(2)
-    # trip = TripToJson(trip)
-    # print(trip, sort_keys=True, indent=4)
-    # print(signUp("shaked", "moked"))
-    # print(signIn("shaked", "moked"))
-    # input()
-    # print(changePassword("shaked", "moked", "noded"))
-    # print(signUp("shaked4", "moked"))
-    # print(signIn("shaked4", "moked"))
-    # print(Trips())
-
-    # myTrip = mockTrip()
-    # myTrip2 = mockTrip()
-
-
-    # tripID = insertTrip(myTrip2).inserted_id
-
-
-    # trip = trips.find_one({'_id':tripID})
-    # trip = trips.find_one({'_id':ObjectId('6283b41a23876f4403012a2b')})
-    # print(trip)
-    # trip = trips.find_one({'destination':'Israel'})
-    # print(trip)
-
-    # printTripObject(tripID)
-
-
-    # # trip-user
-    # print(getTripsByusername("shaked4"))
-    # addTripToUser("shaked4", ObjectId('6296391a2a9317f48543073f'))
-    # addTripToUser("shaked4", ObjectId('62963935ed1317e541f491be'))
-    # addTripToUser("shaked4", ObjectId('6283b41a23876f4403012a2b'))
-    # print(getTripsByusername("shaked4"))
-    # removeTripfromUser("shaked4", ObjectId('62963935ed1317e541f491be'))
-    # print(getTripsByusername("shaked4"))
-    # request.json['username'] = "shaked4"s
-    # print(GetTripsAndNamesByUser())
-    # print(getTripsByusername("shaked4"))
-
-    # t = mockTrip()
-    # t = TripToJson(t)
-    # parsed = json.loads(t)
-    # print(json.dumps(parsed, indent=4, sort_keys=True))
-
-    # trip = JsonToTrip(t)
-    
-
-    
 
