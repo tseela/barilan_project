@@ -56,18 +56,35 @@ class hotelFunctions:
             # create list of activities
             activities = []
             for activity in response.data:
-                title = activity['name']
-                cost = float(activity['price']['amount'])
-                url = activity['bookingLink']
-                photos = activity['pictures']
-                dest = activity["geoCode"]["latitude"] + "," + activity["geoCode"]["longitude"]
 
-                act = classes.Activity(3, cost, None, None, title, url, photos, True, dest)
-                activities.append(act)
+                try:
+                    title = activity['name']
+
+                    try:  
+                        cost = float(activity['price']['amount'])
+                    except:
+                        cost = 0
+
+                    try:
+                        url = activity['bookingLink']
+                    except:
+                        url = "/404/"
+
+                    dest = str(activity["geoCode"]["latitude"]) + "," + str(activity["geoCode"]["longitude"])
+
+                    try:
+                        photos = activity['pictures']
+                    except:
+                        photos = "/404/"
+                    act = classes.Activity(3, cost, None, None, title, url, photos, True, dest)
+                    activities.append(act)
+                except:
+                    continue
+
 
             return activities
         except ResponseError as error:
-            print(error)
+            # print(error)
             return []
         except:
             return activities
@@ -89,15 +106,13 @@ class hotelFunctions:
 
                 if (type(hotel) is list):
                     continue
-                
+
                 try:
                     url = hotel["hotel"]["media"][0]['uri']
                 except:
-                    if (len(offers) == 0):
-                        url = "/404/"
-                    else:
-                        return offers
-                # print(hotel["offers"][0]["price"])
+                    url = "/404/"
+
+
                 price = hotel["offers"][0]["price"]["total"]
                 price = float(price)
 
@@ -146,12 +161,14 @@ if __name__ == '__main__':
 
     amadeus = Client(
         client_id='CGwOmHn7cmfAIuUcbqUiaPC5LAyAvwAG',
-        client_secret='rKvILHDsjxcCh6yq',
-        log_level='debug'
-    )
+        client_secret='rKvILHDsjxcCh6yq'
+        )
 
 
     x = hotelFunctions(amadeus)
-    act = x.getActivities(40.761794, -73.972670,0)
-    print(act)
+    # act = x.getActivities(40.761794, -73.972670,0)
+    # print(act)
 
+    # hotel = x.getHotelsByGeocode(32.080691, 34.779109)
+    # print(hotel)
+    
