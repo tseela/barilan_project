@@ -36,15 +36,37 @@ class transportFunctions:
 
         # add the destinations to walks
         length = len(transportations)
-        for index in range(length):
+
+        index = 0
+        newTransporataions = []
+        while (index < length):
             trans = transportations[index]
             if (trans.title == "pedestrian"):
-                if (index + 1 < length):
-                    trans.arrivalStation = transportations[index + 1].baseStation
 
                 if (index != 0):
                     trans.baseStation = transportations[index - 1].arrivalStation
 
+
+                if (index + 1 < length):
+                    trans.arrivalStation = transportations[index + 1].baseStation
+
+                    # in case that there is 2 walks one by one
+                    if (transportations[index + 1].title == "pedestrian"):
+                        trans.duration += transportations[index + 1].duration
+                        trans.timeEnd = transportations[index + 1].timeEnd
+                        trans.destinationLink = transportations[index + 1].destinationLink
+                        trans.destination = transportations[index + 1].destination
+
+
+                        if (index + 2 < length):
+                            trans.arrivalStation = transportations[index + 2].baseStation
+                        index += 1
+                
+            index += 1
+            newTransporataions.append(trans)
+
+        transportations = newTransporataions
+           
 
         return transportations
     
@@ -76,14 +98,36 @@ class transportFunctions:
 
         # add the destinations to walks
         length = len(transportations)
-        for index in range(length):
+
+        index = 0
+        newTransporataions = []
+        while (index < length):
             trans = transportations[index]
             if (trans.title == "pedestrian"):
-                if (index + 1 < length):
-                    trans.arrivalStation = transportations[index + 1].baseStation
 
                 if (index != 0):
                     trans.baseStation = transportations[index - 1].arrivalStation
+
+
+                if (index + 1 < length):
+                    trans.arrivalStation = transportations[index + 1].baseStation
+
+                    # in case that there is 2 walks one by one
+                    if (transportations[index + 1].title == "pedestrian"):
+                        trans.duration += transportations[index + 1].duration
+                        trans.timeEnd = transportations[index + 1].timeEnd
+                        trans.destinationLink = transportations[index + 1].destinationLink
+                        trans.destination = transportations[index + 1].destination
+
+
+                        if (index + 2 < length):
+                            trans.arrivalStation = transportations[index + 2].baseStation
+                        index += 1
+                
+            index += 1
+            newTransporataions.append(trans)
+
+        transportations = newTransporataions
 
         return transportations
 
@@ -157,4 +201,13 @@ def getNZfromCity(city):
     longitude = float(response["data"][0]["longitude"])
 
     return latitude, longitude
-    
+
+
+x = transportFunctions()   
+s= x.getTransport(41.3957565,2.1748348,41.3940756,2.164951)
+print()
+print()
+print(s)
+for i in s:
+    print(i.__dict__)
+
