@@ -4,6 +4,7 @@ import { OfflineEditTrip } from '../index';
 import { useState, useEffect } from 'react';
 import { Loading, Navbar, LoginDialog, SignUpDialog } from '../../components';
 import Select from 'react-select';
+import { Navigate } from 'react-router-dom';
 
 // gets today's string
 function getToday() {
@@ -25,6 +26,7 @@ export default function PlanTrip() {
     const [ trip, setTrip ] = useState(null); // trip (initializes after created)
     const [ isLoading, setIsLoading ] = useState(false); // should show that the server is loading
     const [ shouldLogin, setShouldLogin ] = useState(false); // should login to user
+    const [ isDone, setIsDone ] = useState(false); // navigate to different page when finished
 
     // non fail mechanizem
     const [ tryFetch, setTryFetch ] = useState(false); // try fetching maps again (probably after null returned)
@@ -171,11 +173,16 @@ export default function PlanTrip() {
             }).then((res) => {
                 if (res.status === 200) {
                     alert("Success! Trip saved.");
+                    setIsDone(true);
                 } else {
-                    alert("Something went wrong... Your trip couldn't be saved.");
+                    alert("Something went wrong... Your trip couldn't be saved.\nTry again in a few seconds.");
                 }
             });
         }
+    }
+
+    if (isDone) { // goto profile
+        return(<Navigate to="/profile" />);
     }
 
     if (isLoading) { // loading screen

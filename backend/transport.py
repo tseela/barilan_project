@@ -8,7 +8,10 @@ from datetime import datetime
 class transportFunctions:
     def __init__(self):
         pass
+
+
     def getTransport(self, latitude1, longitude1, latitude2, longitude2):
+        # get transport between 2 places
         origin = str(latitude1) + "," + str(longitude1)
         destination = str(latitude2) + "," + str(longitude2)
         url = "https://transit.router.hereapi.com/v8/routes?apiKey=pGwbEV9EnOVSNh94i8prG-B4oBd8RSO8bP6lk_u6NXI&origin=" + origin + "&destination=" + destination
@@ -24,11 +27,14 @@ class transportFunctions:
         sections = way["sections"]
 
 
+        # create object for every transportation
         transportations = []
         for section in sections:
             transResults = self.createTransportation(section)
             transportations.append(transResults)
         
+
+        # add the destinations to walks
         length = len(transportations)
         for index in range(length):
             trans = transportations[index]
@@ -42,14 +48,17 @@ class transportFunctions:
 
         return transportations
     
+
+
     def getTransportByTime(self, latitude1, longitude1, latitude2, longitude2, depTime):
+        # get transport bewtween 2 places on another time
         origin = str(latitude1) + "," + str(longitude1)
         destination = str(latitude2) + "," + str(longitude2)
         url = "https://transit.router.hereapi.com/v8/routes?apiKey=pGwbEV9EnOVSNh94i8prG-B4oBd8RSO8bP6lk_u6NXI&origin=" + origin + "&destination=" + destination + "&departureTime=" + depTime
 
         response = requests.get(url)
         trans = ast.literal_eval(response.text)
-        # print(trans)
+
         if len(trans["routes"]) == 0:
             return []
 
@@ -58,15 +67,14 @@ class transportFunctions:
         sections = way["sections"]
 
 
+        # create object for every transportation
         transportations = []
         for section in sections:
             transResults = self.createTransportation(section)
             transportations.append(transResults)
 
 
-        for p in transportations:
-            print(p.__dict__)
-        print()
+        # add the destinations to walks
         length = len(transportations)
         for index in range(length):
             trans = transportations[index]
@@ -76,23 +84,22 @@ class transportFunctions:
 
                 if (index != 0):
                     trans.baseStation = transportations[index - 1].arrivalStation
-        print()
-        for p in transportations:
-            print(p.__dict__)
-        
-                    
 
         return transportations
 
+
+
     def createTransportation(self, section):
-        # print(section)
+        # create transportation object
         mode = section["type"]
 
         cost = None
-        # transType = classes.Transportation.NONE
+
         transType = 0
         order = False
 
+
+        # create the prices and types
         baseStation = ""
         arrivalStation = ""
         if mode == "pedestrian":
@@ -113,10 +120,9 @@ class transportFunctions:
             baseStation = section["departure"]["place"]["name"]
             arrivalStation = section["arrival"]["place"]["name"]
 
-        # print(baseStation, arrivalStation)
 
+        # get the times
         startTime = section["departure"]["time"].split("+")[0]
-        
         if (len(section["departure"]["time"].split("-")) == 4):
             startTime = '-'.join(section["departure"]["time"].split("-")[:-1])
         startTime = datetime.strptime(startTime, '%Y-%m-%dT%H:%M:%S')
@@ -140,65 +146,15 @@ class transportFunctions:
 
 
 
-
+# get geocode of a place
 def getNZfromCity(city):
     url = "http://api.positionstack.com/v1/forward?access_key=e40fa43000e24098607004614faabc0f&query=" + city
     response = requests.get(url)
 
     response = json.loads(response.text)
-    print(response['data'])
      
     latitude = float(response["data"][0]["latitude"])
     longitude = float(response["data"][0]["longitude"])
 
     return latitude, longitude
     
-
-
-
-# url = "https://transit.router.hereapi.com/v8/routes?apiKey=pGwbEV9EnOVSNh94i8prG-B4oBd8RSO8bP6lk_u6NXI&origin=41.79457,12.25473&destination=41.90096,12.50243"
-# url = "https://transit.router.hereapi.com/v8/routes?apiKey=pGwbEV9EnOVSNh94i8prG-B4oBd8RSO8bP6lk_u6NXI&origin=32.0845191,34.8037962&destination=32.0791345,34.7924341"
-
-
-
-# response = requests.get(url)
-
-# # print(response.text)
-# # print(dict(response.text))
-# d = ast.literal_eval(response.text)
-
-# print(json.dumps(d, sort_keys=False, indent=4))
-# print(response.__dict__)
-
-
-
-# x = transportFunctions()
-# tr = x.getTransport(32.0845191,34.8037962,32.0791345,34.7924341)
-# print(tr)
-# for t in tr:
-#     print(t.__dict__)
-# print()
-# print()
-# print()
-# tr = x.getTransportByTime(32.0845191,34.8037962,32.0791345,34.7924341, "2022-07-23T15:00:00")
-# print(tr)
-# for t in tr:
-#     print(t.__dict__)
-#     print()
-
-
-
-
-# for t in tr:
-#     for a in t.__dict__:
-#         print(t.__dict__[a])
-    # print(json.dumps(t.__dict__, sort_keys=False, indent=4))
-
-# print(getNZfromCity("Tel Aviv"))
-# print(getNZfromCity("meskin 21, petah tikva"))
-# print(getNZfromCity("rishon le zion"))
-# print(getNZfromCity("oxford 56, london"))
-
-# tel = getNZfromCity("Tel Aviv")
-# haifa = getNZfromCity("haifa")
-# getTransport(tel[0], tel[1], haifa[0], haifa[1])

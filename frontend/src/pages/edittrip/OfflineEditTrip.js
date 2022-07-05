@@ -16,7 +16,9 @@ export default function OfflineEditTrip({ trip, saveEditedTrip, canCancel=true, 
     const [ editedTripName, setEditedTripName ] = useState(''); // edited trip name
 
     // changes trip name if needed and saving it
-    function saveTrip() {
+    function saveTrip(e) {
+        e.preventDefault();
+        
         if (editedTripName === '') {
             alert('You must name your trip!');
             return;
