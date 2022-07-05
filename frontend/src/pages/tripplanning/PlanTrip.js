@@ -150,7 +150,7 @@ export default function PlanTrip() {
                 if (res.status === 200) {
                     return res.json();
                 }
-                alert("An error occured.")
+                alert("Could not find a matching flight.")
                 return null;
             }).then((res) => {
                 setTrip(res);
