@@ -13,3 +13,11 @@ The front end is written in react, while the backend is written in flask.
 The backend also has all the api calls to the external api from which we obtain the information used for our trips.
 The backend also accesses our mongodb database for user login information as well as for saved trips information.
 The algorithm itself was written in python.
+### The Backend Code
+* The backend has a few classes all in place to do different things.
+* The Flights class is in charge of getting flights by locations.
+* The transportFunctions class is in charge of gettings the public transport information to move from point A to point B.
+* The hotelFunctions class is responsible for getting the attractions as well as the hotels required for the algo.
+* In addition, we have the classes we use to store the information regarding the trip itself in the classes file which contains the placeOfStay class, the Transport class, the Attraction class, the day class and the Trip class.
+* Lastly, in the tripAlgo file we use all of this classes to get a trip given the user inputs.
+* Additionally, it implements a mechanism to adjust the transportation for the case where the attractions are moved around.
