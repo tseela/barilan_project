@@ -21,3 +21,7 @@ The algorithm itself was written in python.
 * In addition, we have the classes we use to store the information regarding the trip itself in the classes file which contains the placeOfStay class, the Transport class, the Attraction class, the day class and the Trip class.
 * Lastly, in the tripAlgo file we use all of this classes to get a trip given the user inputs.
 * Additionally, it implements a mechanism to adjust the transportation for the case where the attractions are moved around.
+### The Frontend Code
+* The frontend has a file for each of the pages the user is able to access.
+* There are many pages the user can access and they are categorized.
+* I guess that is about it.
