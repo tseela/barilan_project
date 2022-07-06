@@ -25,3 +25,5 @@ The algorithm itself was written in python.
 * The frontend has a file for each of the pages the user is able to access.
 * There are many pages the user can access and they are categorized.
 * I guess that is about it.
+#### Link to our project video:
+* https://drive.google.com/file/d/1UDJD9EDs37DCoIYAK_4gPGTa8Nn3HTMs/view?usp=sharing
