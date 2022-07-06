@@ -27,3 +27,7 @@ The algorithm itself was written in python.
 * I guess that is about it.
 #### Link to our project video:
 * https://drive.google.com/file/d/1UDJD9EDs37DCoIYAK_4gPGTa8Nn3HTMs/view?usp=sharing
+#### Link to our promotional video:
+* https://drive.google.com/file/d/1EeEb7B4zlM9Syy5RR3nWLZrX7FGMu4ay/view?usp=sharing
+#### Link to our jira:
+* https://biubarilan.atlassian.net/jira/software/projects/TEAM/boards/1
